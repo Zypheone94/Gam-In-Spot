@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import User
+from users.models import CustomUser
 
 
 class Category(models.Model):
@@ -17,5 +17,5 @@ class Product(models.Model):
     productDescription = models.TextField()
     createdDate = models.DateField()
     category = models.ManyToManyField(Category)
-    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+    seller = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
