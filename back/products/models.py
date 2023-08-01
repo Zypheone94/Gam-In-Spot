@@ -18,3 +18,4 @@ class Product(models.Model):
     createdDate = models.DateField()
     category = models.ManyToManyField(Category)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
+
