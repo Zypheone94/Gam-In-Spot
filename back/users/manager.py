@@ -2,10 +2,8 @@ from django.contrib.auth.models import BaseUserManager
 from django.utils import timezone
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, firstName, lastName, birthDate, email, **extra_fields):
+    def create_user(self, birthDate, email, **extra_fields):
         user = self.model(
-            firstName=firstName,
-            lastName=lastName,
             birthDate=birthDate,
             email=email,
             **extra_fields
@@ -14,7 +12,7 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, firstName, lastName, birthDate, **extra_fields):
+    def create_superuser(self, birthDate, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -23,4 +21,4 @@ class CustomUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError("Superuser must have is_superuser=True.")
 
-        return self.create_user(firstName, lastName, birthDate, **extra_fields)
+        return self.create_user(birthDate, **extra_fields)
