@@ -1,4 +1,0 @@
-yarn
-yarn dev
-
-To start server in front dir
