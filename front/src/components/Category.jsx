@@ -10,9 +10,17 @@ function Category() {
 
     useEffect(() => {
         const getData = async () => {
+            function getSearchParam() {
+                const params = new URLSearchParams(window.location.search);
+                return params.get('search') || '';
+            }
 
             try {
-                const response = await api('/products/api/category');
+                let url = '/products/api/category'
+                getSearchParam() !== null ?
+                    url += `/?search=${getSearchParam()}` : null
+                const response = await api(url);
+                console.log(response)
                 setCategoryList(response);
                 setLoading(false);
             } catch (error) {
@@ -30,9 +38,9 @@ function Category() {
                 <p>Chargement...</p>
             ) : (
                 <ul>
-                    {categoryList.map(category => (
+                    {categoryList !== null ? categoryList.map(category => (
                         <li key={category.categoryId}>{category.title}</li>
-                    ))}
+                    )) : <p>Votre recherche n'a rien donnée malheureusement </p>}
                 </ul>
             )}
         </div>
