@@ -1,32 +1,30 @@
-import { useState, useEffect } from 'react'
-import {api} from "./utils/api.jsx";
+import {
+    createBrowserRouter,
+    RouterProvider,
+} from "react-router-dom";
+
+import Category from "./components/Category.jsx";
 
 function App() {
 
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const response = await api('/products/api/product');
-                setData(response);
-            } catch (error) {
-                console.error('Erreur lors de la récupération des données :', error);
-            }
-        };
-
-        getData();
-    }, []);
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <div>Hello world!</div>,
+        },
+        {
+            path: "/test",
+            element: <div>Hello test!</div>,
+        },
+        {
+            path: "/category",
+            element: <Category />,
+        },
+    ]);
 
     return (
-    <>
-      <div>
-          {data.map(value => (
-              <p>{value.title}</p>
-          ))}
-      </div>
-    </>
-  )
+        <RouterProvider router={router}/>
+    );
 }
 
 export default App
