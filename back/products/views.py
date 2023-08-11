@@ -16,7 +16,8 @@ class CategoryViewSet(ModelViewSet):
 
 
 class ProductViewSet(ModelViewSet):
-    serializer_class = ProductSerializer
 
-    def get_queryset(self):
-        return Product.objects.all()
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['title']

@@ -3,7 +3,9 @@ import {
     RouterProvider,
 } from "react-router-dom";
 
-import Category from "./components/Category.jsx";
+import CategoryList from "./components/CategoryList.jsx";
+import ProductList from "./components/products/ProductList.jsx";
+import ProductDetail from "./components/products/ProductDetail.jsx";
 
 function App() {
 
@@ -13,12 +15,16 @@ function App() {
             element: <div>Hello world!</div>,
         },
         {
-            path: "/test",
-            element: <div>Hello test!</div>,
+            path: "/category",
+            element: <CategoryList/>,
         },
         {
-            path: "/category",
-            element: <Category />,
+            path: "/product",
+            element: <ProductList/>,
+        },
+        {
+            path: "/product/:productId",
+            element: <ProductDetail/>,
         },
     ]);
 

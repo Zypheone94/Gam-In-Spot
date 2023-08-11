@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import {api} from "../utils/api.jsx";
 
-function Category() {
+function CategoryList() {
 
     const [categoryList, setCategoryList] = useState([])
     // State qui va contenir ma liste de category
@@ -47,4 +47,4 @@ function Category() {
     );
 }
 
-export default Category
+export default CategoryList
