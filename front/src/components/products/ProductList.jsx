@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import {api} from "../../utils/api.jsx";
+import {Link} from "react-router-dom";
 
 function ProductList() {
 
@@ -16,9 +17,10 @@ function ProductList() {
             }
 
             try {
-
-                const response = await api('/products/api/product');
-                console.log(response)
+                let url = '/products/api/product'
+                getSearchParam() !== null ?
+                    url += `/?search=${getSearchParam()}` : null
+                const response = await api(url);
                 setProductList(response);
                 setLoading(false);
             } catch (error) {
@@ -37,7 +39,9 @@ function ProductList() {
             ) : (
                 <ul>
                     {productList !== null ? productList.map(product => (
-                        <li key={product.productId}><a href={`productId=${product.productId}`}>{product.title}</a></li>
+                        <li key={product.productId}>
+                            <Link to={`/product/${product.productId}`}>{product.title}</Link>
+                        </li>
                     )) : <p>Votre recherche n'a rien donnée malheureusement </p>}
                 </ul>
             )}

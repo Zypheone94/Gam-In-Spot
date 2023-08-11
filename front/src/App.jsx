@@ -3,9 +3,10 @@ import {
     RouterProvider,
 } from "react-router-dom";
 
-import CategoryList from "./components/CategoryList.jsx";
+import CategoryList from "./components/categories/CategoryList.jsx";
 import ProductList from "./components/products/ProductList.jsx";
 import ProductDetail from "./components/products/ProductDetail.jsx";
+import CategoryDetail from "./components/categories/CategoryDetail.jsx";
 
 function App() {
 
@@ -17,6 +18,10 @@ function App() {
         {
             path: "/category",
             element: <CategoryList/>,
+        },
+        {
+            path: "/category/:slug",
+            element: <CategoryDetail />,
         },
         {
             path: "/product",

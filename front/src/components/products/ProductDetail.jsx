@@ -16,7 +16,6 @@ function ProductDetail() {
         const getData = async () => {
             try {
                 const response = await api(`/products/api/product/${productId}`);
-                console.log(response)
                 setProductDetail(response);
                 setLoading(false);
             } catch (error) {
