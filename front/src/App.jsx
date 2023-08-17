@@ -1,3 +1,6 @@
+import './styles/normalize.css'
+import './index.css'
+
 import {
     createBrowserRouter,
     RouterProvider,
@@ -8,7 +11,6 @@ import ProductList from "./pages/products/ProductList.jsx";
 import ProductDetail from "./pages/products/ProductDetail.jsx";
 import CategoryDetail from "./pages/categories/CategoryDetail.jsx";
 import Homepage from "./pages/Homepage.jsx";
-import './index.css'
 
 function App() {
 
