@@ -3,11 +3,11 @@ import {
     RouterProvider,
 } from "react-router-dom";
 
-import CategoryList from "./components/categories/CategoryList.jsx";
-import ProductList from "./components/products/ProductList.jsx";
-import ProductDetail from "./components/products/ProductDetail.jsx";
-import CategoryDetail from "./components/categories/CategoryDetail.jsx";
-import Homepage from "./components/Homepage.jsx";
+import CategoryList from "./pages/categories/CategoryList.jsx";
+import ProductList from "./pages/products/ProductList.jsx";
+import ProductDetail from "./pages/products/ProductDetail.jsx";
+import CategoryDetail from "./pages/categories/CategoryDetail.jsx";
+import Homepage from "./pages/Homepage.jsx";
 import './index.css'
 
 function App() {

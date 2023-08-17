@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {api} from "../../utils/api.jsx";
-import Header from "../commons/Header.jsx";
+import Header from "../../components/commons/Header.jsx";
 
 function CategoryList() {
 
