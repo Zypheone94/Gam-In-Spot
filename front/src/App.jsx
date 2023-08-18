@@ -41,6 +41,7 @@ function App() {
     return (
         <>
             <Header/>
+            <div className="h-36 md:h-0"></div>
             <RouterProvider router={router}/>
         </>
 
