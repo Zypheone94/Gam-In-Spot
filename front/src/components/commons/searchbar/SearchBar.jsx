@@ -11,11 +11,11 @@ function SearchBar() {
                 <input style={{
                     border: '1px solid #F72585',
                     borderRadius: '10px',
-                    height: '30px'
-                }}/>
-                <button type='submit' className='w-6'>
-                    <img src={square} alt='Valide' />
-                </button>
+                    height: '35px',
+                    width: '500px',
+                    paddingLeft: '10px'
+                }}
+                placeholder="Search..."/>
             </form>
         </>
     );

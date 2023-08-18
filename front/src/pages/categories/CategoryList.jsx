@@ -1,6 +1,5 @@
 import {useState, useEffect} from "react";
 import {api} from "../../utils/api.jsx";
-import Header from "../../components/commons/header/Header.jsx";
 
 function CategoryList() {
 
@@ -34,7 +33,6 @@ function CategoryList() {
 
     return (
         <div>
-            <Header/>
             <h1>Liste des catégories</h1>
             {loading ? (
                 <p>Chargement...</p>

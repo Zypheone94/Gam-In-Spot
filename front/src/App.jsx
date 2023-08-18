@@ -11,6 +11,7 @@ import ProductList from "./pages/products/ProductList.jsx";
 import ProductDetail from "./pages/products/ProductDetail.jsx";
 import CategoryDetail from "./pages/categories/CategoryDetail.jsx";
 import Homepage from "./pages/Homepage.jsx";
+import Header from "./components/commons/header/Header.jsx";
 
 function App() {
 
@@ -38,7 +39,11 @@ function App() {
     ]);
 
     return (
-        <RouterProvider router={router}/>
+        <>
+            <Header/>
+            <RouterProvider router={router}/>
+        </>
+
     );
 }
 
