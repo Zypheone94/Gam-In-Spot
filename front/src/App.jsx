@@ -6,11 +6,15 @@ import {
     RouterProvider,
 } from "react-router-dom";
 
+// Import des pages
 import CategoryList from "./pages/categories/CategoryList.jsx";
 import ProductList from "./pages/products/ProductList.jsx";
 import ProductDetail from "./pages/products/ProductDetail.jsx";
 import CategoryDetail from "./pages/categories/CategoryDetail.jsx";
 import Homepage from "./pages/Homepage.jsx";
+import Login from "./pages/user/Login.jsx"
+
+// Import des composants
 import Header from "./components/commons/header/Header.jsx";
 import Footer from "./components/commons/footer/Footer.jsx"
 
@@ -20,6 +24,10 @@ function App() {
         {
             path: "/",
             element: <Homepage />,
+        },
+        {
+            path: "/login",
+            element: <Login />
         },
         {
             path: "/category",
@@ -43,7 +51,7 @@ function App() {
         <>
             <Header/>
             <RouterProvider router={router}/>
-            <Footer />
+            <Footer/>
         </>
 
     );
