@@ -3,9 +3,6 @@ import logo from '../../../assets/images/logo.png'
 import User from '../../../assets/images/icons/user.svg'
 import Main from '../../../assets/images/banner/main.jpg'
 
-// import styles
-import './header.css'
-
 //import component
 import SearchBar from "../searchbar/SearchBar.jsx";
 
@@ -41,6 +38,7 @@ function Header() {
                 </div>
 
             </header>
+            <div className='my-8 h-36 md:hidden'></div>
             <div className="lg:mt-0 md:block md:mt-32 hidden" id="mainBanner" style={{
                 background: `url(${Main})`,
                 height: '250px',

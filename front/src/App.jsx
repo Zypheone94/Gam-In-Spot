@@ -12,6 +12,7 @@ import ProductDetail from "./pages/products/ProductDetail.jsx";
 import CategoryDetail from "./pages/categories/CategoryDetail.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import Header from "./components/commons/header/Header.jsx";
+import Footer from "./components/commons/footer/Footer.jsx"
 
 function App() {
 
@@ -41,8 +42,8 @@ function App() {
     return (
         <>
             <Header/>
-            <div className="h-36 md:h-0"></div>
             <RouterProvider router={router}/>
+            <Footer />
         </>
 
     );
