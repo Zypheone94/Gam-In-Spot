@@ -4,7 +4,7 @@ from .manager import CustomUserManager
 
 
 class CustomUser(AbstractUser):
-    userId = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=35)
     last_name = models.CharField(max_length=35)
@@ -15,4 +15,7 @@ class CustomUser(AbstractUser):
         return self.first_name + ' ' + self.last_name
 
     objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 

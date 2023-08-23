@@ -32,7 +32,7 @@ function CategoryList() {
     }, []);
 
     return (
-        <div style={{height: '100000px'}}>
+        <div>
             <h1>Liste des catégories</h1>
             {loading ? (
                 <p>Chargement...</p>
