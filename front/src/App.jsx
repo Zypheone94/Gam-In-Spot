@@ -18,6 +18,10 @@ import Login from "./pages/user/Login.jsx"
 import Header from "./components/commons/header/Header.jsx";
 import Footer from "./components/commons/footer/Footer.jsx"
 
+// Import Reducer
+import { Provider } from 'react-redux';
+import Store from "./redux/store.jsx"
+
 function App() {
 
     const router = createBrowserRouter([
@@ -49,9 +53,11 @@ function App() {
 
     return (
         <>
-            <Header/>
-            <RouterProvider router={router}/>
-            <Footer/>
+            <Provider store={Store}>
+                <Header/>
+                <RouterProvider router={router}/>
+                <Footer/>
+            </Provider>
         </>
 
     );

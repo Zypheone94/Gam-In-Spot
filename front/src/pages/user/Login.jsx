@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {api} from '../../utils/api.jsx'
+
+// Import utils pour Redux
+
+import {useDispatch} from 'react-redux'; // Importez useDispatch
+import {setUser} from '../../redux/actions/userActions';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+    // Const for Redirection
+    const dispatch = useDispatch();
+    // Consst for Redux
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -12,8 +23,9 @@ function Login() {
                 email: email,
                 password: password
             });
-            const data = response.data;
-            // Gérer la réponse du serveur ici (par exemple, stocker le token)
+            const data = response.user_info;
+            dispatch(setUser(data));
+            navigate('/')
         } catch (error) {
             // Gérer les erreurs ici (par exemple, afficher un message d'erreur)
         }

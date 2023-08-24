@@ -17,6 +17,14 @@ class LoginView(APIView):
             response_data = {
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
+                'user_info': {
+                    'id': user.id,
+                    'email': user.email,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'birthDate': user.birthDate,
+                    'creationAccountDate': user.creationAccountDate
+                }
             }
             return Response(response_data)
         else:
