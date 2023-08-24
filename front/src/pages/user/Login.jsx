@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import Cookies from 'js-cookie'
 import {api} from '../../utils/api.jsx'
 
 // Import utils pour Redux
@@ -24,12 +25,40 @@ function Login() {
                 password: password
             });
             const data = response.user_info;
+
+            Cookies.set('access_token', response.token, { secure: true, sameSite: 'strict', expires: 30 });
+            Cookies.set('refresh_token', response.refresh, { secure: true, sameSite: 'strict', expires: 7 });
+            // Put access token in cookie
+
             dispatch(setUser(data));
+            // Put user info in store
+
             navigate('/')
         } catch (error) {
             // Gérer les erreurs ici (par exemple, afficher un message d'erreur)
         }
     };
+
+    const handleTokenRefresh = () => {
+        const refreshToken = Cookies.get('refresh_token');
+
+        api('/users/token/refresh', 'POST', {
+            refresh: refreshToken
+        })
+            .then((response) => {
+                const { access } = response;
+
+                // Mettez à jour le cookie du token d'accès
+                Cookies.set('access_token', access, { secure: true, sameSite: 'strict', expires: 30 });
+                console.log(response);
+            })
+            .catch((error) => {
+                // Gérez les erreurs ici
+                console.error('Error refreshing token:', error);
+            });
+    };
+
+    setTimeout(handleTokenRefresh, 20 * 1000);
 
     return (
         <div>
