@@ -39,27 +39,6 @@ function Login() {
         }
     };
 
-    const handleTokenRefresh = () => {
-        const refreshToken = Cookies.get('refresh_token');
-
-        api('/users/token/refresh', 'POST', {
-            refresh: refreshToken
-        })
-            .then((response) => {
-                const { access } = response;
-
-                // Mettez à jour le cookie du token d'accès
-                Cookies.set('access_token', access, { secure: true, sameSite: 'strict', expires: 30 });
-                console.log(response);
-            })
-            .catch((error) => {
-                // Gérez les erreurs ici
-                console.error('Error refreshing token:', error);
-            });
-    };
-
-    setTimeout(handleTokenRefresh, 20 * 1000);
-
     return (
         <div>
             <h2>Connexion</h2>

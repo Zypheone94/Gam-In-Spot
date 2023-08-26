@@ -21,6 +21,7 @@ import Footer from "./components/commons/footer/Footer.jsx";
 import Store from "./redux/store.jsx";
 import {Provider} from 'react-redux';
 import {setUser} from './redux/actions/userActions';
+import {api} from "./utils/api.jsx";
 
 
 function App() {
@@ -35,13 +36,31 @@ function App() {
         return JSON.parse(jsonPayload);
     }
 
+    const handleTokenRefresh = () => {
+        const refreshToken = Cookies.get('refresh_token');
+
+        api('/users/token/refresh', 'POST', {
+            refresh: refreshToken
+        })
+            .then((response) => {
+                const { access } = response;
+
+                // Mettez à jour le cookie du token d'accès
+                Cookies.set('access_token', access, { secure: true, sameSite: 'strict', expires: 30 });
+                console.log(response);
+            })
+            .catch((error) => {
+                // Gérez les erreurs ici
+                console.warn('Error refreshing token:', error);
+            });
+        console.log('request')
+    };
+
     const authToken = Cookies.get('access_token');
     if (authToken) {
         try {
             // Déchiffrez le jeton pour obtenir les données utilisateur
             const decodedPayload = decodeJWT(authToken);
-
-            console.log(decodedPayload)
 
             const userPayload = {
                 id: decodedPayload.user_id,
@@ -59,6 +78,8 @@ function App() {
             console.error('Error decoding token:', error);
         }
     }
+
+    setTimeout(handleTokenRefresh,  30 * 60 * 1000);
 
     const allRoutes = [...MainRoutes, ...AuthRoutes, ...CategoryRoutes, ...ProductRoutes]
     const router = createBrowserRouter(allRoutes);

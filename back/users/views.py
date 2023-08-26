@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import CustomUser
 
+
 def custom_jwt_payload(user):
     payload = {
         'user_id': user.id,
@@ -32,7 +33,6 @@ class LoginView(APIView):
             access_token.payload = custom_jwt_payload(user)
             jwt_token = str(access_token)
 
-
             # Renvoyez la réponse avec le jeton JWT personnalisé
             return Response({
                 'refresh': str(refresh),
@@ -43,7 +43,8 @@ class LoginView(APIView):
                     'first_name': user.first_name,
                     'last_name': user.last_name,
                     'birthDate': user.birthDate,
-                    'creationAccountDate': user.creationAccountDate
+                    'creationAccountDate': user.creationAccountDate,
+
                 },
             })
         else:
