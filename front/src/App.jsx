@@ -1,32 +1,99 @@
-import { useState, useEffect } from 'react'
+import './styles/normalize.css'
+import './index.css'
+
+import {
+    createBrowserRouter,
+    RouterProvider,
+} from "react-router-dom";
+import Cookies from 'js-cookie';
+
+// Import des routes
+import MainRoutes from "./routes/MainRoutes.jsx";
+import AuthRoutes from "./routes/AuthRoutes.jsx";
+import CategoryRoutes from "./routes/CategoryRoutes.jsx";
+import ProductRoutes from "./routes/ProductRoutes.jsx";
+
+// Import des composants
+import Header from "./components/commons/header/Header.jsx";
+import Footer from "./components/commons/footer/Footer.jsx";
+
+// Import Reducer
+import Store from "./redux/store.jsx";
+import {Provider} from 'react-redux';
+import {setUser} from './redux/actions/userActions';
 import {api} from "./utils/api.jsx";
+
 
 function App() {
 
-    const [data, setData] = useState([]);
+    function decodeJWT(jwtToken) {
+        const base64Url = jwtToken.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Remplacer les caractères spéciaux
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map((c) => {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join('')); // Décoder en JSON
 
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const response = await api('/products/api/product');
-                setData(response);
-            } catch (error) {
-                console.error('Erreur lors de la récupération des données :', error);
-            }
-        };
+        return JSON.parse(jsonPayload);
+    }
 
-        getData();
-    }, []);
+    const handleTokenRefresh = () => {
+        const refreshToken = Cookies.get('refresh_token');
+
+        api('/users/token/refresh', 'POST', {
+            refresh: refreshToken
+        })
+            .then((response) => {
+                const { access } = response;
+
+                // Mettez à jour le cookie du token d'accès
+                Cookies.set('access_token', access, { secure: true, sameSite: 'strict', expires: 30 });
+                console.log(response);
+            })
+            .catch((error) => {
+                // Gérez les erreurs ici
+                console.warn('Error refreshing token:', error);
+            });
+    };
+
+    const authToken = Cookies.get('access_token');
+    if (authToken) {
+        try {
+            // Déchiffrez le jeton pour obtenir les données utilisateur
+            const decodedPayload = decodeJWT(authToken);
+
+            const userPayload = {
+                id: decodedPayload.user_id,
+                email: decodedPayload.email,
+                first_name: decodedPayload.first_name,
+                last_name: decodedPayload.last_name,
+                birthDate: decodedPayload.birth_date_str,
+                creationAccountDate: decodedPayload.creation_date_str
+            };
+
+            // Dispatchez l'action pour stocker les informations de l'utilisateur dans le store Redux
+            Store.dispatch(setUser(userPayload));
+        } catch (error) {
+            // En cas d'erreur lors du déchiffrement, gérez-la ici
+            console.error('Error decoding token:', error);
+        }
+    }
+
+    setTimeout(handleTokenRefresh,  30 * 60 * 1000);
+    console.log(Cookies.get())
+
+    const allRoutes = [...MainRoutes, ...AuthRoutes, ...CategoryRoutes, ...ProductRoutes]
+    const router = createBrowserRouter(allRoutes);
 
     return (
-    <>
-      <div>
-          {data.map(value => (
-              <p>{value.title}</p>
-          ))}
-      </div>
-    </>
-  )
+        <>
+            <Provider store={Store}>
+                <Header/>
+                <RouterProvider router={router}/>
+                <Footer/>
+            </Provider>
+        </>
+
+    );
 }
 
 export default App
