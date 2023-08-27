@@ -53,7 +53,6 @@ function App() {
                 // Gérez les erreurs ici
                 console.warn('Error refreshing token:', error);
             });
-        console.log('request')
     };
 
     const authToken = Cookies.get('access_token');
@@ -80,6 +79,7 @@ function App() {
     }
 
     setTimeout(handleTokenRefresh,  30 * 60 * 1000);
+    console.log(Cookies.get())
 
     const allRoutes = [...MainRoutes, ...AuthRoutes, ...CategoryRoutes, ...ProductRoutes]
     const router = createBrowserRouter(allRoutes);

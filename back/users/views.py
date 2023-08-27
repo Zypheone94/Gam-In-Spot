@@ -1,9 +1,9 @@
-from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import CustomUser
-
+from rest_framework import status
+from django.contrib.auth import logout
 
 def custom_jwt_payload(user):
     payload = {
@@ -49,3 +49,12 @@ class LoginView(APIView):
             })
         else:
             return Response({'error': 'Invalid credentials'}, status=401)
+
+
+class LogoutView(APIView):
+    def post(self, request):
+        try:
+            logout(request)
+            return Response({"message": "Logout successful", "status": status.HTTP_205_RESET_CONTENT})  # Indique que la déconnexion a réussi
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
