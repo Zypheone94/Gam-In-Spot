@@ -6,7 +6,17 @@ import Main from '../../../assets/images/banner/main.jpg'
 //import component
 import SearchBar from "../searchbar/SearchBar.jsx";
 
+import {useSelector} from 'react-redux'
+
+
 function Header() {
+
+    const user = useSelector(state => state.user)
+    const redirection = () => {
+        if(user === null) {
+            //navigate('/login')
+        }
+    }
 
     return (
         <>

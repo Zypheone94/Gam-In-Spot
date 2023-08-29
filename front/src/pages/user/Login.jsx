@@ -5,7 +5,7 @@ import {api} from '../../utils/api.jsx'
 
 // Import utils pour Redux
 
-import {useDispatch} from 'react-redux'; // Importez useDispatch
+import {useDispatch} from 'react-redux';
 import {setUser} from '../../redux/actions/userActions';
 
 function Login() {

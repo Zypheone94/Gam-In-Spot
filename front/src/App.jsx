@@ -3,7 +3,7 @@ import './index.css'
 
 import {
     createBrowserRouter,
-    RouterProvider,
+    RouterProvider, useNavigate,
 } from "react-router-dom";
 import Cookies from 'js-cookie';
 
@@ -19,10 +19,10 @@ import Footer from "./components/commons/footer/Footer.jsx";
 
 // Import Reducer
 import Store from "./redux/store.jsx";
+import {useNavigation} from "react-router-dom";
 import {Provider} from 'react-redux';
 import {setUser} from './redux/actions/userActions';
 import {api} from "./utils/api.jsx";
-
 
 function App() {
 
@@ -43,10 +43,10 @@ function App() {
             refresh: refreshToken
         })
             .then((response) => {
-                const { access } = response;
+                const {access} = response;
 
                 // Mettez à jour le cookie du token d'accès
-                Cookies.set('access_token', access, { secure: true, sameSite: 'strict', expires: 30 });
+                Cookies.set('access_token', access, {secure: true, sameSite: 'strict', expires: 30});
                 console.log(response);
             })
             .catch((error) => {
@@ -78,8 +78,7 @@ function App() {
         }
     }
 
-    setTimeout(handleTokenRefresh,  30 * 60 * 1000);
-    console.log(Cookies.get())
+    setTimeout(handleTokenRefresh, 30 * 60 * 1000);
 
     const allRoutes = [...MainRoutes, ...AuthRoutes, ...CategoryRoutes, ...ProductRoutes]
     const router = createBrowserRouter(allRoutes);
@@ -87,9 +86,7 @@ function App() {
     return (
         <>
             <Provider store={Store}>
-                <Header/>
-                <RouterProvider router={router}/>
-                <Footer/>
+                <RouterProvider router={router} />
             </Provider>
         </>
 
