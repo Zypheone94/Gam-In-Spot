@@ -8,8 +8,12 @@ export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
             'Content-Type': 'application/json',
             // Autres en-têtes si nécessaires, comme les en-têtes d'authentification
         },
-        body: JSON.stringify(data), // Convertit l'objet data en JSON
     };
+
+    if (method !== 'GET') {
+        // Inclure le corps de requête uniquement si ce n'est pas une requête GET
+        requestOptions.body = JSON.stringify(data);
+    }
 
     try {
         const response = await fetch(`${apiUrl}/${apiDetailRoad}`, requestOptions);

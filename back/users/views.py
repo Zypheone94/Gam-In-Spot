@@ -9,6 +9,7 @@ def custom_jwt_payload(user):
     payload = {
         'user_id': user.id,
         'email': user.email,
+        'username': user.username,
         'first_name': user.first_name,
         'last_name': user.last_name,
         'birth_date_str': user.birthDate.strftime('%Y-%m-%d'),
@@ -40,6 +41,7 @@ class LoginView(APIView):
                 'user_info': {
                     'id': user.id,
                     'email': user.email,
+                    'username': user.username,
                     'first_name': user.first_name,
                     'last_name': user.last_name,
                     'birthDate': user.birthDate,

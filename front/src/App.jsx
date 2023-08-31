@@ -47,7 +47,6 @@ function App() {
 
                 // Mettez à jour le cookie du token d'accès
                 Cookies.set('access_token', access, {secure: true, sameSite: 'strict', expires: 30});
-                console.log(response);
             })
             .catch((error) => {
                 // Gérez les erreurs ici
@@ -64,11 +63,13 @@ function App() {
             const userPayload = {
                 id: decodedPayload.user_id,
                 email: decodedPayload.email,
+                username: decodedPayload.username,
                 first_name: decodedPayload.first_name,
                 last_name: decodedPayload.last_name,
                 birthDate: decodedPayload.birth_date_str,
                 creationAccountDate: decodedPayload.creation_date_str
             };
+
 
             // Dispatchez l'action pour stocker les informations de l'utilisateur dans le store Redux
             Store.dispatch(setUser(userPayload));

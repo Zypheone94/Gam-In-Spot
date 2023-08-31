@@ -1,5 +1,6 @@
 // import images
 import logo from '../../../assets/images/logo.png'
+import logoutIcon from '../../../assets/images/icons/logout.svg'
 import User from '../../../assets/images/icons/user.svg'
 import Main from '../../../assets/images/banner/main.jpg'
 
@@ -7,15 +8,23 @@ import Main from '../../../assets/images/banner/main.jpg'
 import SearchBar from "../searchbar/SearchBar.jsx";
 
 import {useSelector} from 'react-redux'
-
+import {useNavigate} from 'react-router-dom'
 
 function Header() {
 
+    const navigate = useNavigate()
+
     const user = useSelector(state => state.user)
     const redirection = () => {
-        if(user === null) {
-            //navigate('/login')
+        if (user === null) {
+            navigate('/login')
+        } else {
+            navigate('/profile')
         }
+    }
+
+    const disconnect = () => {
+        navigate('/logout')
     }
 
     return (
@@ -34,16 +43,28 @@ function Header() {
                     <SearchBar/>
                 </div>
                 <div className='flex mt-6 md:mt-0 lg:flex-1 lg:justify-center'>
-                    <div style={{
-                        border: '1px solid silver',
-                        borderRadius: '5px',
-                        padding: '7px'
-                    }}>
-                        <p className="text-purple">Ajouter article +</p>
-                    </div>
+                    {user !== null &&
+                        <div style={{
+                            border: '1px solid silver',
+                            borderRadius: '5px',
+                            padding: '7px'
+                        }}>
+                            <p className="text-purple">Ajouter article +</p>
+                        </div>
+                    }
                     <div className="flex items-center ml-10">
-                        <img src={User} alt="Logo Gam'In-Spot" className='w-6 cursor-pointer' id='userIcon'/>
-                        <p className='text-purple font-[Poppins] ml-4 cursor-pointer hidden md:block'>Mon compte</p>
+                        <img src={User} alt="Logo Gam'In-Spot" className='w-6 cursor-pointer'
+                             id='userIcon'/>
+                        <p className='text-purple font-[Poppins] ml-2 cursor-pointer hidden md:block'
+                           onClick={redirection}>
+                            {user && user.username ? user.username : "Mon compte"}
+                        </p>
+                        {user === null || user.username === undefined ? (
+                            <></>
+                        ) : (
+                            <img src={logoutIcon} alt="Deconnect Icon" className='w-6 cursor-pointer ml-6'
+                                 id='userIcon' onClick={disconnect}/>
+                        )}
                     </div>
                 </div>
 
