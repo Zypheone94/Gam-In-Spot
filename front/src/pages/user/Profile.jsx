@@ -10,9 +10,7 @@ const Profile = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log('j')
         if (user === null || user.email === undefined) {
-            console.log('t')
             navigate('/login')
         }
     }, [])
@@ -22,33 +20,74 @@ const Profile = () => {
         <section className='mx-4'>
             {user !== null ? (
                 <>
-                    <div>
-                        <h3 className='text-pink'>Information du compte</h3>
+                    <div className='py-4 px-10'
+                         style={{
+                             border: "1px solid #4361EE",
+                             borderRadius: '10px',
+                             background: "#EBEBEB",
+                         }}>
+                        <h3 className='text-pink font-bold'>Information du compte</h3>
                         <div>
-                            <p className='text-deepPurple'><span
+                            <p className='text-deepPurple mt-6'><span
                                 className='underline font-bold'>Nom :</span> {user.last_name}
                             </p>
-                            <p className='text-deepPurple'><span
+                            <p className='text-deepPurple mt-4'><span
                                 className='underline font-bold'>Prénom :</span> {user.first_name}</p>
-                            <p className='text-deepPurple'><span
-                                className='underline font-bold'>Date de naissance :</span>
-                                <DateFormat type="birthDate"/></p>
-                            <p className='text-deepPurple'><span
+                            <p className='text-deepPurple mt-4'><span
+                                className='underline font-bold'>Date de naissance :</span> <DateFormat
+                                type="birthDate"/></p>
+                            <p className='text-deepPurple mt-4 mb-2'><span
                                 className='underline font-bold'>Date de création du compte :</span> <DateFormat
                                 type="creationAccountDate"/></p>
                         </div>
                     </div>
-                    <div className=''
-                         style={{
-                             border: "1px solid #4361EE",
-                             background: "#EBEBEB"
-                         }}>
-
-                        <div>
-                            Paramètre du compte
+                    <div>
+                        <div className='py-4 px-10 mt-6'
+                             style={{
+                                 border: "1px solid #4361EE",
+                                 borderRadius: '10px',
+                                 background: "#EBEBEB"
+                             }}>
+                            <h3 className='text-pink font-bold mb-6'>Paramètre du compte</h3>
+                            <div className='text-deepPurple font-bold py-2 px-4 text-center'
+                                 style={{
+                                     border: '1px solid #4361EE',
+                                     borderRadius: '10px',
+                                     cursor: 'pointer'
+                                 }}>
+                                Changer le compte de paiement
+                            </div>
+                            <div className='text-deepPurple font-bold py-2 px-4 mt-6 text-center'
+                                 style={{
+                                     border: '1px solid #4361EE',
+                                     borderRadius: '10px',
+                                     cursor: 'pointer'
+                                 }}>
+                                Changer le moyen de paiement
+                            </div>
+                            <div className='text-deepPurple font-bold py-2 px-4 mt-6 text-center'
+                                 style={{
+                                     border: '1px solid #4361EE',
+                                     borderRadius: '10px',
+                                     cursor: 'pointer'
+                                 }}>
+                                Changer les informations du compte
+                            </div>
+                            <div className='text-white bg-deleteRed font-bold py-2 px-4 mt-6 mb-6 text-center'
+                                 style={{
+                                     borderRadius: '10px',
+                                     cursor: 'pointer'
+                                 }}>
+                                Changer les informations du compte
+                            </div>
                         </div>
-                        <div>
-                            Dernier produits en lignes
+                        <div className='py-4 px-10 mt-6'
+                             style={{
+                                 border: "1px solid #4361EE",
+                                 borderRadius: '10px',
+                                 background: "#EBEBEB"
+                             }}>
+                            <h3 className='text-pink font-bold'>Dernier produits en lignes</h3>
                         </div>
                     </div>
                 </>

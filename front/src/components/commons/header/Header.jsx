@@ -58,7 +58,7 @@ function Header() {
                     }
                     <div className="flex items-center ml-10">
                         <img src={User} alt="Logo Gam'In-Spot" className='w-6 cursor-pointer'
-                             id='userIcon'/>
+                             id='userIcon' onClick={redirection}/>
                         <p className='text-purple font-[Poppins] ml-2 cursor-pointer hidden md:block'
                            onClick={redirection}>
                             {user && user.username ? user.username : "Mon compte"}

@@ -15,6 +15,7 @@ export default {
       deepPurple: '#3A0CA3',
       lightPurple: '#4361EE',
       pastelPurple: '#5F70BD',
+      deleteRed: '#C0392B',
       white: '#ffffff'
     }
   },
