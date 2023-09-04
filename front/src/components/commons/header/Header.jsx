@@ -8,11 +8,12 @@ import Main from '../../../assets/images/banner/main.jpg'
 import SearchBar from "../searchbar/SearchBar.jsx";
 
 import {useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
 
 function Header() {
 
     const navigate = useNavigate()
+    const locate = useLocation()
 
     const user = useSelector(state => state.user)
     const redirection = () => {
@@ -43,7 +44,9 @@ function Header() {
                     <SearchBar/>
                 </div>
                 <div className='flex mt-6 md:mt-0 lg:flex-1 lg:justify-center'>
-                    {user !== null &&
+                    {user === null || user.username === undefined ? (
+                        <></>
+                    ) : (
                         <div style={{
                             border: '1px solid silver',
                             borderRadius: '5px',
@@ -51,6 +54,7 @@ function Header() {
                         }}>
                             <p className="text-purple">Ajouter article +</p>
                         </div>
+                    )
                     }
                     <div className="flex items-center ml-10">
                         <img src={User} alt="Logo Gam'In-Spot" className='w-6 cursor-pointer'
@@ -70,13 +74,17 @@ function Header() {
 
             </header>
             <div className='my-8 h-36 md:hidden'></div>
-            <div className="lg:mt-0 md:block md:mt-32 hidden" id="mainBanner" style={{
-                background: `url(${Main})`,
-                height: '250px',
-                backgroundPosition: '50% 100%',
-                backgroundSize: 'cover',
-                backgroundAttachment: 'fixed'
-            }}></div>
+            {locate.pathname === '/profile' ? (
+                <></>
+            ) : (
+                <div className="lg:mt-0 md:block md:mt-32 hidden" id="mainBanner" style={{
+                    background: `url(${Main})`,
+                    height: '250px',
+                    backgroundPosition: '50% 100%',
+                    backgroundSize: 'cover',
+                    backgroundAttachment: 'fixed'
+                }}></div>
+            )}
         </>
     );
 }

@@ -18,7 +18,7 @@ const AuthRoutes = [
     },
     {
         path: '/profile',
-        element: <><Header/><Profile/><Footer/></>
+        element: <><Header/><Profile/></>
     }
 ]
 
