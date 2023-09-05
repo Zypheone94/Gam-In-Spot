@@ -6,16 +6,22 @@ const DateFormat = ({type}) => {
 
     let sliced = null
 
-    if(user !== null || user.mail !== undefined){
+    if (user !== null && user.mail !== undefined) {
         sliced = type === 'birthDate' ? user.birthDate.split('-')
             : type === 'creationAccountDate' ? user.creationAccountDate.split('-')
                 : null
     }
-    
+
     return (
-        <>
-            {sliced[2] + '/' + sliced[1] + '/' + sliced[0]}
-        </>
+
+        sliced !== null ? (
+            <>
+                {sliced[2] + '/' + sliced[1] + '/' + sliced[0]}
+            </>
+        ) : (
+            <></>
+        )
+
     )
 }
 export default DateFormat
