@@ -56,7 +56,9 @@ function Header() {
                         </div>
                     )
                     }
-                    <div className="flex items-center ml-10">
+                    <div className="flex items-center" style={{
+                        marginLeft: user !== null && user.email !== undefined ? '40px' : ''
+                    }}>
                         <img src={User} alt="Logo Gam'In-Spot" className='w-6 cursor-pointer'
                              id='userIcon' onClick={redirection}/>
                         <p className='text-purple font-[Poppins] ml-2 cursor-pointer hidden md:block'

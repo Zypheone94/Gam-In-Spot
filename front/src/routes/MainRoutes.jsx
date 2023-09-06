@@ -10,7 +10,7 @@ const MainRoutes = [
     {
         path: "/",
         element: <> <Header/><Homepage/><Footer/> </>,
-        errorElement: <WrongPage/>
+        errorElement: <> <Header/><WrongPage/> <Footer/> </>
     },
 ]
 
