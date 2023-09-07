@@ -6,7 +6,7 @@ const DateFormat = ({type}) => {
 
     let sliced = null
 
-    if (user !== null && user.mail !== undefined) {
+    if (user !== null && user.email !== undefined) {
         sliced = type === 'birthDate' ? user.birthDate.split('-')
             : type === 'creationAccountDate' ? user.creationAccountDate.split('-')
                 : null

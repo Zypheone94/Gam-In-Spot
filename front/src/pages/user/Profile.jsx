@@ -17,10 +17,17 @@ const Profile = () => {
 
     return (
 
-        <section className='mx-4'>
+        <section className='mx-4
+        lg:flex lg:f-width'>
+            <div className='hidden sm:block lg:hidden' style={{
+                height: '15rem',
+            }}>
+
+            </div>
             {user !== null ? (
                 <>
-                    <div className='py-4 px-10'
+                    <div className='py-4 px-10
+                        lg:w-3/12'
                          style={{
                              border: "1px solid #4361EE",
                              borderRadius: '10px',
@@ -41,44 +48,51 @@ const Profile = () => {
                                 type="creationAccountDate"/></p>
                         </div>
                     </div>
-                    <div>
-                        <div className='py-4 px-10 mt-6'
+                    <div className="lg:w-9/12 lg:ml-6">
+                        <div className='py-4 px-10 mt-6
+                            lg:mt-0 lg:h-60'
                              style={{
                                  border: "1px solid #4361EE",
                                  borderRadius: '10px',
                                  background: "#EBEBEB"
                              }}>
                             <h3 className='text-pink font-bold mb-6'>Paramètre du compte</h3>
-                            <div className='text-deepPurple font-bold py-2 px-4 text-center'
-                                 style={{
-                                     border: '1px solid #4361EE',
-                                     borderRadius: '10px',
-                                     cursor: 'pointer'
-                                 }}>
-                                Changer le compte de paiement
+                            <div className="lg:flex lg:items-center">
+                                <div className='text-deepPurple font-bold py-2 px-4 text-center
+                                       lg:w-3/12 lg:h-fit'
+                                     style={{
+                                         border: '1px solid #4361EE',
+                                         borderRadius: '10px',
+                                         cursor: 'pointer'
+                                     }}>
+                                    Changer le compte de paiement
+                                </div>
+                                <div className='text-deepPurple font-bold py-2 px-4 mt-6 text-center
+                                    lg:w-3/12 lg:mt-0 lg:ml-4'
+                                     style={{
+                                         border: '1px solid #4361EE',
+                                         borderRadius: '10px',
+                                         cursor: 'pointer'
+                                     }}>
+                                    Changer le moyen de paiement
+                                </div>
+                                <div className='text-deepPurple font-bold py-2 px-4 mt-6 text-center
+                                    lg:w-3/12 lg:mt-0 lg:ml-4'
+                                     style={{
+                                         border: '1px solid #4361EE',
+                                         borderRadius: '10px',
+                                         cursor: 'pointer'
+                                     }}>
+                                    Changer les informations du compte
+                                </div>
                             </div>
-                            <div className='text-deepPurple font-bold py-2 px-4 mt-6 text-center'
-                                 style={{
-                                     border: '1px solid #4361EE',
-                                     borderRadius: '10px',
-                                     cursor: 'pointer'
-                                 }}>
-                                Changer le moyen de paiement
-                            </div>
-                            <div className='text-deepPurple font-bold py-2 px-4 mt-6 text-center'
-                                 style={{
-                                     border: '1px solid #4361EE',
-                                     borderRadius: '10px',
-                                     cursor: 'pointer'
-                                 }}>
-                                Changer les informations du compte
-                            </div>
-                            <div className='text-white bg-deleteRed font-bold py-2 px-4 mt-6 mb-6 text-center'
+                            <div className='text-white bg-deleteRed font-bold py-2 px-4 mt-6 mb-6 text-center
+                                lg:w-3/12 lg:mt-10'
                                  style={{
                                      borderRadius: '10px',
                                      cursor: 'pointer'
                                  }}>
-                                Changer les informations du compte
+                                SUPPRIMER LE COMPTE
                             </div>
                         </div>
                         <div className='py-4 px-10 mt-6'
