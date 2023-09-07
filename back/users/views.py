@@ -5,6 +5,8 @@ from .models import CustomUser
 from rest_framework import status
 from django.contrib.auth import logout
 
+from .serializer import CustomUserSerializer
+
 def custom_jwt_payload(user):
     payload = {
         'user_id': user.id,
@@ -53,6 +55,25 @@ class LoginView(APIView):
             return Response({'error': 'Invalid credentials'}, status=401)
 
 
+class UpdateUserView(APIView):
+    def put(self, request):
+        user_id = request.data.get('id')
+
+        try:
+            user = CustomUser.objects.get(pk=user_id)
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'L\'utilisateur n\'existe pas'}, status=status.HTTP_404_NOT_FOUND)
+
+        data = request.data.get('data', {})
+
+        user.email = data.get('email', user.email)
+        user.username = data.get('username', user.username)
+        user.first_name = data.get('first_name', user.first_name)
+        user.last_name = data.get('last_name', user.last_name)
+
+        user.save()
+
+        return Response({'message': 'Utilisateur mis à jour avec succès'})
 class LogoutView(APIView):
     def post(self, request):
         try:

@@ -82,7 +82,8 @@ const Profile = () => {
                                          border: '1px solid #4361EE',
                                          borderRadius: '10px',
                                          cursor: 'pointer'
-                                     }}>
+                                     }}
+                                onClick={() => navigate('/profile/modify')}>
                                     Changer les informations du compte
                                 </div>
                             </div>

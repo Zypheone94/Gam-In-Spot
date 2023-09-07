@@ -6,6 +6,7 @@ import Logout from "../pages/user/Logout.jsx";
 import Header from "../components/commons/header/Header.jsx";
 import Footer from "../components/commons/footer/Footer.jsx";
 import Profile from "../pages/user/Profile.jsx";
+import ModifyUser from "../pages/user/ModifyUser.jsx";
 
 const AuthRoutes = [
     {
@@ -19,6 +20,10 @@ const AuthRoutes = [
     {
         path: '/profile',
         element: <><Header/><Profile/></>
+    },
+    {
+        path: '/profile/modify',
+        element: <><Header/><ModifyUser/></>
     }
 ]
 
