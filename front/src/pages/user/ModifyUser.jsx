@@ -52,8 +52,8 @@ const UserProfile = () => {
     };
 
     return (
-        <div>
-            <h1>Profil de l'utilisateur</h1>
+        <div className="mx-12">
+            <h1 className="text-pink">Profil de l'utilisateur</h1>
             <DelaiRender>
                 <UserForm user={userData} onUpdate={handleUpdateUser}/>
             </DelaiRender>
