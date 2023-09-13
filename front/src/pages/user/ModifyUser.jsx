@@ -36,7 +36,6 @@ const UserProfile = () => {
     }, []);
 
     const handleUpdateUser = async (updatedUserData) => {
-        console.log(updatedUserData)
         let requestDate = {
             id: user.id,
             data: updatedUserData
@@ -46,14 +45,15 @@ const UserProfile = () => {
             setUserData(updatedUser);
             const newUserValue = await api('/users/detail', 'POST', requestDate)
             dispatch(setUser(newUserValue.user));
+            navigate('/profile')
         } catch (error) {
             console.error('Erreur lors de la mise à jour de l\'utilisateur', error);
         }
     };
 
     return (
-        <div className="mx-12 md:mt-6">
-            <h1 className="text-pink">Profil de l'utilisateur</h1>
+        <div className="mx-12 md:mt-6 md:text-lg">
+            <h1 className="text-pink md:text-xl">Profil de l'utilisateur</h1>
             <DelaiRender>
                 <UserForm user={userData} onUpdate={handleUpdateUser}/>
             </DelaiRender>
