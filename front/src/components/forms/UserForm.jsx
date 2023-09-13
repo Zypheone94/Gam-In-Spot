@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 
 const UserForm = ({ user, onUpdate }) => {
 
-    const [formData, setFormData] = useState({
-        last_name: user.last_name,
-        first_name: user.first_name,
-        birthDate: user.birthDate,
-    });
+    const [formData, setFormData] = useState(user);
+
+    console.log(formData)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;

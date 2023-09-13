@@ -2,12 +2,14 @@ import React, {useState, useEffect} from 'react';
 import UserForm from "../../components/forms/UserForm.jsx";
 
 import {api} from "../../utils/api.jsx";
+import delaiRender from "../../utils/DelaiRender.jsx";
 
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom"
 import {setUser} from "../../redux/actions/userActions.jsx";
 
 import {useDispatch} from 'react-redux';
+import DelaiRender from "../../utils/DelaiRender.jsx";
 
 const UserProfile = () => {
     const user = useSelector(state => state.user)
@@ -33,7 +35,6 @@ const UserProfile = () => {
         }
     }, []);
 
-
     const handleUpdateUser = async (updatedUserData) => {
         console.log(updatedUserData)
         let requestDate = {
@@ -53,13 +54,9 @@ const UserProfile = () => {
     return (
         <div>
             <h1>Profil de l'utilisateur</h1>
-            {
-                userData.email !== '' ? (
-                    <UserForm user={userData} onUpdate={handleUpdateUser}/>
-                ) : (
-                    <></>
-                )
-            }
+            <DelaiRender>
+                <UserForm user={userData} onUpdate={handleUpdateUser}/>
+            </DelaiRender>
         </div>
     );
 };
