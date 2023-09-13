@@ -49,15 +49,15 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className="lg:w-9/12 lg:ml-6">
-                        <div className='py-4 px-10 mt-6
-                            lg:mt-0 lg:h-60'
+                        <div className='py-8 px-10 mt-6
+                            lg:mt-0'
                              style={{
                                  border: "1px solid #4361EE",
                                  borderRadius: '10px',
                                  background: "#EBEBEB"
                              }}>
                             <h3 className='text-pink font-bold mb-6'>Paramètre du compte</h3>
-                            <div className="lg:flex lg:items-center">
+                            <div className="lg:flex lg:items-center lg:justify-around">
                                 <div className='text-deepPurple font-bold py-2 px-4 text-center
                                        lg:w-3/12 lg:h-fit'
                                      style={{
@@ -83,17 +83,38 @@ const Profile = () => {
                                          borderRadius: '10px',
                                          cursor: 'pointer'
                                      }}
-                                onClick={() => navigate('/profile/modify')}>
+                                     onClick={() => navigate('/profile/modify')}>
                                     Changer les informations du compte
                                 </div>
                             </div>
-                            <div className='text-white bg-deleteRed font-bold py-2 px-4 mt-6 mb-6 text-center
+                            <div className="lg:flex lg: justify-around">
+                                <div className='text-white bg-deleteRed font-bold py-2 px-4 mt-6 mb-6
+                                flex items-center justify-center text-center
                                 lg:w-3/12 lg:mt-10'
-                                 style={{
-                                     borderRadius: '10px',
-                                     cursor: 'pointer'
-                                 }}>
-                                SUPPRIMER LE COMPTE
+                                     style={{
+                                         borderRadius: '10px',
+                                         cursor: 'pointer'
+                                     }}>
+                                    Changer le mail associé au compte
+                                </div>
+                                <div className='text-white bg-deleteRed font-bold py-2 px-4 mt-6 mb-6
+                                flex items-center justify-center text-center
+                                lg:w-3/12 lg:mt-10'
+                                     style={{
+                                         borderRadius: '10px',
+                                         cursor: 'pointer'
+                                     }}>
+                                    Changer le mot de passe
+                                </div>
+                                <div className='text-white bg-deleteRed font-bold py-2 px-4 mt-6 mb-6
+                                flex items-center justify-center
+                                lg:w-3/12 lg:mt-10'
+                                     style={{
+                                         borderRadius: '10px',
+                                         cursor: 'pointer'
+                                     }}>
+                                    SUPPRIMER LE COMPTE
+                                </div>
                             </div>
                         </div>
                         <div className='py-4 px-10 mt-6'

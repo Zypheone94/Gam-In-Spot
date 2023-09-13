@@ -28,14 +28,12 @@ function Login() {
 
             Cookies.set('access_token', response.token, { secure: true, sameSite: 'strict', expires: 30 });
             Cookies.set('refresh_token', response.refresh, { secure: true, sameSite: 'strict', expires: 7 });
-            // Put access token in cookie
 
             dispatch(setUser(data));
-            // Put user info in store
 
             navigate('/')
         } catch (error) {
-            // Gérer les erreurs ici (par exemple, afficher un message d'erreur)
+
         }
     };
 

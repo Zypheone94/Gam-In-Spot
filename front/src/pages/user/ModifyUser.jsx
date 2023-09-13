@@ -4,10 +4,15 @@ import UserForm from "../../components/forms/UserForm.jsx";
 import {api} from "../../utils/api.jsx";
 
 import {useSelector} from "react-redux";
-import {useLocation, useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
+import {setUser} from "../../redux/actions/userActions.jsx";
+
+import {useDispatch} from 'react-redux';
 
 const UserProfile = () => {
     const user = useSelector(state => state.user)
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
 
     const [userData, setUserData] = useState({
         email: '',
@@ -17,8 +22,7 @@ const UserProfile = () => {
     });
 
     useEffect(() => {
-        if (user) {
-            // Mettez à jour userData en fusionnant avec les nouvelles valeurs
+        if (user && user.email !== undefined) {
             setUserData((prevUserData) => ({
                 ...prevUserData,
                 email: user.email || '',
@@ -26,9 +30,8 @@ const UserProfile = () => {
                 first_name: user.first_name || '',
                 last_name: user.last_name || '',
             }));
-            console.log(userData)
         } else {
-            useLocation('/login')
+            navigate('/login')
         }
     }, []);
 
@@ -41,6 +44,8 @@ const UserProfile = () => {
         try {
             const updatedUser = await api('/users/modify', 'PUT', requestDate);
             setUserData(updatedUser);
+            const newUserValue = await api('/users/detail/', 'POST', requestDate)
+            dispatch(setUser(newUserValue.user));
         } catch (error) {
             console.error('Erreur lors de la mise à jour de l\'utilisateur', error);
         }
@@ -52,7 +57,6 @@ const UserProfile = () => {
             {
                 userData.email !== '' ? (
                     <UserForm user={userData} onUpdate={handleUpdateUser}/>
-                    
                 ) : (
                     <></>
                 )
