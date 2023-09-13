@@ -85,10 +85,9 @@ class UpdateUserView(APIView):
 
         data = request.data.get('data', {})
 
-        user.email = data.get('email', user.email)
-        user.username = data.get('username', user.username)
         user.first_name = data.get('first_name', user.first_name)
         user.last_name = data.get('last_name', user.last_name)
+        user.birthDate = data.get('birthDate', user.birthDate)
 
         user.save()
 

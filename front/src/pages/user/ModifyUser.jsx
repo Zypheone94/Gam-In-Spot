@@ -15,20 +15,18 @@ const UserProfile = () => {
     const dispatch = useDispatch();
 
     const [userData, setUserData] = useState({
-        email: '',
-        username: '',
         first_name: '',
         last_name: '',
+        birthDate: ''
     });
 
     useEffect(() => {
         if (user && user.email !== undefined) {
             setUserData((prevUserData) => ({
                 ...prevUserData,
-                email: user.email || '',
-                username: user.username || '',
                 first_name: user.first_name || '',
                 last_name: user.last_name || '',
+                birthDate: user.birthDate || ''
             }));
         } else {
             navigate('/login')
@@ -37,6 +35,7 @@ const UserProfile = () => {
 
 
     const handleUpdateUser = async (updatedUserData) => {
+        console.log(updatedUserData)
         let requestDate = {
             id: user.id,
             data: updatedUserData
@@ -44,7 +43,7 @@ const UserProfile = () => {
         try {
             const updatedUser = await api('/users/modify', 'PUT', requestDate);
             setUserData(updatedUser);
-            const newUserValue = await api('/users/detail/', 'POST', requestDate)
+            const newUserValue = await api('/users/detail', 'POST', requestDate)
             dispatch(setUser(newUserValue.user));
         } catch (error) {
             console.error('Erreur lors de la mise à jour de l\'utilisateur', error);

@@ -3,12 +3,9 @@ import React, { useState } from 'react';
 const UserForm = ({ user, onUpdate }) => {
 
     const [formData, setFormData] = useState({
-        email: user.email,
-        last_name: user.last_name || '',
+        last_name: user.last_name,
         first_name: user.first_name,
-        username: user.username,
-        //password: user.password,
-        //birthDate: user.birthDate,
+        birthDate: user.birthDate,
     });
 
     const handleInputChange = (e) => {
@@ -24,14 +21,6 @@ const UserForm = ({ user, onUpdate }) => {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                />
                 <input
                     type="text"
                     name="last_name"
@@ -49,26 +38,11 @@ const UserForm = ({ user, onUpdate }) => {
                     onChange={handleInputChange}
                 />
                 <input
-                    type="text"
-                    name="username"
-                    placeholder="Pseudo"
-                    required
-                    value={formData.username}
-                    onChange={handleInputChange}
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Mot de passe"
-                    //value={formData.password}
-                    //onChange={handleInputChange}
-                />
-                <input
                     type="date"
                     name="birthDate"
                     placeholder="Date de naissance"
-                    //value={formData.birthDate}
-                    //onChange={handleInputChange}
+                    value={formData.birthDate}
+                    onChange={handleInputChange}
                 />
                 <button type="submit">Enregistrer</button>
             </form>
