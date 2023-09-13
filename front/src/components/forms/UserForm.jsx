@@ -19,8 +19,11 @@ const UserForm = ({ user, onUpdate }) => {
     return (
         <>
             <form onSubmit={handleSubmit} className="flex flex-col justify-center">
-                <div className="flex justify-between mt-8">
-                    <label className="pt-1">Nom</label>
+                <div className="flex justify-between mt-8 text-center
+                md:justify-around md:mt-12">
+                    <label className="pt-1" style={{
+                        width: '100px'
+                    }}>Nom</label>
                     <input
                         type="text"
                         name="last_name"
@@ -28,15 +31,18 @@ const UserForm = ({ user, onUpdate }) => {
                         required
                         value={formData.last_name}
                         onChange={handleInputChange}
-                        className="w-3/4 p-1"
+                        className="w-3/4 p-1 md:w-2/4"
                         style={{
                             border: '1px solid #F72585',
                             borderRadius: '10px'
                         }}
                     />
                 </div>
-                <div className="flex justify-between mt-8">
-                    <label className="pt-1">Prénom</label>
+                <div className="flex justify-between mt-8 text-center
+                md:justify-around md:mt-12">
+                    <label className="pt-1" style={{
+                        width: '100px'
+                    }}>Prénom</label>
                     <input
                         type="text"
                         name="first_name"
@@ -44,22 +50,25 @@ const UserForm = ({ user, onUpdate }) => {
                         required
                         value={formData.first_name}
                         onChange={handleInputChange}
-                        className="w-3/4 p-1"
+                        className="w-3/4 p-1 md:w-2/4"
                         style={{
                             border: '1px solid #F72585',
                             borderRadius: '10px'
                         }}
                     />
                 </div>
-                <div className="flex justify-between mt-8">
-                    <label>Date anniversaire</label>
+                <div className="flex justify-between mt-8 text-center
+                md:justify-around md:mt-12">
+                    <label style={{
+                        width: '100px'
+                    }}>Date anniversaire</label>
                     <input
                         type="date"
                         name="birthDate"
                         placeholder="Date de naissance"
                         value={formData.birthDate}
                         onChange={handleInputChange}
-                        className="w-3/4 px-1"
+                        className="w-3/4 px-1 md:w-2/4"
                         style={{
                             border: '1px solid #F72585',
                             borderRadius: '10px'
@@ -67,7 +76,9 @@ const UserForm = ({ user, onUpdate }) => {
                     />
                 </div>
 
-                <button type="submit" className="mt-8 text-right">Enregistrer</button>
+                <button type="submit" className="mt-8 text-right duration-200
+                md:mt-12
+                hover:text-pink">Enregistrer</button>
             </form>
         </>
     );
