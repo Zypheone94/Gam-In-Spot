@@ -22,7 +22,11 @@ const AuthRoutes = [
         element: <><Header/><Profile/></>
     },
     {
-        path: '/profile/modify',
+        path: '/profile/modify/data',
+        element: <><Header/><ModifyUser/></>
+    },
+    {
+        path: '/profile/modify/mail',
         element: <><Header/><ModifyUser/></>
     }
 ]

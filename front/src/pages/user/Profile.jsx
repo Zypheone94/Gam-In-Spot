@@ -83,7 +83,7 @@ const Profile = () => {
                                          borderRadius: '10px',
                                          cursor: 'pointer'
                                      }}
-                                     onClick={() => navigate('/profile/modify')}>
+                                     onClick={() => navigate('/profile/modify/data')}>
                                     Changer les informations du compte
                                 </div>
                             </div>
@@ -94,7 +94,8 @@ const Profile = () => {
                                      style={{
                                          borderRadius: '10px',
                                          cursor: 'pointer'
-                                     }}>
+                                     }}
+                                     onClick={() => navigate('/profile/modify/mail')}>
                                     Changer le mail associé au compte
                                 </div>
                                 <div className='text-white bg-deleteRed font-bold py-2 px-4 mt-6 mb-6

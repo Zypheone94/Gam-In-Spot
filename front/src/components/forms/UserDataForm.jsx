@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 
-const UserForm = ({ user, onUpdate }) => {
+const UserDataForm = ({ user, onUpdate }) => {
 
     const [formData, setFormData] = useState(user);
-
-    console.log(formData)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -84,4 +82,4 @@ const UserForm = ({ user, onUpdate }) => {
     );
 };
 
-export default UserForm;
+export default UserDataForm;

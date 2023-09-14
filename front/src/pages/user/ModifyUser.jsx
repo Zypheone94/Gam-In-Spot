@@ -1,25 +1,29 @@
 import React, {useState, useEffect} from 'react';
-import UserForm from "../../components/forms/UserForm.jsx";
+import UserDataForm from "../../components/forms/UserDataForm.jsx";
+import UserMailForm from "../../components/forms/UserMailForm.jsx";
 
 import {api} from "../../utils/api.jsx";
-import delaiRender from "../../utils/DelaiRender.jsx";
+import DelaiRender from "../../utils/DelaiRender.jsx";
 
 import {useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useLocation} from "react-router-dom"
 import {setUser} from "../../redux/actions/userActions.jsx";
 
 import {useDispatch} from 'react-redux';
-import DelaiRender from "../../utils/DelaiRender.jsx";
 
 const UserProfile = () => {
     const user = useSelector(state => state.user)
     const navigate = useNavigate()
+    const location = useLocation()
     const dispatch = useDispatch();
+
+    const url = location.pathname.split('/')
 
     const [userData, setUserData] = useState({
         first_name: '',
         last_name: '',
-        birthDate: ''
+        birthDate: '',
+        email: ''
     });
 
     useEffect(() => {
@@ -28,7 +32,8 @@ const UserProfile = () => {
                 ...prevUserData,
                 first_name: user.first_name || '',
                 last_name: user.last_name || '',
-                birthDate: user.birthDate || ''
+                birthDate: user.birthDate || '',
+                email: user.email || ''
             }));
         } else {
             navigate('/login')
@@ -51,11 +56,26 @@ const UserProfile = () => {
         }
     };
 
+    const handleSendMail = () => {
+        console.log('mail !')
+    }
+
     return (
         <div className="mx-12 md:mt-6 md:text-lg">
             <h1 className="text-pink md:text-xl">Profil de l'utilisateur</h1>
             <DelaiRender>
-                <UserForm user={userData} onUpdate={handleUpdateUser}/>
+                {
+                    url[url.length -1] === 'data' ? (
+                        <UserDataForm user={userData} onUpdate={handleUpdateUser}/>
+                    ) : (
+                        url[url.length -1] === 'mail' ? (
+                            <UserMailForm user={userData} onUpdate={handleUpdateUser}/>
+                        ) : (
+                            <></>
+                        )
+                    )
+                }
+
             </DelaiRender>
         </div>
     );
