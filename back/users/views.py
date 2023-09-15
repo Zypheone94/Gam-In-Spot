@@ -1,14 +1,16 @@
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.views import APIView, View
 from .models import CustomUser
 from rest_framework import status
 from django.contrib.auth import logout
+import json
 
 from .serializer import CustomUserSerializer
 from django.core.mail import send_mail
 
-from django.http import HttpResponse
+from django.http import JsonResponse
 
 
 def custom_jwt_payload(user):
@@ -101,12 +103,20 @@ class LogoutView(APIView):
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-class SendValidationMail(View):
-    def get(self, request):
-        subject = 'Validation de votre compte'
-        message = 'Cliquez sur le lien suivant pour valider votre compte : http://example.com/validate/12345/'
-        from_email = 'magna94320@gmail.com'
-        recipient_list = ['maximerene.durand.pro@gmail.com']
 
-        send_mail(subject, message, from_email, recipient_list)
-        return HttpResponse('E-mail envoyé avec succès.')
+class SendValidationMail(APIView):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+            email = data.get('formMail')
+            subject = 'Validation de votre compte'
+            message = 'Cliquez sur le lien suivant pour valider votre compte : http://example.com/validate/12345/'
+            from_email = 'magna94320@gmail.com'
+            recipient_list = [email]
+
+            send_mail(subject, message, from_email, recipient_list)
+
+
+            return Response({'message': 'E-mail envoyé avec succès.', 'mail': email}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': 'Erreur lors de l\'envoi de l\'e-mail.'}, status=status.HTTP_400_BAD_REQUEST)

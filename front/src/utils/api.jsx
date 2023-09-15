@@ -6,7 +6,6 @@ export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
         method: method,
         headers: {
             'Content-Type': 'application/json',
-            // Autres en-têtes si nécessaires, comme les en-têtes d'authentification
         },
     };
 

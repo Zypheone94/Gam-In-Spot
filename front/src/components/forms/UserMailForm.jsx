@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import {api} from "../../utils/api.jsx";
 
-const UserDataForm = ({ user, onUpdate }) => {
+const UserDataForm = ({user, onUpdate}) => {
 
     const [formMail, setFormMail] = useState(user.email);
 
     const handleInputChange = (e) => {
         setFormMail(e.target.value);
-        console.log(formMail)
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const response = await api('users/validation', 'POST', {formMail});
+        } catch (error) {
+            console.error('Erreur lors de l\'envoi de l\'email :', error);
+        }
     };
 
     return (
         <>
+
             <form onSubmit={handleSubmit} className="flex flex-col justify-center">
 
-                <div className="flex justify-between mt-8 text-center
-                md:justify-around md:mt-12">
+                <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
                     <label className="pt-1" style={{
                         width: '100px'
                     }}>Email</label>
@@ -37,11 +42,12 @@ const UserDataForm = ({ user, onUpdate }) => {
                     />
                 </div>
 
-                <button type="submit" className="mt-8 text-right duration-200
-                md:mt-12
-                hover:text-pink">Enregistrer</button>
+                <button type="submit"
+                        className="mt-8 text-right duration-200 md:mt-12 hover:text-pink">Enregistrer
+                </button>
             </form>
         </>
+
     );
 };
 
