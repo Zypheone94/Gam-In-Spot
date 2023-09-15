@@ -1,3 +1,5 @@
+import random
+
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
@@ -105,18 +107,33 @@ class LogoutView(APIView):
 
 
 class SendValidationMail(APIView):
+    verification_code = None
     def post(self, request):
         try:
             data = json.loads(request.body)
+            verification_code = str(random.randint(1, 500000))
             email = data.get('formMail')
             subject = 'Validation de votre compte'
-            message = 'Cliquez sur le lien suivant pour valider votre compte : http://example.com/validate/12345/'
+            message = 'Voici votre code de vérification : ' + verification_code
             from_email = 'magna94320@gmail.com'
             recipient_list = [email]
 
             send_mail(subject, message, from_email, recipient_list)
 
 
-            return Response({'message': 'E-mail envoyé avec succès.', 'mail': email}, status=status.HTTP_200_OK)
+            return Response({'message': 'E-mail envoyé avec succès.', 'mail': email }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': 'Erreur lors de l\'envoi de l\'e-mail.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request):
+        try:
+            data = json.loads(request.body)
+            entered_code = data.get('verification_code')
+
+            if self.verification_code and str(self.verification_code) == entered_code:
+
+                return Response({'message': 'Code de vérification valide.'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Code de vérification invalide.'}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': 'Erreur lors de la vérification du code.'}, status=status.HTTP_400_BAD_REQUEST)
