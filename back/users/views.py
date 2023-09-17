@@ -1,9 +1,8 @@
 import random
 
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
-from rest_framework.views import APIView, View
+from rest_framework.views import APIView
 from .models import CustomUser
 from rest_framework import status
 from django.contrib.auth import logout
@@ -12,7 +11,7 @@ import json
 from .serializer import CustomUserSerializer
 from django.core.mail import send_mail
 
-from django.http import JsonResponse
+from django.core.cache import cache
 
 
 def custom_jwt_payload(user):
@@ -44,7 +43,6 @@ class LoginView(APIView):
             access_token.payload = custom_jwt_payload(user)
             jwt_token = str(access_token)
 
-            # Renvoyez la réponse avec le jeton JWT personnalisé
             return Response({
                 'refresh': str(refresh),
                 'token': jwt_token,
@@ -62,6 +60,7 @@ class LoginView(APIView):
         else:
             return Response({'error': 'Invalid credentials'}, status=401)
 
+
 class UserDetailView(APIView):
     def post(self, request):
         user_id = request.data.get('id')
@@ -70,13 +69,13 @@ class UserDetailView(APIView):
 
         try:
             user = CustomUser.objects.get(pk=user_id)
-            # Sérialisez l'objet CustomUser en JSON
             serializer = CustomUserSerializer(user)
             serialized_data = serializer.data
 
             return Response({'user': serialized_data})
         except CustomUser.DoesNotExist:
             return Response({'error': 'L\'utilisateur n\'existe pas'}, status=status.HTTP_404_NOT_FOUND)
+
 
 class UpdateUserView(APIView):
     def put(self, request):
@@ -97,6 +96,8 @@ class UpdateUserView(APIView):
         user.save()
 
         return Response({'message': 'Utilisateur mis à jour avec succès'})
+
+    
 class LogoutView(APIView):
     def post(self, request):
         try:
@@ -107,11 +108,10 @@ class LogoutView(APIView):
 
 
 class SendValidationMail(APIView):
-    verification_code = None
     def post(self, request):
         try:
             data = json.loads(request.body)
-            verification_code = str(random.randint(1, 500000))
+            verification_code = str(random.randint(100000, 500000))
             email = data.get('formMail')
             subject = 'Validation de votre compte'
             message = 'Voici votre code de vérification : ' + verification_code
@@ -120,6 +120,7 @@ class SendValidationMail(APIView):
 
             send_mail(subject, message, from_email, recipient_list)
 
+            cache.set('secret_code', verification_code, 3600)
 
             return Response({'message': 'E-mail envoyé avec succès.', 'mail': email }, status=status.HTTP_200_OK)
         except Exception as e:
@@ -128,12 +129,15 @@ class SendValidationMail(APIView):
     def put(self, request):
         try:
             data = json.loads(request.body)
-            entered_code = data.get('verification_code')
+            entered_code = data.get('checkCode')
 
-            if self.verification_code and str(self.verification_code) == entered_code:
+            secret_code = cache.get('secret_code')
 
-                return Response({'message': 'Code de vérification valide.'}, status=status.HTTP_200_OK)
+            print(secret_code)
+
+            if entered_code and entered_code == secret_code:
+                return Response({'message': 'Code de vérification valide.', 'code': secret_code}, status=status.HTTP_200_OK)
             else:
-                return Response({'error': 'Code de vérification invalide.'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Code de vérification invalide.', 'code': secret_code}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': 'Erreur lors de la vérification du code.'}, status=status.HTTP_400_BAD_REQUEST)

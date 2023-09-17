@@ -30,7 +30,11 @@ const UserDataForm = ({user, onUpdate}) => {
 
     const handleVerifyCode = async (e) => {
         e.preventDefault();
-        console.log('Envoie du code à vérifier')
+        try {
+            const response = await api('users/validation', 'PUT', {checkCode});
+        } catch (error) {
+            console.error('Erreur lors de l\'envoi de l\'email :', error);
+        }
     }
 
     return (
@@ -68,6 +72,10 @@ const UserDataForm = ({user, onUpdate}) => {
                     <div>Loading </div>
                 ) : (
                     <form onSubmit={handleVerifyCode} className="flex flex-col justify-center">
+                        <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
+                            <label className="pt-1" style={{
+                                width: '100px'
+                            }}>Code</label>
                         <input
                             type="text"
                             name="verification_code"
@@ -80,6 +88,7 @@ const UserDataForm = ({user, onUpdate}) => {
                                 borderRadius: '10px'
                             }}
                         />
+                        </div>
                         <button type="submit"
                                 className="mt-8 text-right duration-200 md:mt-12 hover:text-pink">Vérifier le code
                         </button>
