@@ -8,14 +8,14 @@ const UserDataForm = ({user}) => {
     const [onLoad, setOnLoad] = useState(false)
     const [displayVerification, setDisplayVerification] = useState(false)
     const [checkCode, setCheckCode] = useState('')
+    const [returnMessage, setReturnMessage] = useState('')
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (user && user.email !== undefined){
+        if (user && user.email !== undefined) {
             null
-        }
-        else {
+        } else {
             navigate('/login')
         }
     })
@@ -41,14 +41,20 @@ const UserDataForm = ({user}) => {
     };
 
     const handleVerifyCode = async (e) => {
-        let data = {'user_mail' : user.email, 'check_code' : checkCode}
+        let data = {'user_mail': user.email, 'check_code': checkCode}
         e.preventDefault();
         try {
             const response = await api('users/validation', 'PUT', data);
+            if (response.status_code === 10) {
+                setOnLoad(false)
+                setReturnMessage('Votre mail à bien été changé')
+            }
+            if (response.status_code === 20) {
+                setReturnMessage('Une erreur est survenu lors de la soumission de votre code')
+            }
         } catch (error) {
             console.error('Erreur lors de l\'envoi de l\'email :', error);
         }
-        navigate('/profile')
     }
 
     return (
@@ -90,24 +96,31 @@ const UserDataForm = ({user}) => {
                             <label className="pt-1" style={{
                                 width: '100px'
                             }}>Code</label>
-                        <input
-                            type="text"
-                            name="verification_code"
-                            placeholder="Code de vérification"
-                            required
-                            onChange={handleCodeChange}
-                            className="w-3/4 p-1 md:w-2/4"
-                            style={{
-                                border: '1px solid #F72585',
-                                borderRadius: '10px'
-                            }}
-                        />
+                            <input
+                                type="text"
+                                name="verification_code"
+                                placeholder="Code de vérification"
+                                required
+                                onChange={handleCodeChange}
+                                className="w-3/4 p-1 md:w-2/4"
+                                style={{
+                                    border: '1px solid #F72585',
+                                    borderRadius: '10px'
+                                }}
+                            />
                         </div>
                         <button type="submit"
                                 className="mt-8 text-right duration-200 md:mt-12 hover:text-pink">Vérifier le code
                         </button>
                     </form>
                 )}
+            {
+                returnMessage ? (
+                    <div>{returnMessage}</div>
+                ) : (
+                    <div></div>
+                )
+            }
         </>
     );
 };

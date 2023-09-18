@@ -136,7 +136,7 @@ class SendValidationMail(APIView):
             cache_data = cache.get('cache_data')
 
             if CustomUser.objects.filter(email=cache_data['email']).exists():
-                return Response({'error_code': 10, 'message': 'Cet e-mail est déjà enregistré.'})
+                return Response({'status_code': 40, 'message': 'Cet e-mail est déjà enregistré.'})
 
             user = CustomUser.objects.get(email=user_email)
             print(entered_code)
@@ -145,8 +145,8 @@ class SendValidationMail(APIView):
             if entered_code and entered_code == cache_data['verification_code']:
                 user.email = cache_data['email']
                 user.save()
-                return Response({'message': 'Code de vérification valide.'}, status=status.HTTP_200_OK)
+                return Response({'message': 'Code de vérification valide.', 'status_code': 10}, status=status.HTTP_200_OK)
             else:
-                return Response({'error': 'Code de vérification invalide.', 'code': cache_data['verification_code']}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Code de vérification invalide.', 'status_code': 15}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return Response({'error': 'Erreur lors de la vérification du code.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Erreur lors de la vérification du code.', 'status_code': 20}, status=status.HTTP_400_BAD_REQUEST)
