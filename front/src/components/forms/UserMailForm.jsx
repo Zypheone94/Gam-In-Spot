@@ -1,12 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import {api} from "../../utils/api.jsx";
+import {useNavigate} from "react-router-dom";
 
-const UserDataForm = ({user, onUpdate}) => {
+const UserDataForm = ({user}) => {
 
     const [formMail, setFormMail] = useState(user.email);
     const [onLoad, setOnLoad] = useState(false)
     const [displayVerification, setDisplayVerification] = useState(false)
     const [checkCode, setCheckCode] = useState('')
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (user && user.email !== undefined){
+            null
+        }
+        else {
+            navigate('/login')
+        }
+    })
 
     const handleInputChange = (e) => {
         setFormMail(e.target.value);
@@ -29,12 +41,14 @@ const UserDataForm = ({user, onUpdate}) => {
     };
 
     const handleVerifyCode = async (e) => {
+        let data = {'user_mail' : user.email, 'check_code' : checkCode}
         e.preventDefault();
         try {
-            const response = await api('users/validation', 'PUT', {checkCode});
+            const response = await api('users/validation', 'PUT', data);
         } catch (error) {
             console.error('Erreur lors de l\'envoi de l\'email :', error);
         }
+        navigate('/profile')
     }
 
     return (

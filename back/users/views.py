@@ -97,7 +97,7 @@ class UpdateUserView(APIView):
 
         return Response({'message': 'Utilisateur mis à jour avec succès'})
 
-    
+
 class LogoutView(APIView):
     def post(self, request):
         try:
@@ -120,24 +120,33 @@ class SendValidationMail(APIView):
 
             send_mail(subject, message, from_email, recipient_list)
 
-            cache.set('secret_code', verification_code, 3600)
+            cache.set('cache_data', {'verification_code': verification_code, 'email' : email}, 3600)
 
-            return Response({'message': 'E-mail envoyé avec succès.', 'mail': email }, status=status.HTTP_200_OK)
+            return Response({'message': 'E-mail envoyé avec succès.' }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': 'Erreur lors de l\'envoi de l\'e-mail.'}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
+        print(json.loads(request.body))
         try:
             data = json.loads(request.body)
-            entered_code = data.get('checkCode')
+            user_email = data.get('user_mail')
+            entered_code = data.get('check_code')
 
-            secret_code = cache.get('secret_code')
+            cache_data = cache.get('cache_data')
 
-            print(secret_code)
+            if CustomUser.objects.filter(email=cache_data['email']).exists():
+                return Response({'error_code': 10, 'message': 'Cet e-mail est déjà enregistré.'})
 
-            if entered_code and entered_code == secret_code:
-                return Response({'message': 'Code de vérification valide.', 'code': secret_code}, status=status.HTTP_200_OK)
+            user = CustomUser.objects.get(email=user_email)
+            print(entered_code)
+            print(cache_data['verification_code'])
+
+            if entered_code and entered_code == cache_data['verification_code']:
+                user.email = cache_data['email']
+                user.save()
+                return Response({'message': 'Code de vérification valide.'}, status=status.HTTP_200_OK)
             else:
-                return Response({'error': 'Code de vérification invalide.', 'code': secret_code}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Code de vérification invalide.', 'code': cache_data['verification_code']}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': 'Erreur lors de la vérification du code.'}, status=status.HTTP_400_BAD_REQUEST)
