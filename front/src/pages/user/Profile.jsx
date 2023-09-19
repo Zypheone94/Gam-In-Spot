@@ -104,7 +104,8 @@ const Profile = () => {
                                      style={{
                                          borderRadius: '10px',
                                          cursor: 'pointer'
-                                     }}>
+                                     }}
+                                     onClick={() => navigate('/profile/modify/password')}>
                                     Changer le mot de passe
                                 </div>
                                 <div className='text-white bg-deleteRed font-bold py-2 px-4 mt-6 mb-6

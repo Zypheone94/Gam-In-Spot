@@ -28,6 +28,10 @@ const AuthRoutes = [
     {
         path: '/profile/modify/mail',
         element: <><Header/><ModifyUser/></>
+    },
+    {
+        path: '/profile/modify/password',
+        element: <><Header/><ModifyUser/></>
     }
 ]
 

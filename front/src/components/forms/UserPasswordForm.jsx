@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const UserDataForm = ({ user, onUpdate }) => {
+const UserPasswordForm = ({user}) => {
 
-    const [formData, setFormData] = useState(user);
+    const [formData, setFormData] = useState();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -11,7 +11,6 @@ const UserDataForm = ({ user, onUpdate }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onUpdate(formData);
     };
 
     return (
@@ -20,14 +19,13 @@ const UserDataForm = ({ user, onUpdate }) => {
                 <div className="flex justify-between mt-8 text-center
                 md:justify-around md:mt-12">
                     <label className="pt-1" style={{
-                        width: '100px'
-                    }}>Nom</label>
+                        width: '300px'
+                    }}>Nouveau mot de passe</label>
                     <input
-                        type="text"
-                        name="last_name"
-                        placeholder="Nom"
+                        type="password"
+                        name="new_password"
+                        placeholder="Nouveau mot de passe"
                         required
-                        value={formData.last_name}
                         onChange={handleInputChange}
                         className="w-3/4 p-1 md:w-2/4"
                         style={{
@@ -39,16 +37,32 @@ const UserDataForm = ({ user, onUpdate }) => {
                 <div className="flex justify-between mt-8 text-center
                 md:justify-around md:mt-12">
                     <label className="pt-1" style={{
-                        width: '100px'
-                    }}>Prénom</label>
+                        width: '300px'
+                    }}>Confirmation</label>
                     <input
-                        type="text"
-                        name="first_name"
-                        placeholder="Prénom"
+                        type="password"
+                        name="confirm"
+                        placeholder="Confiromation mot de passe"
                         required
-                        value={formData.first_name}
                         onChange={handleInputChange}
                         className="w-3/4 p-1 md:w-2/4"
+                        style={{
+                            border: '1px solid #F72585',
+                            borderRadius: '10px'
+                        }}
+                    />
+                </div>
+                <div className="flex justify-between mt-8 text-center
+                md:justify-around md:mt-12">
+                    <label style={{
+                        width: '300px'
+                    }}>Mot de passe actuel</label>
+                    <input
+                        type="password"
+                        name="actual_password"
+                        placeholder="Mot de passe actuel"
+                        onChange={handleInputChange}
+                        className="w-3/4 px-1 md:w-2/4"
                         style={{
                             border: '1px solid #F72585',
                             borderRadius: '10px'
@@ -64,4 +78,4 @@ const UserDataForm = ({ user, onUpdate }) => {
     );
 };
 
-export default UserDataForm;
+export default UserPasswordForm;

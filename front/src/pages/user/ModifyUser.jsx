@@ -10,6 +10,7 @@ import {useNavigate, useLocation} from "react-router-dom"
 import {setUser} from "../../redux/actions/userActions.jsx";
 
 import {useDispatch} from 'react-redux';
+import UserPasswordForm from "../../components/forms/UserPasswordForm.jsx";
 
 const UserProfile = () => {
     const user = useSelector(state => state.user)
@@ -65,13 +66,17 @@ const UserProfile = () => {
             <h1 className="text-pink md:text-xl">Profil de l'utilisateur</h1>
             <DelaiRender>
                 {
-                    url[url.length -1] === 'data' ? (
+                    url[url.length - 1] === 'data' ? (
                         <UserDataForm user={userData} onUpdate={handleUpdateUser}/>
                     ) : (
-                        url[url.length -1] === 'mail' ? (
-                            <UserMailForm user={userData} onUpdate={handleUpdateUser}/>
+                        url[url.length - 1] === 'mail' ? (
+                            <UserMailForm user={userData}/>
                         ) : (
-                            <></>
+                            url[url.length - 1] === 'password' ? (
+                                <UserPasswordForm user={userData} />
+                            ) : (
+                                <></>
+                            )
                         )
                     )
                 }
