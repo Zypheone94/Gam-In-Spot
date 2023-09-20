@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import CustomUser
 from rest_framework import status
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, update_session_auth_hash
 import json
 
 from .serializer import CustomUserSerializer
@@ -23,18 +23,16 @@ def custom_jwt_payload(user):
         'last_name': user.last_name,
         'birth_date_str': user.birthDate.strftime('%Y-%m-%d'),
         'creation_date_str': user.creationAccountDate.strftime('%Y-%m-%d')
-        # Ajoutez d'autres champs personnalisés ici
     }
     return payload
 
 
 class LoginView(APIView):
     def post(self, request):
-        email = request.data.get('email')  # Assurez-vous que vous avez un champ 'email' dans votre formulaire
+        email = request.data.get('email')
         password = request.data.get('password')
 
-        # Recherche de l'utilisateur par e-mail
-        user = CustomUser.objects.filter(email=email).first()
+        user = authenticate(request, username=email, password=password)
 
         if user is not None:
             refresh = RefreshToken.for_user(user)
@@ -54,12 +52,10 @@ class LoginView(APIView):
                     'last_name': user.last_name,
                     'birthDate': user.birthDate,
                     'creationAccountDate': user.creationAccountDate,
-
                 },
             })
         else:
-            return Response({'error': 'Invalid credentials'}, status=401)
-
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class UserDetailView(APIView):
     def post(self, request):
@@ -127,7 +123,6 @@ class SendValidationMail(APIView):
             return Response({'error': 'Erreur lors de l\'envoi de l\'e-mail.'}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
-        print(json.loads(request.body))
         try:
             data = json.loads(request.body)
             user_email = data.get('user_mail')
@@ -139,8 +134,6 @@ class SendValidationMail(APIView):
                 return Response({'status_code': 40, 'message': 'Cet e-mail est déjà enregistré.'})
 
             user = CustomUser.objects.get(email=user_email)
-            print(entered_code)
-            print(cache_data['verification_code'])
 
             if entered_code and entered_code == cache_data['verification_code']:
                 user.email = cache_data['email']
@@ -150,3 +143,22 @@ class SendValidationMail(APIView):
                 return Response({'error': 'Code de vérification invalide.', 'status_code': 15}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': 'Erreur lors de la vérification du code.', 'status_code': 20}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PasswordChangeView(APIView):
+    def post(self, request):
+        data = request.data.get('data', {})
+        new_password = data.get('new_password')
+        current_password = data.get('actual_password')
+        email = request.data.get('email')
+
+        user = authenticate(request, username=email, password=current_password)
+        print(email)
+
+        if user is not None:
+            user.set_password(new_password)
+            user.save()
+            update_session_auth_hash(request, user)
+            return Response({'message': 'Mot de passe mis à jour avec succès.'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Mot de passe actuel incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
