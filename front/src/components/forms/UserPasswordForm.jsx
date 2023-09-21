@@ -12,6 +12,7 @@ const UserPasswordForm = ({user}) => {
     const handleInputChange = (e) => {
         const {name, value} = e.target;
         setFormData({...formData, [name]: value});
+        calcPasswordSecurity();
     };
 
     const handleUpdatePassword = async (updatedUserData) => {
@@ -21,7 +22,7 @@ const UserPasswordForm = ({user}) => {
         }
         try {
             const updatedUser = await api('/users/password', 'POST', requestDate);
-            updatedUser.status === 200 ?
+            updatedUser.error === 0 ?
                 navigate('/profile') :
                 updatedUser.error === 50 ?
                     setReturnError('Votre mot de passe actuelle est incorrect') :
@@ -32,11 +33,7 @@ const UserPasswordForm = ({user}) => {
     };
 
     const calcPasswordSecurity = () => {
-        const password = formData?.confirm;
-
-        if (!password || password.length < 7) {
-            return 0; // Retourne 0 si le mot de passe est vide ou a moins de 7 caractères
-        }
+        const password = formData?.new_password;
 
         let containsUppercase = false;
         let containsLowercase = false;
@@ -44,23 +41,26 @@ const UserPasswordForm = ({user}) => {
         let containsSpecialChar = false;
         let passwordLength = false
 
-        if (!password || password.length < 7) {
-            passwordLength = true;
-        }
+        if (password) {
 
-        for (let i = 0; i < password.length; i++) {
-            const character = password[i];
+            if (!password || password.length > 7) {
+                passwordLength = true;
+            }
 
-            if (character >= 'A' && character <= 'Z') {
-                containsUppercase = true;
-            } else if (character >= 'a' && character <= 'z') {
-                containsLowercase = true;
-            } else if (character >= '0' && character <= '9') {
-                containsDigit = true;
-            } else {
-                const specialChars = "!@#$%^&*";
-                if (specialChars.includes(character)) {
-                    containsSpecialChar = true;
+            for (let i = 0; i < password.length; i++) {
+                const character = password[i];
+
+                if (character >= 'A' && character <= 'Z') {
+                    containsUppercase = true;
+                } else if (character >= 'a' && character <= 'z') {
+                    containsLowercase = true;
+                } else if (character >= '0' && character <= '9') {
+                    containsDigit = true;
+                } else {
+                    const specialChars = "!@#$%^&*";
+                    if (specialChars.includes(character)) {
+                        containsSpecialChar = true;
+                    }
                 }
             }
         }
@@ -75,7 +75,16 @@ const UserPasswordForm = ({user}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleUpdatePassword(formData)
+        if (formData.new_password === formData.confirm) {
+            if(calcPasswordSecurity() <= 2) {
+                setReturnError('Votre mot de passe n\'est pas assez sécurisé')
+            }
+            else {
+                handleUpdatePassword(formData)
+            }
+        } else {
+            setReturnError('Les mots de passes entrés ne sont pas identiques')
+        }
     };
 
     return (
@@ -86,23 +95,43 @@ const UserPasswordForm = ({user}) => {
                     <label className="pt-1" style={{
                         width: '300px'
                     }}>Nouveau mot de passe</label>
-                    <input
-                        type="password"
-                        name="new_password"
-                        placeholder="Nouveau mot de passe"
-                        required
-                        onChange={() => {
-                            handleInputChange;
-                            calcPasswordSecurity();
-                        }}
-                        className="w-3/4 p-1 md:w-2/4"
-                        style={{
-                            border: '1px solid #F72585',
-                            borderRadius: '10px'
-                        }}
-                    />
+                    <div className="w-3/4 md:w-2/4 flex flex-col items-end">
+                        <input
+                            type="password"
+                            name="new_password"
+                            placeholder="Nouveau mot de passe"
+                            required
+                            onChange={
+                                handleInputChange
+                            }
+                            className='p-1'
+                            style={{
+                                border: '1px solid #F72585',
+                                borderRadius: '10px',
+                                width: '100%'
+                            }}
+                        />
+                        <div style={{
+                            width: '200px',
+                            border: '1px solid black',
+                            borderRadius: '10px',
+                            marginTop: '20px',
+                            padding: '2px'
+                        }}>
+                            <div style={{
+                                width: `calc(20% * ${calcPasswordSecurity()})`,
+                                height: '10px',
+                                borderRadius: '10px',
+                                backgroundColor: calcPasswordSecurity() === 1 ? 'red'
+                                    : calcPasswordSecurity() === 2 ? 'orange'
+                                        : calcPasswordSecurity() === 3 ? 'orange'
+                                            : calcPasswordSecurity() === 4 ? 'lime'
+                                                : calcPasswordSecurity() === 5 ? 'lime' : ''
+                            }} />
+                        </div>
+                    </div>
                 </div>
-                <p>{calcPasswordSecurity()}</p>
+
                 <div className="flex justify-between mt-8 text-center
                 md:justify-around md:mt-12">
                     <label className="pt-1" style={{
