@@ -153,7 +153,6 @@ class PasswordChangeView(APIView):
         email = request.data.get('email')
 
         user = authenticate(request, username=email, password=current_password)
-        print(email)
 
         if user is not None:
             user.set_password(new_password)
@@ -161,4 +160,4 @@ class PasswordChangeView(APIView):
             update_session_auth_hash(request, user)
             return Response({'message': 'Mot de passe mis à jour avec succès.'}, status=status.HTTP_200_OK)
         else:
-            return Response({'error': 'Mot de passe actuel incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 50}, status=status.HTTP_400_BAD_REQUEST)
