@@ -89,12 +89,11 @@ const UserPasswordForm = ({user}) => {
     return (
         <>
             <form onSubmit={handleSubmit} className="flex flex-col justify-center">
-                <div className="flex justify-between mt-8 text-center
-                md:justify-around md:mt-12">
-                    <label className="pt-1" style={{
-                        width: '300px'
-                    }}>Nouveau mot de passe</label>
-                    <div className="w-3/4 md:w-2/4 flex flex-col items-end">
+                <div className="flex flex-col items-end mt-8 text-center
+                md:flex-row md:justify-around md:items-start md:mt-12">
+                    <label className="w-full text-left mb-6 md:mb-0 md:pt-1 md:text-center md:w-1/2">Nouveau mot de
+                        passe</label>
+                    <div className="md:w-2/4 flex flex-col items-start md:items-end lg:items-start w-full">
                         <input
                             type="password"
                             name="new_password"
@@ -103,18 +102,17 @@ const UserPasswordForm = ({user}) => {
                             onChange={
                                 handleInputChange
                             }
-                            className='p-1'
+                            className='p-1 w-full md:w-5/6'
                             style={{
                                 border: '1px solid #F72585',
                                 borderRadius: '10px',
-                                width: '100%'
                             }}
                         />
                         <div style={{
                             width: '200px',
                             border: '1px solid black',
                             borderRadius: '10px',
-                            marginTop: '20px',
+                            marginTop: '30px',
                             padding: '2px'
                         }}>
                             <div style={{
@@ -130,7 +128,8 @@ const UserPasswordForm = ({user}) => {
                         </div>
                         {
                             returnError ? (
-                                <p style={{color: 'red', marginTop: '20px'}}>{returnError}</p>
+                                <p style={{color: 'red', marginTop: '20px'}}
+                                   className='text-left md:text-right'>{returnError}</p>
                             ) : (
                                 <></>
                             )
@@ -138,40 +137,42 @@ const UserPasswordForm = ({user}) => {
                     </div>
                 </div>
 
-                <div className="flex justify-between mt-8 text-center
-                md:justify-around md:mt-12">
-                    <label className="pt-1" style={{
-                        width: '300px'
-                    }}>Confirmation</label>
-                    <input
-                        type="password"
-                        name="confirm"
-                        placeholder="Confirmation mot de passe"
-                        required
-                        onChange={handleInputChange}
-                        className="w-3/4 p-1 md:w-2/4"
-                        style={{
-                            border: '1px solid #F72585',
-                            borderRadius: '10px'
-                        }}
-                    />
+                <div className="flex flex-col items-start mt-8 text-center
+                md:flex-row md:justify-between md:justify-around md:mt-12">
+                    <label
+                        className="text-left mb-6 md:mb-0 md:pt-1 md:text-center w-full md:w-1/2">Confirmation</label>
+                    <div className="md:w-2/4 flex flex-col items-start md:items-end lg:items-start w-full">
+                        <input
+                            type="password"
+                            name="confirm"
+                            placeholder="Confirmation mot de passe"
+                            required
+                            onChange={handleInputChange}
+                            className="p-1 w-full md:w-5/6"
+                            style={{
+                                border: '1px solid #F72585',
+                                borderRadius: '10px'
+                            }}
+                        />
+                    </div>
                 </div>
-                <div className="flex justify-between mt-8 text-center
-                md:justify-around md:mt-12">
-                    <label style={{
-                        width: '300px'
-                    }}>Mot de passe actuel</label>
-                    <input
-                        type="password"
-                        name="actual_password"
-                        placeholder="Mot de passe actuel"
-                        onChange={handleInputChange}
-                        className="w-3/4 p-1 md:w-2/4"
-                        style={{
-                            border: '1px solid #F72585',
-                            borderRadius: '10px'
-                        }}
-                    />
+                <div className="flex flex-col items-start mt-8 text-center
+                md:flex-row md:justify-between md:justify-around md:mt-12">
+                    <label className="text-left mb-6 md:mb-0 md:pt-1 md:text-center w-full md:w-1/2">Mot de passe
+                        actuel</label>
+                    <div className="md:w-2/4 flex flex-col items-start md:items-end lg:items-start w-full">
+                        <input
+                            type="password"
+                            name="actual_password"
+                            placeholder="Mot de passe actuel"
+                            onChange={handleInputChange}
+                            className="p-1 w-full md:w-5/6"
+                            style={{
+                                border: '1px solid #F72585',
+                                borderRadius: '10px'
+                            }}
+                        />
+                    </div>
                 </div>
 
                 <button type="submit" className="mt-8 text-right duration-200
