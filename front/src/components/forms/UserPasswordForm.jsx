@@ -76,10 +76,9 @@ const UserPasswordForm = ({user}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (formData.new_password === formData.confirm) {
-            if(calcPasswordSecurity() <= 2) {
+            if (calcPasswordSecurity() <= 2) {
                 setReturnError('Votre mot de passe n\'est pas assez sécurisé')
-            }
-            else {
+            } else {
                 handleUpdatePassword(formData)
             }
         } else {
@@ -127,8 +126,15 @@ const UserPasswordForm = ({user}) => {
                                         : calcPasswordSecurity() === 3 ? 'orange'
                                             : calcPasswordSecurity() === 4 ? 'lime'
                                                 : calcPasswordSecurity() === 5 ? 'lime' : ''
-                            }} />
+                            }}/>
                         </div>
+                        {
+                            returnError ? (
+                                <p style={{color: 'red', marginTop: '20px'}}>{returnError}</p>
+                            ) : (
+                                <></>
+                            )
+                        }
                     </div>
                 </div>
 
@@ -169,17 +175,11 @@ const UserPasswordForm = ({user}) => {
                 </div>
 
                 <button type="submit" className="mt-8 text-right duration-200
-                md:mt-12
+                md:mt-12 lg:mb-24
                 hover:text-pink">Enregistrer
                 </button>
             </form>
-            {
-                returnError ? (
-                    <p style={{color: 'red'}}>{returnError}</p>
-                ) : (
-                    <></>
-                )
-            }
+
         </>
     );
 };
