@@ -1,21 +1,35 @@
 import React, {useState} from 'react'
 import {api} from "../../utils/api.jsx";
+import {useNavigate} from 'react-router-dom'
 
 const CreateUserForm = () => {
 
     const [formData, setFormData] = useState('');
     const [returnError, setReturnError] = useState('')
 
+    const navigate = useNavigate()
+
     const handleInputChange = (e) => {
         const {name, value} = e.target;
         setFormData({...formData, [name]: value});
-        console.log(formData)
     };
 
     const handleSubmit = (e) => {
         if (formData.password === formData.verify_password) {
             e.preventDefault()
             api('users/create', 'POST', formData)
+                .then((res) => {
+                    if (res.ok) {
+                        navigate('/login')
+                    } else if (res.status === 40) {
+                        setReturnError("L'email entré est déjà associé à un compte")
+                    } else if (res.status === 50){
+                        setReturnError("Le pseudo entré est déjà utilisé")
+                    }
+                })
+                .catch((error) => {
+                    console.error('Erreur lors de la requête', error);
+                });
         } else {
             e.preventDefault()
             setReturnError('Les deux mots de passes ne sont pas identiques')

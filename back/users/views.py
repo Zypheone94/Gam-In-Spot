@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from .models import CustomUser
 from rest_framework import status
 from django.contrib.auth import logout, authenticate, update_session_auth_hash
-from django.contrib.auth.hashers import make_password 
+from django.contrib.auth.hashers import make_password
 import json
 
 from .serializer import CustomUserSerializer
@@ -62,18 +62,18 @@ class CustomUserCreateView(APIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get('email', None)
         if CustomUser.objects.filter(email=email).exists():
-            return Response({'error': 'Cet email est déjà utilisé.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'status': 40}, status=status.HTTP_400_BAD_REQUEST)
 
         username = request.data.get('username', None)
         if CustomUser.objects.filter(username=username).exists():
-            return Response({'error': 'Ce nom d\'utilisateur est déjà utilisé.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'status': 50}, status=status.HTTP_400_BAD_REQUEST)
 
         request.data['password'] = make_password(request.data['password'])
 
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response({'status': 10}, serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
