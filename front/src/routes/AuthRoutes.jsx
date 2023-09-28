@@ -7,6 +7,7 @@ import Header from "../components/commons/header/Header.jsx";
 import Footer from "../components/commons/footer/Footer.jsx";
 import Profile from "../pages/user/Profile.jsx";
 import ModifyUser from "../pages/user/ModifyUser.jsx";
+import CreateUser from "../pages/user/CreateUser.jsx";
 
 const AuthRoutes = [
     {
@@ -16,6 +17,10 @@ const AuthRoutes = [
     {
         path: "/logout",
         element: <Logout/>,
+    },
+    {
+        path: "/create",
+        element: <><Header/><CreateUser/><Footer/></>
     },
     {
         path: '/profile',

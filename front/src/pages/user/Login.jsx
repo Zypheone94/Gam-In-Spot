@@ -95,7 +95,10 @@ function Login() {
                             <></>
                         )
                     }
-                    <button type="submit" className='mb-24'>Se connecter</button>
+                    <div>
+                        <button onClick={() => navigate('/create')}>Créer un compte</button>
+                        <button type="submit" className='mb-24'>Se connecter</button>
+                    </div>
                 </div>
             </form>
         </div>
