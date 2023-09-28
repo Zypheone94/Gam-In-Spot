@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {api} from "../../utils/api.jsx";
 
 const CreateUserForm = () => {
 
@@ -14,7 +15,7 @@ const CreateUserForm = () => {
     const handleSubmit = (e) => {
         if (formData.password === formData.verify_password) {
             e.preventDefault()
-            console.log('verification database nécessaire puis création compte')
+            api('users/create', 'POST', formData)
         } else {
             e.preventDefault()
             setReturnError('Les deux mots de passes ne sont pas identiques')
@@ -83,7 +84,7 @@ const CreateUserForm = () => {
                                border: '1px solid #F72585',
                                borderRadius: '10px'
                            }}
-                           name="birth_date"
+                           name="birthDate"
                            onChange={handleInputChange}
                            required/>
                 </div>
