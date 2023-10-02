@@ -9,7 +9,6 @@ const CreateUserForm = () => {
     const [onLoad, setOnLoad] = useState(false)
     const [displayVerification, setDisplayVerification] = useState(false)
     const [checkCode, setCheckCode] = useState('')
-    const [returnMessage, setReturnMessage] = useState('')
 
     const navigate = useNavigate()
 
@@ -33,6 +32,7 @@ const CreateUserForm = () => {
             }
             setOnLoad(false)
             setDisplayVerification(true)
+
         } else {
             e.preventDefault()
             setReturnError('Les deux mots de passes ne sont pas identiques')
@@ -45,23 +45,27 @@ const CreateUserForm = () => {
         try {
             const response = await api('users/validation', 'PUT', data);
             if (response.status_code === 10) {
-                console.log('t')
                 setOnLoad(false)
                 const create = await api('users/create', 'POST', formData)
-                if (create.ok) {
+                console.log(create)
+                if (create.status === 10) {
                     navigate('/login')
                 } else if (create.status === 40) {
                     setReturnError("L'email entré est déjà associé à un compte")
+                    setDisplayVerification(false)
                 } else if (create.status === 50) {
                     setReturnError("Le pseudo entré est déjà utilisé")
+                    setDisplayVerification(false)
+                } else {
+                    console.log(response)
                 }
             }
 
             if (response.status_code === 20) {
-                setReturnMessage('Une erreur est survenu lors de la soumission de votre code')
+                setReturnError('Une erreur est survenu lors de la soumission de votre code')
             }
             if (response.status_code === 15) {
-                setReturnMessage('Code de vérification érroné')
+                setReturnError('Code de vérification érroné')
             }
         } catch (error) {
             console.error('Erreur lors de l\'envoi de l\'email :', error);
