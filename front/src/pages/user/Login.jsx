@@ -30,7 +30,11 @@ function Login() {
             }
             const data = response.user_info;
 
-            Cookies.set('access_token', response.token, {secure: true, sameSite: 'strict', expires: 30});
+            Cookies.set('access_token', response.token, {
+                secure: true,
+                sameSite: 'strict',
+                expires: 30
+            });
             Cookies.set('refresh_token', response.refresh, {secure: true, sameSite: 'strict', expires: 7});
 
             dispatch(setUser(data));
@@ -96,10 +100,11 @@ function Login() {
                         )
                     }
                     <div>
-                        <button onClick={() => navigate('/create')}>Créer un compte</button>
                         <button type="submit" className='mb-24'>Se connecter</button>
                     </div>
                 </div>
+                <button onClick={() => navigate('/create')}>Créer un compte</button>
+
             </form>
         </div>
     );
