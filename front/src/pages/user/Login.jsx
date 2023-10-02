@@ -46,7 +46,7 @@ function Login() {
     };
 
     return (
-        <div className='mx-2 md:mx-12 md:mt-6'>
+        <div className='mx-2 md:mx-12 md:mt-6 lg:mx-36'>
             <h2 className='text-pink font-bold mb-4'>Connexion</h2>
             <form onSubmit={handleLogin} className=''>
                 <div>
@@ -91,7 +91,7 @@ function Login() {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col items-end md:mt-24'>
+                <div className='flex flex-col items-end mt-10 md:mt-24 mx-8'>
                     {
                         loginError ? (
                             <p style={{color: 'red', marginBottom: '20px'}}>{loginError}</p>
@@ -99,11 +99,12 @@ function Login() {
                             <></>
                         )
                     }
-                    <div>
-                        <button type="submit" className='mb-24'>Se connecter</button>
+                    <div className="flex flex-row-reverse items-center justify-between w-full mt-10 mb-20
+                    md:mt-0">
+                        <button type="submit" className='hover:text-pink'>Se connecter</button>
+                        <button onClick={() => navigate('/create')} className="hover:text-pink">Créer un compte</button>
                     </div>
                 </div>
-                <button onClick={() => navigate('/create')}>Créer un compte</button>
 
             </form>
         </div>

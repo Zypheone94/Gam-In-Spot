@@ -134,9 +134,12 @@ const CreateUserForm = () => {
                         <></>
                     )
                 }
-                <div className='w-full mt-6 flex justify-end'>
-                    <button type="submit">
+                <div className='w-full mt-12 flex flex-row-reverse justify-between'>
+                    <button type="submit" className="hover:text-pink">
                         Créer le compte
+                    </button>
+                    <button className="hover:text-pink" onClick={() => navigate('/login')}>
+                        Vous avez déjà un compte ?
                     </button>
                 </div>
             </form>
