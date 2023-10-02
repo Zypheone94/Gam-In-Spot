@@ -58,6 +58,7 @@ class LoginView(APIView):
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
+
 class CustomUserCreateView(APIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get('email', None)
@@ -73,9 +74,10 @@ class CustomUserCreateView(APIView):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'status': 10}, serializer.data, status=status.HTTP_201_CREATED)
+            return Response({'status': 10}, serializer.data)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserDetailView(APIView):
     def post(self, request):
@@ -118,7 +120,8 @@ class LogoutView(APIView):
     def post(self, request):
         try:
             logout(request)
-            return Response({"message": "Logout successful", "status": status.HTTP_205_RESET_CONTENT})  # Indique que la déconnexion a réussi
+            return Response({"message": "Logout successful",
+                             "status": status.HTTP_205_RESET_CONTENT})  # Indique que la déconnexion a réussi
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -136,9 +139,9 @@ class SendValidationMail(APIView):
 
             send_mail(subject, message, from_email, recipient_list)
 
-            cache.set('cache_data', {'verification_code': verification_code, 'email' : email}, 3600)
+            cache.set('cache_data', {'verification_code': verification_code, 'email': email}, 3600)
 
-            return Response({'message': 'E-mail envoyé avec succès.' }, status=status.HTTP_200_OK)
+            return Response({'message': 'E-mail envoyé avec succès.'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': 'Erreur lors de l\'envoi de l\'e-mail.'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -147,22 +150,38 @@ class SendValidationMail(APIView):
             data = json.loads(request.body)
             user_email = data.get('user_mail')
             entered_code = data.get('check_code')
-
             cache_data = cache.get('cache_data')
 
-            if CustomUser.objects.filter(email=cache_data['email']).exists():
-                return Response({'status_code': 40, 'message': 'Cet e-mail est déjà enregistré.'})
+            print(data)
 
-            user = CustomUser.objects.get(email=user_email)
+            if user_email:
+                user = CustomUser.objects.get(email=user_email)
 
-            if entered_code and entered_code == cache_data['verification_code']:
-                user.email = cache_data['email']
-                user.save()
-                return Response({'message': 'Code de vérification valide.', 'status_code': 10}, status=status.HTTP_200_OK)
+                if CustomUser.objects.filter(email=cache_data['email']).exists():
+                    return Response({'status_code': 40, 'message': 'Cet e-mail est déjà enregistré.'})
+
+                if entered_code and entered_code == cache_data['verification_code']:
+                    user.email = cache_data['email']
+                    user.save()
+                    return Response({'message': 'Code de vérification valide.', 'status_code': 10},
+                                    status=status.HTTP_200_OK)
+                else:
+                    return Response({'error': 'Code de vérification invalide.', 'status_code': 15},
+                                    status=status.HTTP_400_BAD_REQUEST)
+
             else:
-                return Response({'error': 'Code de vérification invalide.', 'status_code': 15}, status=status.HTTP_400_BAD_REQUEST)
+                print(data)
+
+                if entered_code and entered_code == cache_data['verification_code']:
+                    return Response({'message': 'Code de vérification valide.', 'status_code': 10},
+                                    status=status.HTTP_200_OK)
+                else:
+                    return Response({'error': 'Code de vérification invalide.', 'status_code': 15},
+                                    status=status.HTTP_400_BAD_REQUEST)
+
         except Exception as e:
-            return Response({'error': 'Erreur lors de la vérification du code.', 'status_code': 20}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Erreur lors de la vérification du code.', 'status_code': 20},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class PasswordChangeView(APIView):
@@ -178,6 +197,6 @@ class PasswordChangeView(APIView):
             user.set_password(new_password)
             user.save()
             update_session_auth_hash(request, user)
-            return Response({'message': 'Mot de passe mis à jour avec succès.', 'error' : 0}, status=status.HTTP_200_OK)
+            return Response({'message': 'Mot de passe mis à jour avec succès.', 'error': 0}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 50}, status=status.HTTP_400_BAD_REQUEST)
