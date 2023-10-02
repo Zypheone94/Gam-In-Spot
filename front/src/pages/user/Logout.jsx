@@ -20,7 +20,7 @@ function Logout() {
                     dispatch(setUser(null));
                     Cookies.remove('access_token')
                     Cookies.remove('refresh_token')
-                    navigate('/');
+                    navigate('/login');
                 } else {
                     console.error('Logout failed');
                 }

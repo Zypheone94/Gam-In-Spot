@@ -152,8 +152,6 @@ class SendValidationMail(APIView):
             entered_code = data.get('check_code')
             cache_data = cache.get('cache_data')
 
-            print(data)
-
             if user_email:
                 user = CustomUser.objects.get(email=user_email)
 

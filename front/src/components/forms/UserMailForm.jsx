@@ -47,7 +47,13 @@ const UserDataForm = ({user}) => {
             const response = await api('users/validation', 'PUT', data);
             if (response.status_code === 10) {
                 setOnLoad(false)
-                setReturnMessage('Votre mail à bien été changé')
+                setReturnMessage('Votre mail à bien été changé, vous allez être redirigé vers la page de connexion !')
+                setTimeout(() => {
+                    navigate('/logout')
+                }, 6000);
+            }
+            if (response.status_code === 15) {
+                setReturnMessage('Code invalide')
             }
             if (response.status_code === 20) {
                 setReturnMessage('Une erreur est survenu lors de la soumission de votre code')
@@ -92,6 +98,7 @@ const UserDataForm = ({user}) => {
                     <div>Loading </div>
                 ) : (
                     <form onSubmit={handleVerifyCode} className="flex flex-col justify-center">
+                        <p className='my-8'>Un code de vérification vous a été envoyé par mail !</p>
                         <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
                             <label className="pt-1" style={{
                                 width: '100px'
@@ -116,7 +123,7 @@ const UserDataForm = ({user}) => {
                 )}
             {
                 returnMessage ? (
-                    <div>{returnMessage}</div>
+                    <div style={{color: returnMessage === 'Votre mail à bien été changé, vous allez être redirigé vers la page de connexion !' ? 'lime' : 'red', marginBottom: '20px'}}>{returnMessage}</div>
                 ) : (
                     <div></div>
                 )

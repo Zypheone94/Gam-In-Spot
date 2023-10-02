@@ -9,6 +9,7 @@ const CreateUserForm = () => {
     const [onLoad, setOnLoad] = useState(false)
     const [displayVerification, setDisplayVerification] = useState(false)
     const [checkCode, setCheckCode] = useState('')
+    const [returnMessage, setReturnMessage] = useState('')
 
     const navigate = useNavigate()
 
@@ -49,7 +50,10 @@ const CreateUserForm = () => {
                 const create = await api('users/create', 'POST', formData)
                 console.log(create)
                 if (create.status === 10) {
-                    navigate('/login')
+                    setReturnMessage('Votre compte a bien été crée, vous allez être redirigé vers la page de connexion !')
+                    setTimeout(() => {
+                        navigate('/login')
+                    }, 6000);
                 } else if (create.status === 40) {
                     setReturnError("L'email entré est déjà associé à un compte")
                     setDisplayVerification(false)
@@ -183,6 +187,7 @@ const CreateUserForm = () => {
                         </form>)
                     : (<div>Loading</div>
                     ) : <form onSubmit={handleVerifyCode} className="flex flex-col justify-center">
+                    <p className='my-8'>Un code de vérification vous a été envoyé par mail !</p>
                     <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
                         <label className="pt-1" style={{
                             width: '100px'
@@ -201,8 +206,9 @@ const CreateUserForm = () => {
                         />
                     </div>
                     <button type="submit"
-                            className="mt-8 text-right duration-200 md:mt-12 hover:text-pink">Vérifier le code
+                            className="mt-8 mb-8 text-right duration-200 md:mt-12 hover:text-pink">Vérifier le code
                     </button>
+                    <p style={{color: 'lime', marginBottom: '20px'}}>{returnMessage}</p>
                 </form>
             }
         </>
