@@ -2,3 +2,4 @@ from .test_custom_user_create_view import CustomUserCreateViewTest
 from .test_login_view import LoginViewTest
 from .test_custom_user_detail_view import UserDetailViewTest
 from .test_update_user_view import UpdateUserViewTest
+from .test_logout_view import LogoutViewTest
