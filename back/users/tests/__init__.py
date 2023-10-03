@@ -1,0 +1,3 @@
+from .test_custom_user_create_view import CustomUserCreateViewTest
+from .test_login_view import LoginViewTest
+from .test_custom_user_detail_view import UserDetailViewTest
