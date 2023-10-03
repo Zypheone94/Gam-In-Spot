@@ -1,19 +1,17 @@
+import json
 import random
 
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from .models import CustomUser
-from rest_framework import status
 from django.contrib.auth import logout, authenticate, update_session_auth_hash
 from django.contrib.auth.hashers import make_password
-import json
-
-from .serializer import CustomUserSerializer
-from django.core.mail import send_mail
-
 from django.core.cache import cache
+from django.core.mail import send_mail
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
+from .models import CustomUser
+from .serializer import CustomUserSerializer
 
 def custom_jwt_payload(user):
     payload = {
@@ -28,12 +26,13 @@ def custom_jwt_payload(user):
     return payload
 
 
+
 class LoginView(APIView):
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
 
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             refresh = RefreshToken.for_user(user)
@@ -57,7 +56,6 @@ class LoginView(APIView):
             })
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
 
 class CustomUserCreateView(APIView):
     def post(self, request, *args, **kwargs):
