@@ -190,7 +190,7 @@ const CreateUserForm = () => {
                                        onChange={handleInputChange}
                                        required/>
                             </div>
-                            <div className="flex flex-wrap">
+                            <div className="flex flex-wrap justify-end">
                                 <div className="mt-6 w-full flex justify-between">
                                     <label className="w-2/5">Mot de passe</label>
                                     <input type="password"
