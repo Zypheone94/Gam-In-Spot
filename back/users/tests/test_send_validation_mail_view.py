@@ -42,10 +42,10 @@ class SendValidationMailViewTest(TestCase):
         self.assertIn('message', response_validate_code.data)
 
     def test_validate_code_failure(self):
-        data = {'formMail': 'test@example.com'}
+        data = {'formMail': 'existing@example.com'}
         self.client.post(reverse('users:validation_mail'), data, format='json')
 
-        data = {'user_mail': 'test@example.com', 'check_code': 'incorrect-code'}
+        data = {'check_code': 'incorrect-code'}
         response = self.client.put(reverse('users:validation_mail'), data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('error', response.data)
