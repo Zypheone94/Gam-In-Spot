@@ -16,6 +16,47 @@ const CreateUserForm = () => {
     const handleInputChange = (e) => {
         const {name, value} = e.target;
         setFormData({...formData, [name]: value});
+        calcPasswordSecurity();
+    };
+
+    const calcPasswordSecurity = () => {
+        const password = formData?.password;
+
+        let containsUppercase = false;
+        let containsLowercase = false;
+        let containsDigit = false;
+        let containsSpecialChar = false;
+        let passwordLength = false
+
+        if (password) {
+
+            if (!password || password.length > 7) {
+                passwordLength = true;
+            }
+
+            for (let i = 0; i < password.length; i++) {
+                const character = password[i];
+
+                if (character >= 'A' && character <= 'Z') {
+                    containsUppercase = true;
+                } else if (character >= 'a' && character <= 'z') {
+                    containsLowercase = true;
+                } else if (character >= '0' && character <= '9') {
+                    containsDigit = true;
+                } else {
+                    const specialChars = "!@#$%^&*";
+                    if (specialChars.includes(character)) {
+                        containsSpecialChar = true;
+                    }
+                }
+            }
+        }
+
+        if (containsUppercase && containsLowercase && containsDigit && containsSpecialChar && passwordLength) {
+            return 5;
+        }
+
+        return containsUppercase + containsLowercase + containsDigit + containsSpecialChar + passwordLength;
     };
 
     const handleCodeChange = (e) => {
@@ -25,14 +66,19 @@ const CreateUserForm = () => {
     const handleSubmit = async (e) => {
         if (formData.password === formData.verify_password) {
             e.preventDefault()
-            setOnLoad(true)
-            try {
-                const response = await api('users/validation', 'POST', {'formMail': formData.email});
-            } catch (error) {
-                console.error('Erreur lors de l\'envoi de l\'email :', error);
+            if (calcPasswordSecurity() <= 2) {
+                setReturnError('Votre mot de passe n\'est pas assez sécurisé')
+            } else {
+
+                setOnLoad(true)
+                try {
+                    const response = await api('users/validation', 'POST', {'formMail': formData.email});
+                } catch (error) {
+                    console.error('Erreur lors de l\'envoi de l\'email :', error);
+                }
+                setOnLoad(false)
+                setDisplayVerification(true)
             }
-            setOnLoad(false)
-            setDisplayVerification(true)
 
         } else {
             e.preventDefault()
@@ -156,6 +202,24 @@ const CreateUserForm = () => {
                                            name="password"
                                            onChange={handleInputChange}
                                            required/>
+                                </div>
+                                <div style={{
+                                    width: '200px',
+                                    border: '1px solid black',
+                                    borderRadius: '10px',
+                                    marginTop: '30px',
+                                    padding: '2px'
+                                }}>
+                                    <div style={{
+                                        width: `calc(20% * ${calcPasswordSecurity()})`,
+                                        height: '10px',
+                                        borderRadius: '10px',
+                                        backgroundColor: calcPasswordSecurity() === 1 ? 'red'
+                                            : calcPasswordSecurity() === 2 ? 'orange'
+                                                : calcPasswordSecurity() === 3 ? 'orange'
+                                                    : calcPasswordSecurity() === 4 ? 'lime'
+                                                        : calcPasswordSecurity() === 5 ? 'lime' : ''
+                                    }}/>
                                 </div>
                                 <div className="mt-6 w-full flex justify-between">
                                     <label className="w-2/5">Confirmation</label>
