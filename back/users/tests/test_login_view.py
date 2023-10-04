@@ -6,7 +6,7 @@ from users.models import CustomUser
 class LoginViewTest(APITestCase):
     def setUp(self):
         self.existing_user = CustomUser.objects.create_user(
-            email='existing@example.com',
+            email='existinglogin@example.com',
             username='existinguser',
             password='existingpassword',
             birthDate='1990-01-01',
@@ -18,7 +18,7 @@ class LoginViewTest(APITestCase):
     def test_login_success(self):
         url = reverse('users:login')
         data = {
-            'email': 'existing@example.com',
+            'email': 'existinglogin@example.com',
             'password': 'existingpassword',
         }
 
@@ -33,7 +33,7 @@ class LoginViewTest(APITestCase):
 
     def test_login_failure_invalid_credentials(self):
         data = {
-            'email': 'test@example.com',
+            'email': 'testlogin@example.com',
             'password': 'wrongpassword',
         }
 

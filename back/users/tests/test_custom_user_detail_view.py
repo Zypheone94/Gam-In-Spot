@@ -6,8 +6,8 @@ from users.models import CustomUser
 class UserDetailViewTest(APITestCase):
     def setUp(self):
         self.user = CustomUser.objects.create(
-            email='test@example.com',
-            username='testuser',
+            email='testdetail@example.com',
+            username='testdetailuser',
             password='testpassword',
             birthDate='1990-01-01',
             first_name='John',

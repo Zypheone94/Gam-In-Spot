@@ -6,8 +6,8 @@ from users.models import CustomUser
 class PasswordChangeViewTest(APITestCase):
     def setUp(self):
         self.user = CustomUser.objects.create_user(
-            email='test@example.com',
-            username='testuser',
+            email='testpassword@example.com',
+            username='testpassworduser',
             password='testpassword',
             birthDate='1990-01-01',
             firstName='John',
@@ -17,7 +17,7 @@ class PasswordChangeViewTest(APITestCase):
 
     def test_password_change_success(self):
         data = {
-            'email': 'test@example.com',
+            'email': 'testpassword@example.com',
             'actual_password': 'testpassword',
             'new_password': 'newpassword123',
         }
@@ -28,5 +28,5 @@ class PasswordChangeViewTest(APITestCase):
         self.assertIn('message', response.data)
 
         login_response = self.client.post(reverse('users:login'),
-                                          data={'email': 'test@example.com', 'password': 'newpassword123'})
+                                          data={'email': 'testpassword@example.com', 'password': 'newpassword123'})
         self.assertEqual(login_response.status_code, status.HTTP_200_OK)

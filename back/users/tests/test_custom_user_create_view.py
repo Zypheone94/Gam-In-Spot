@@ -21,8 +21,8 @@ class CustomUserCreateViewTest(APITestCase):
     def test_create_user_success(self):
         url = reverse('users:create')
         data = {
-            'email': 'test@example.com',
-            'username': 'testuser',
+            'email': 'testcreate@example.com',
+            'username': 'testcreateuser',
             'password': 'testpassword',
             'birthDate': '1990-01-01',
             'first_name': 'John',
@@ -32,8 +32,8 @@ class CustomUserCreateViewTest(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(CustomUser.objects.count(), 2)
-        self.assertEqual(CustomUser.objects.last().email, 'test@example.com')
-        self.assertEqual(CustomUser.objects.last().username, 'testuser')
+        self.assertEqual(CustomUser.objects.last().email, 'testcreate@example.com')
+        self.assertEqual(CustomUser.objects.last().username, 'testcreateuser')
         expected_birth_date = datetime.strptime('1990-01-01', '%Y-%m-%d').date()
         self.assertEqual(CustomUser.objects.last().birthDate, expected_birth_date)
         self.assertEqual(CustomUser.objects.last().first_name, 'John')

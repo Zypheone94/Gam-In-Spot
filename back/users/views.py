@@ -127,7 +127,8 @@ class LogoutView(APIView):
 class SendValidationMail(APIView):
     def post(self, request):
         try:
-            data = json.loads(request.body)
+
+            data = request.data
             verification_code = str(random.randint(100000, 500000))
             email = data.get('formMail')
             subject = 'Validation de votre compte'
@@ -135,11 +136,15 @@ class SendValidationMail(APIView):
             from_email = 'magna94320@gmail.com'
             recipient_list = [email]
 
-            send_mail(subject, message, from_email, recipient_list)
+            if email:
 
-            cache.set('cache_data', {'verification_code': verification_code, 'email': email}, 3600)
+                send_mail(subject, message, from_email, recipient_list)
 
-            return Response({'message': 'E-mail envoyé avec succès.'}, status=status.HTTP_200_OK)
+                cache.set('cache_data', {'verification_code': verification_code, 'email': email}, 3600)
+
+                return Response({'message': 'E-mail envoyé avec succès.'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Erreur lors de l\'envoi de l\'e-mail.'}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': 'Erreur lors de l\'envoi de l\'e-mail.'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -155,32 +160,32 @@ class SendValidationMail(APIView):
 
                 if CustomUser.objects.filter(email=cache_data['email']).exists():
                     print('E-mail déjà enregistré.')
-                    return Response({'status_code': 40, 'message': 'Cet e-mail est déjà enregistré.'})
+                    return Response({"status_code": 40, "message": "Cet e-mail est déjà enregistré."})
 
                 if entered_code and entered_code == cache_data['verification_code']:
                     user.email = cache_data['email']
                     user.save()
-                    return Response({'message': 'Code de vérification valide.', 'status_code': 10},
+                    return Response({"message": "Code de vérification valide.", "status_code": 10},
                                     status=status.HTTP_200_OK)
                 else:
                     print('Code de vérification invalide.')
-                    return Response({'error': 'Code de vérification invalide.', 'status_code': 15},
+                    return Response({"error": "Code de vérification invalide.", "status_code": 15},
                                     status=status.HTTP_400_BAD_REQUEST)
 
             else:
                 print('No user_email provided.')
 
                 if entered_code and entered_code == cache_data['verification_code']:
-                    return Response({'message': 'Code de vérification valide.', 'status_code': 10},
+                    return Response({"message": "Code de vérification valide.", "status_code": 10},
                                     status=status.HTTP_200_OK)
                 else:
                     print('Code de vérification invalide.')
-                    return Response({'error': 'Code de vérification invalide.', 'status_code': 15},
+                    return Response({'error': "Code de vérification invalide.", "status_code": 15},
                                     status=status.HTTP_400_BAD_REQUEST)
 
         except Exception as e:
             print('Erreur lors de la vérification du code:', str(e))
-            return Response({'error': 'Erreur lors de la vérification du code.', 'status_code': 20},
+            return Response({"error": "Erreur lors de la vérification du code.", "status_code": 20},
                             status=status.HTTP_400_BAD_REQUEST)
 
 

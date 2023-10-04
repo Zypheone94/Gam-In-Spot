@@ -6,8 +6,8 @@ from users.models import CustomUser
 class LogoutViewTest(APITestCase):
     def setUp(self):
         self.user = CustomUser.objects.create(
-            email='test@example.com',
-            username='testuser',
+            email='testlogout@example.com',
+            username='testlogoutuser',
             password='testpassword',
             birthDate='1990-01-01',
             first_name='John',
