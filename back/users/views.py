@@ -2,7 +2,7 @@ import json
 import random
 
 from django.contrib.auth import logout, authenticate, update_session_auth_hash
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from django.core.cache import cache
 from django.core.mail import send_mail
 from rest_framework import status
@@ -186,17 +186,21 @@ class SendValidationMail(APIView):
 
 class PasswordChangeView(APIView):
     def post(self, request):
-        data = request.data.get('data', {})
-        new_password = data.get('new_password')
-        current_password = data.get('actual_password')
+        new_password = request.data.get('new_password')
+        current_password = request.data.get('actual_password')
         email = request.data.get('email')
 
-        user = authenticate(request, username=email, password=current_password)
+        ret = authenticate(request, email=email, password=current_password)
 
-        if user is not None:
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'Utilisateur non trouvé.'}, status=status.HTTP_404_NOT_FOUND)
+
+        if authenticate(request, username=email, password=current_password):
             user.set_password(new_password)
             user.save()
             update_session_auth_hash(request, user)
             return Response({'message': 'Mot de passe mis à jour avec succès.', 'error': 0}, status=status.HTTP_200_OK)
         else:
-            return Response({'error': 50}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Mot de passe actuel incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
