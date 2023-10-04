@@ -8,28 +8,28 @@ from users.models import CustomUser
 
 class SendValidationMailViewTest(TestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create(
-            email='existingvalidation@example.com',
-            username='existingvalidationuser',
-            password='existingpassword',
+        self.client = APIClient()
+
+    def test_send_mail_success(self):
+        data = {'formMail': 'test@example.com'}
+        response = self.client.post(reverse('users:validation_mail'), data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('message', response.data)
+
+    def test_send_mail_failure(self):
+        response = self.client.post(reverse('users:validation_mail'), format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_validate_code_success(self):
+        existing_user = CustomUser.objects.create(
+            email='test@example.com',
+            username='testuser',
+            password='testpassword',
             birthDate='1990-01-01',
             first_name='John',
             last_name='Doe'
         )
 
-    def test_send_mail_success(self):
-        print(self.user.email)
-        data = {'formMail': self.user.email}
-        response = self.client.post(reverse('users:validation_mail'), data, format='json')
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn('message', response.data)
-
-    '''def test_send_mail_failure(self):
-        response = self.client.post(reverse('users:validation_mail'), format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_validate_code_success(self):
         data = {'formMail': 'test@example.com'}
         response_send_mail = self.client.post(reverse('users:validation_mail'), data, format='json')
         self.assertEqual(response_send_mail.status_code, status.HTTP_200_OK)
@@ -48,4 +48,4 @@ class SendValidationMailViewTest(TestCase):
         data = {'user_mail': 'test@example.com', 'check_code': 'incorrect-code'}
         response = self.client.put(reverse('users:validation_mail'), data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('error', response.data)'''
+        self.assertIn('error', response.data)
