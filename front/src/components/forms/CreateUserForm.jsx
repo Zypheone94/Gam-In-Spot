@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {api} from "../../utils/api.jsx";
 import {useNavigate} from 'react-router-dom'
 
@@ -15,9 +15,34 @@ const CreateUserForm = () => {
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
-        setFormData({...formData, [name]: value});
-        calcPasswordSecurity();
+        setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
     };
+
+    useEffect(() => {
+        calcPasswordSecurity();
+        if (formData?.username) {
+            usernameParser(formData.username)
+        }
+    }, [formData])
+
+    const usernameParser = (username) => {
+        let alphaMaj = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        let alphaMin = alphaMaj.toLowerCase()
+        let num = '0123456789'
+        let spec = '@_-.'
+        let displayChar = false
+        for (let i = 0; i < username.length; i++) {
+            if (!alphaMaj.includes(username[i]) &&
+                !alphaMin.includes(username[i]) &&
+                !num.includes(username[i]) &&
+                !spec.includes(username[i])) {
+                displayChar = true
+                setReturnError(`Votre pseudo ne peux pas contenir le charactère : ${username[i]}`)
+            } else {
+                !displayChar ? setReturnError('') : null
+            }
+        }
+    }
 
     const calcPasswordSecurity = () => {
         const password = formData?.password;
