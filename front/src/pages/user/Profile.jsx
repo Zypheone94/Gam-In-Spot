@@ -114,7 +114,8 @@ const Profile = () => {
                                      style={{
                                          borderRadius: '10px',
                                          cursor: 'pointer'
-                                     }}>
+                                     }}
+                                     onClick={() => navigate('/profile/delete')}>
                                     SUPPRIMER LE COMPTE
                                 </div>
                             </div>

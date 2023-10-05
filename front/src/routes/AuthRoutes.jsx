@@ -8,6 +8,7 @@ import Footer from "../components/commons/footer/Footer.jsx";
 import Profile from "../pages/user/Profile.jsx";
 import ModifyUser from "../pages/user/ModifyUser.jsx";
 import CreateUser from "../pages/user/CreateUser.jsx";
+import DeleteUser from "../pages/user/DeleteUser.jsx";
 
 const AuthRoutes = [
     {
@@ -37,6 +38,10 @@ const AuthRoutes = [
     {
         path: '/profile/modify/password',
         element: <><Header/><ModifyUser/></>
+    },
+    {
+        path: '/profile/delete',
+        element: <><Header/><DeleteUser/></>
     }
 ]
 
