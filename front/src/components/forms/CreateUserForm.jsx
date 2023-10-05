@@ -5,48 +5,83 @@ import {useNavigate} from 'react-router-dom'
 const CreateUserForm = () => {
 
     const [formData, setFormData] = useState('');
+    const [formName, setFormName] = useState('')
     const [returnError, setReturnError] = useState('')
     const [onLoad, setOnLoad] = useState(false)
     const [displayVerification, setDisplayVerification] = useState(false)
     const [checkCode, setCheckCode] = useState('')
     const [returnMessage, setReturnMessage] = useState('')
+    const [disable, setDisable] = useState(false)
 
     const navigate = useNavigate()
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
-        setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
+        setFormName(name)
+        setFormData(prevFormData => ({...prevFormData, [name]: value}));
     };
 
     useEffect(() => {
         calcPasswordSecurity();
-        if (formData?.username) {
+        if (formData?.username && formName === 'username') {
             usernameParser(formData.username)
+        }
+        if (formData?.first_name && formName === 'first_name') {
+            namesParser(formData.first_name)
+        }
+        if (formData?.last_name && formName === 'last_name') {
+            namesParser(formData.last_name)
         }
     }, [formData])
 
     const usernameParser = (username) => {
-        let alphaMaj = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        let alphaMin = alphaMaj.toLowerCase()
-        let num = '0123456789'
-        let spec = '@_-.'
-        let displayChar = false
+        let alphaMaj = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let alphaMin = alphaMaj.toLowerCase();
+        let num = '0123456789';
+        let spec = '@_-.';
+        let displayChar = false;
+
         for (let i = 0; i < username.length; i++) {
-            if (!alphaMaj.includes(username[i]) &&
+            if (
+                !alphaMaj.includes(username[i]) &&
                 !alphaMin.includes(username[i]) &&
                 !num.includes(username[i]) &&
-                !spec.includes(username[i])) {
-                displayChar = true
-                setReturnError(`Votre pseudo ne peux pas contenir le charactère : ${username[i]}`)
-            } else {
-                !displayChar ? setReturnError('') : null
+                !spec.includes(username[i])
+            ) {
+                displayChar = true;
+                setReturnError(`Votre pseudo ne peut pas contenir le caractère : ${username[i]}`);
+                setDisable(true);
             }
+        }
+
+        if (!displayChar) {
+            setReturnError('');
+            setDisable(false);
+        }
+    };
+
+
+    const namesParser = (input) => {
+        let alphaMaj = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let alphaMin = alphaMaj.toLowerCase();
+        let displayChar = true;
+
+        for (let i = 0; i < input.length; i++) {
+            if (!alphaMaj.includes(input[i]) && !alphaMin.includes(input[i])) {
+                displayChar = false;
+                setReturnError(`Votre nom/prénom ne peut pas contenir le caractère : ${input[i]}`);
+                setDisable(true)
+            }
+        }
+
+        if (displayChar) {
+            setReturnError('');
+            setDisable(false)
         }
     }
 
     const calcPasswordSecurity = () => {
         const password = formData?.password;
-
         let containsUppercase = false;
         let containsLowercase = false;
         let containsDigit = false;
@@ -266,7 +301,9 @@ const CreateUserForm = () => {
                                 )
                             }
                             <div className='w-full mt-12 flex flex-row-reverse justify-between'>
-                                <button type="submit" className="hover:text-pink">
+                                <button type="submit" className="hover:text-pink" disabled={disable} style={{
+                                    color: disable ? 'grey' : 'black',
+                                }}>
                                     Créer le compte
                                 </button>
                                 <button className="hover:text-pink" onClick={() => navigate('/login')}>
