@@ -5,80 +5,43 @@ import {useNavigate} from 'react-router-dom'
 const CreateUserForm = () => {
 
     const [formData, setFormData] = useState('');
-    const [formName, setFormName] = useState('')
     const [returnError, setReturnError] = useState('')
     const [onLoad, setOnLoad] = useState(false)
     const [displayVerification, setDisplayVerification] = useState(false)
     const [checkCode, setCheckCode] = useState('')
     const [returnMessage, setReturnMessage] = useState('')
-    const [disable, setDisable] = useState(false)
+    const [invalidFields, setInvalidFields] = useState({});
+    const [isFormValid, setIsFormValid] = useState(true);
 
     const navigate = useNavigate()
 
-    const handleInputChange = (e) => {
-        const {name, value} = e.target;
-        setFormName(name)
-        setFormData(prevFormData => ({...prevFormData, [name]: value}));
+    const handleInputChange = (e, allowedFields) => {
+        const { name, value } = e.target;
+
+        let isFieldValid = false;
+
+        if (
+            allowedFields.includes(name) &&
+            (name !== 'username'
+                ? /^[a-zA-Z]+$/.test(value) || value === ""
+                : /^[a-zA-Z0-9._\-@]+$/.test(value) || value === "")
+        ) {
+            isFieldValid = true;
+        }
+
+        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+
+        setIsFormValid((prevIsFormValid) => {
+            const newInvalidFields = { ...invalidFields, [name]: !isFieldValid };
+            const newIsFormValid = Object.values(newInvalidFields).every((field) => !field);
+            setInvalidFields(newInvalidFields);
+            return newIsFormValid;
+        });
     };
 
     useEffect(() => {
         calcPasswordSecurity();
-        if (formData?.username && formName === 'username') {
-            usernameParser(formData.username)
-        }
-        if (formData?.first_name && formName === 'first_name') {
-            namesParser(formData.first_name)
-        }
-        if (formData?.last_name && formName === 'last_name') {
-            namesParser(formData.last_name)
-        }
     }, [formData])
-
-    const usernameParser = (username) => {
-        let alphaMaj = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        let alphaMin = alphaMaj.toLowerCase();
-        let num = '0123456789';
-        let spec = '@_-.';
-        let displayChar = false;
-
-        for (let i = 0; i < username.length; i++) {
-            if (
-                !alphaMaj.includes(username[i]) &&
-                !alphaMin.includes(username[i]) &&
-                !num.includes(username[i]) &&
-                !spec.includes(username[i])
-            ) {
-                displayChar = true;
-                setReturnError(`Votre pseudo ne peut pas contenir le caractère : ${username[i]}`);
-                setDisable(true);
-            }
-        }
-
-        if (!displayChar) {
-            setReturnError('');
-            setDisable(false);
-        }
-    };
-
-
-    const namesParser = (input) => {
-        let alphaMaj = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        let alphaMin = alphaMaj.toLowerCase();
-        let displayChar = true;
-
-        for (let i = 0; i < input.length; i++) {
-            if (!alphaMaj.includes(input[i]) && !alphaMin.includes(input[i])) {
-                displayChar = false;
-                setReturnError(`Votre nom/prénom ne peut pas contenir le caractère : ${input[i]}`);
-                setDisable(true)
-            }
-        }
-
-        if (displayChar) {
-            setReturnError('');
-            setDisable(false)
-        }
-    }
 
     const calcPasswordSecurity = () => {
         const password = formData?.password;
@@ -192,25 +155,33 @@ const CreateUserForm = () => {
                                 <div className="mt-6 w-full flex justify-between">
                                     <label className="w-2/5">Nom</label>
                                     <input type="text"
-                                           className="w-3/5 p-1 md:w-2/4"
+                                           className={`w-3/5 p-1 md:w-2/4 ${invalidFields["last_name"] ? 'invalid-input' : ''}`}
                                            style={{
                                                border: '1px solid #F72585',
-                                               borderRadius: '10px'
+                                               borderRadius: '10px',
+                                               ...(invalidFields["last_name"] && {
+                                                   border: '2px solid red',
+                                                   backgroundColor: '#FFD9D9',
+                                               })
                                            }}
                                            name="last_name"
-                                           onChange={handleInputChange}
+                                           onChange={(e) => handleInputChange(e, ["last_name"])}
                                            required/>
                                 </div>
                                 <div className="mt-6 w-full flex justify-between">
                                     <label className="w-2/5">Prénom</label>
                                     <input type="text"
-                                           className="w-3/5 p-1 md:w-2/4"
+                                           className={`w-3/5 p-1 md:w-2/4 ${invalidFields["first_name"] ? 'invalid-input' : ''}`}
                                            style={{
                                                border: '1px solid #F72585',
-                                               borderRadius: '10px'
+                                               borderRadius: '10px',
+                                               ...(invalidFields["first_name"] && {
+                                                   border: '2px solid red',
+                                                   backgroundColor: '#FFD9D9',
+                                               })
                                            }}
                                            name="first_name"
-                                           onChange={handleInputChange}
+                                           onChange={(e) => handleInputChange(e, ["first_name"])}
                                            required/>
                                 </div>
                             </div>
@@ -228,15 +199,21 @@ const CreateUserForm = () => {
                             </div>
                             <div className="mt-6 w-full flex justify-between">
                                 <label className="w-2/5">Pseudo</label>
-                                <input type="text"
-                                       className="w-3/5 p-1 md:w-2/4"
-                                       style={{
-                                           border: '1px solid #F72585',
-                                           borderRadius: '10px'
-                                       }}
-                                       name="username"
-                                       onChange={handleInputChange}
-                                       required/>
+                                <input
+                                    type="text"
+                                    className={`w-3/5 p-1 md:w-2/4 ${invalidFields["username"] ? 'invalid-input' : ''}`}
+                                    style={{
+                                        border: '1px solid #F72585',
+                                        borderRadius: '10px',
+                                        ...(invalidFields["username"] && {
+                                            border: '2px solid red',
+                                            backgroundColor: '#FFD9D9',
+                                        })
+                                    }}
+                                    name="username"
+                                    onChange={(e) => handleInputChange(e, ["username"])}
+                                    required
+                                />
                             </div>
                             <div className="mt-6 w-full flex justify-between">
                                 <label className="w-2/5">Date de naissance</label>
@@ -301,9 +278,11 @@ const CreateUserForm = () => {
                                 )
                             }
                             <div className='w-full mt-12 flex flex-row-reverse justify-between'>
-                                <button type="submit" className="hover:text-pink" disabled={disable} style={{
-                                    color: disable ? 'grey' : 'black',
-                                }}>
+                                <button type="submit" className="hover:text-pink"
+                                        disabled={!isFormValid}
+                                        style={{
+                                            color: !isFormValid ? 'grey' : 'black',
+                                        }}>
                                     Créer le compte
                                 </button>
                                 <button className="hover:text-pink" onClick={() => navigate('/login')}>
