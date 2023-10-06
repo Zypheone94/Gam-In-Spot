@@ -7,6 +7,7 @@ export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
         headers: {
             'Content-Type': 'application/json',
         },
+        mode: 'cors',
     };
 
     if (method !== 'GET') {
