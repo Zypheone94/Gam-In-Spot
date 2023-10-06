@@ -139,7 +139,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
+CORS_ALLOWED_ORIGINS = ['46.101.3.222', ]
 
 SIMPLEREST_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
