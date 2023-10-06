@@ -56,7 +56,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'sslserver'
 ]
 
 ROOT_URLCONF = 'Gaminspot.urls'
