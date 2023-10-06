@@ -7,6 +7,7 @@ from .models import CustomUser
 from rest_framework import status
 from django.contrib.auth import logout, authenticate, update_session_auth_hash
 from django.contrib.auth.hashers import make_password
+from django.shortcuts import get_object_or_404
 import json
 
 from .serializer import CustomUserSerializer
@@ -198,3 +199,19 @@ class PasswordChangeView(APIView):
             return Response({'message': 'Mot de passe mis à jour avec succès.', 'error': 0}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 50}, status=status.HTTP_400_BAD_REQUEST)
+
+class DeleteUserView(APIView):
+    def delete(self, request):
+        user_id = request.data.get('id')
+
+        if user_id is None:
+            return Response({'error': 'ID de l\'utilisateur manquant'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = get_object_or_404(CustomUser, pk=user_id)
+
+        try:
+            user.delete()
+            return Response({'message': 'Utilisateur supprimé avec succès'})
+        except Exception as e:
+            return Response({'error': 'Erreur lors de la suppression de l\'utilisateur'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
