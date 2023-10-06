@@ -16,7 +16,7 @@ export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
     console.log('apiDetailRoad:', apiDetailRoad);
 
     try {
-        const response = await fetch(`http://46.101.3.222:8000${apiDetailRoad}`, requestOptions);
+        const response = await fetch(`https://46.101.3.222:8000${apiDetailRoad}`, requestOptions);
         return await response.json();
     } catch (error) {
         console.log('apiDetailRoad:', apiDetailRoad);
