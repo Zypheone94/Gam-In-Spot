@@ -19,6 +19,7 @@ export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
         const response = await fetch(`http://46.101.3.222:8000${apiDetailRoad}`, requestOptions);
         return await response.json();
     } catch (error) {
+        console.log('apiDetailRoad:', apiDetailRoad);
         throw error;
     }
 };
