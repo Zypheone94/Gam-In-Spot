@@ -23,7 +23,7 @@ const CreateUserForm = () => {
 
         let isFieldValid = false;
 
-        if (name === 'password' || name === 'birthDate' || name === 'email' || name === 'confirmPassword') {
+        if (name === 'password' || name === 'birthDate' || name === 'email' || name === 'verify_password') {
             isFieldValid = true;
         } else if (name === 'username') {
             isFieldValid = isUsernameValid(value);
