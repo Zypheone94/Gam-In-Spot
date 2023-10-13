@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom'
 
 const CreateUserForm = () => {
 
-    const [formData, setFormData] = useState('');
+    const [formData, setFormData] = useState({});
     const [returnError, setReturnError] = useState('')
     const [onLoad, setOnLoad] = useState(false)
     const [displayVerification, setDisplayVerification] = useState(false)
@@ -15,29 +15,39 @@ const CreateUserForm = () => {
 
     const navigate = useNavigate()
 
-    const handleInputChange = (e, allowedFields) => {
-        const { name, value } = e.target;
+    const handleInputChange = (e) => {
+        const {name, value} = e.target;
+
+        const isAlphaValid = (val) => /^[a-zA-ZÀ-ÿ'-]+$/.test(val);
+        const isUsernameValid = (val) => /^[a-zA-Z0-9._@-]+$/.test(val);
 
         let isFieldValid = false;
 
-        if (
-            allowedFields.includes(name) &&
-            (name !== 'username'
-                ? /^[a-zA-Z]+$/.test(value) || value === ""
-                : /^[a-zA-Z0-9._\-@]+$/.test(value) || value === "")
-        ) {
+        if (name === 'password' || name === 'birthDate' || name === 'email' || name === 'confirmPassword') {
             isFieldValid = true;
+        } else if (name === 'username') {
+            isFieldValid = isUsernameValid(value);
+        } else if (name === 'first_name' || name === 'last_name') {
+            isFieldValid = isAlphaValid(value) || value === '';
         }
 
-        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+        if (name === 'first_name' || name === 'last_name') {
+            const formattedValue = value.replace(/\s+/g, '-').trim();
+            setFormData((prevFormData) => ({...prevFormData, [name]: formattedValue}));
+        }
 
-        setIsFormValid((prevIsFormValid) => {
-            const newInvalidFields = { ...invalidFields, [name]: !isFieldValid };
-            const newIsFormValid = Object.values(newInvalidFields).every((field) => !field);
-            setInvalidFields(newInvalidFields);
-            return newIsFormValid;
-        });
+        setFormData((prevFormData) => ({...prevFormData, [name]: value}));
+
+        setInvalidFields((prevInvalidFields) => ({
+            ...prevInvalidFields,
+            [name]: !isFieldValid,
+        }));
     };
+
+    useEffect(() => {
+        const newIsFormValid = Object.values(invalidFields).every((field) => field === false);
+        setIsFormValid(newIsFormValid);
+    }, [invalidFields]);
 
     useEffect(() => {
         calcPasswordSecurity();
@@ -109,6 +119,18 @@ const CreateUserForm = () => {
         }
     }
 
+    const trimFormData = () => {
+        setFormData((prevFormData) => {
+            const trimmedFormData = {};
+            for (const key in prevFormData) {
+                if (Object.prototype.hasOwnProperty.call(prevFormData, key)) {
+                    trimmedFormData[key] = prevFormData[key].trim();
+                }
+            }
+            return trimmedFormData;
+        });
+    };
+
     const handleVerifyCode = async (e) => {
         let data = {'check_code': checkCode}
         e.preventDefault();
@@ -116,8 +138,8 @@ const CreateUserForm = () => {
             const response = await api('users/validation', 'PUT', data);
             if (response.status_code === 10) {
                 setOnLoad(false)
+                trimFormData()
                 const create = await api('users/create', 'POST', formData)
-                console.log(create)
                 if (create.status === 10) {
                     setReturnMessage('Votre compte a bien été crée, vous allez être redirigé vers la page de connexion !')
                     setTimeout(() => {

@@ -1,12 +1,14 @@
 import React, {useState} from "react";
 import {useSelector} from "react-redux"
 import {api} from "../../utils/api.jsx";
-import Cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
 
 const DeleteUser = () => {
 
     const user = useSelector(state => state.user)
+    const navigate = useNavigate()
     const [deleteValue, setDeleteValue] = useState('')
+    const [returnMessage, setReturnMessage] = useState('')
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -14,7 +16,10 @@ const DeleteUser = () => {
             api('/users/delete', 'DELETE', user.id)
                 .then((response) => {
                     console.log(response)
-
+                    setReturnMessage('Votre compte a bien été supprimé !!')
+                    setTimeout(() => {
+                        navigate('/logout')
+                    }, 6000);
                 })
                 .catch((error) => {
                     console.warn('Error while delete user:', error);
