@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom"
 
 const UserPasswordForm = ({user}) => {
 
-    const [formData, setFormData] = useState();
+    const [formData, setFormData] = useState({'email': user.email});
     const [returnError, setReturnError] = useState('')
     const navigate = useNavigate()
 
@@ -16,12 +16,8 @@ const UserPasswordForm = ({user}) => {
     };
 
     const handleUpdatePassword = async (updatedUserData) => {
-        let requestDate = {
-            email: user.email,
-            data: updatedUserData
-        }
         try {
-            const updatedUser = await api('/users/password', 'POST', requestDate);
+            const updatedUser = await api('/users/password', 'POST', updatedUserData);
             updatedUser.error === 0 ?
                 navigate('/profile') :
                 updatedUser.error === 50 ?

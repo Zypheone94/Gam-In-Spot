@@ -1,8 +1,15 @@
+import json
 import random
 
-from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import logout, authenticate, update_session_auth_hash
+from django.contrib.auth.hashers import make_password, check_password
+from django.core.cache import cache
+from django.core.mail import send_mail
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from .models import CustomUser
 from rest_framework import status
 from django.contrib.auth import logout, authenticate, update_session_auth_hash
@@ -11,10 +18,6 @@ from django.shortcuts import get_object_or_404
 import json
 
 from .serializer import CustomUserSerializer
-from django.core.mail import send_mail
-
-from django.core.cache import cache
-
 
 def custom_jwt_payload(user):
     payload = {
@@ -29,12 +32,13 @@ def custom_jwt_payload(user):
     return payload
 
 
+
 class LoginView(APIView):
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
 
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             refresh = RefreshToken.for_user(user)
@@ -58,7 +62,6 @@ class LoginView(APIView):
             })
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
 
 class CustomUserCreateView(APIView):
     def post(self, request, *args, **kwargs):
@@ -130,7 +133,8 @@ class LogoutView(APIView):
 class SendValidationMail(APIView):
     def post(self, request):
         try:
-            data = json.loads(request.body)
+
+            data = request.data
             verification_code = str(random.randint(100000, 500000))
             email = data.get('formMail')
             subject = 'Validation de votre compte'
@@ -138,11 +142,15 @@ class SendValidationMail(APIView):
             from_email = 'magna94320@gmail.com'
             recipient_list = [email]
 
-            send_mail(subject, message, from_email, recipient_list)
+            if email:
 
-            cache.set('cache_data', {'verification_code': verification_code, 'email': email}, 3600)
+                send_mail(subject, message, from_email, recipient_list)
 
-            return Response({'message': 'E-mail envoyé avec succès.'}, status=status.HTTP_200_OK)
+                cache.set('cache_data', {'verification_code': verification_code, 'email': email}, 3600)
+
+                return Response({'message': 'E-mail envoyé avec succès.'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Erreur lors de l\'envoi de l\'e-mail.'}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': 'Erreur lors de l\'envoi de l\'e-mail.'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -157,48 +165,51 @@ class SendValidationMail(APIView):
                 user = CustomUser.objects.get(email=user_email)
 
                 if CustomUser.objects.filter(email=cache_data['email']).exists():
-                    return Response({'status_code': 40, 'message': 'Cet e-mail est déjà enregistré.'})
+                    return Response({"status_code": 40, "message": "Cet e-mail est déjà enregistré."})
 
                 if entered_code and entered_code == cache_data['verification_code']:
                     user.email = cache_data['email']
                     user.save()
-                    return Response({'message': 'Code de vérification valide.', 'status_code': 10},
+                    return Response({"message": "Code de vérification valide.", "status_code": 10},
                                     status=status.HTTP_200_OK)
                 else:
-                    return Response({'error': 'Code de vérification invalide.', 'status_code': 15},
+                    return Response({"error": "Code de vérification invalide.", "status_code": 15},
                                     status=status.HTTP_400_BAD_REQUEST)
 
             else:
-                print(data)
 
                 if entered_code and entered_code == cache_data['verification_code']:
-                    return Response({'message': 'Code de vérification valide.', 'status_code': 10},
+                    return Response({"message": "Code de vérification valide.", "status_code": 10},
                                     status=status.HTTP_200_OK)
                 else:
-                    return Response({'error': 'Code de vérification invalide.', 'status_code': 15},
+                    return Response({'error': "Code de vérification invalide.", "status_code": 15},
                                     status=status.HTTP_400_BAD_REQUEST)
 
         except Exception as e:
-            return Response({'error': 'Erreur lors de la vérification du code.', 'status_code': 20},
+            return Response({"error": "Erreur lors de la vérification du code.", "status_code": 20},
                             status=status.HTTP_400_BAD_REQUEST)
 
 
 class PasswordChangeView(APIView):
     def post(self, request):
-        data = request.data.get('data', {})
-        new_password = data.get('new_password')
-        current_password = data.get('actual_password')
+        new_password = request.data.get('new_password')
+        current_password = request.data.get('actual_password')
         email = request.data.get('email')
 
-        user = authenticate(request, username=email, password=current_password)
+        ret = authenticate(request, email=email, password=current_password)
 
-        if user is not None:
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'Utilisateur non trouvé.'}, status=status.HTTP_404_NOT_FOUND)
+
+        if authenticate(request, username=email, password=current_password):
             user.set_password(new_password)
             user.save()
             update_session_auth_hash(request, user)
             return Response({'message': 'Mot de passe mis à jour avec succès.', 'error': 0}, status=status.HTTP_200_OK)
         else:
-            return Response({'error': 50}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Mot de passe actuel incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
 
 class DeleteUserView(APIView):
     def delete(self, request):

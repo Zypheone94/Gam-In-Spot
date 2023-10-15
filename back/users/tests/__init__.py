@@ -1,0 +1,7 @@
+from .test_custom_user_create_view import CustomUserCreateViewTest
+from .test_login_view import LoginViewTest
+from .test_custom_user_detail_view import UserDetailViewTest
+from .test_update_user_view import UpdateUserViewTest
+from .test_logout_view import LogoutViewTest
+from .test_send_validation_mail_view import SendValidationMailViewTest
+from .test_password_change_view import PasswordChangeViewTest
