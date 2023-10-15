@@ -213,7 +213,7 @@ class PasswordChangeView(APIView):
 
 class DeleteUserView(APIView):
     def delete(self, request):
-        user_id = request.data
+        user_id = request.data.get('id')
 
         if user_id is None:
             return Response({'error': 'ID de l\'utilisateur manquant'}, status=status.HTTP_400_BAD_REQUEST)

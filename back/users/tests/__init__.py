@@ -5,3 +5,4 @@ from .test_update_user_view import UpdateUserViewTest
 from .test_logout_view import LogoutViewTest
 from .test_send_validation_mail_view import SendValidationMailViewTest
 from .test_password_change_view import PasswordChangeViewTest
+from .test_delete_user_view import DeleteUserViewTest
