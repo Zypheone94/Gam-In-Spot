@@ -16,7 +16,7 @@ const DeleteUser = () => {
             api('/users/delete', 'DELETE', {'id': user.id})
                 .then((response) => {
                     console.log(response)
-                    setReturnMessage('Votre compte a bien été supprimé !!')
+                    setReturnMessage('Votre compte a bien été supprimé, vous allez être déconnecté !')
                     setTimeout(() => {
                         navigate('/logout')
                     }, 6000);
@@ -35,7 +35,8 @@ const DeleteUser = () => {
                 <h1 className="text-pink md:text-xl">Supprimer votre profil</h1>
                 <p className='mt-6'>Afin de valider la suppression de votre compte, merci de taper votre nom
                     d'utilisateur puis de valider votre demande</p>
-                <form onSubmit={(e) => handleSubmit(e)} className="mt-6 flex flex-col md:flex-row justify-between items-end md:items-center">
+                <form onSubmit={(e) => handleSubmit(e)}
+                      className="mt-6 flex flex-col md:flex-row justify-between items-end md:items-center">
                     <input type="text" onChange={e => setDeleteValue(e.target.value)}
                            className="w-full p-1 md:w-2/4"
                            style={{
@@ -47,6 +48,9 @@ const DeleteUser = () => {
                     hover:text-pink">Supprimer le compte
                     </button>
                 </form>
+                {returnMessage && (
+                    <p style={{color: 'lime', marginTop: '40px'}}>{returnMessage}</p>
+                )}
             </div>
         </>
     )

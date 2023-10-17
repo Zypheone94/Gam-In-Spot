@@ -313,7 +313,7 @@ const CreateUserForm = () => {
                             </div>
                         </form>)
                     : (<div>Loading</div>
-                    ) : <form onSubmit={handleVerifyCode} className="flex flex-col justify-center">
+                    ) : (<form onSubmit={handleVerifyCode} className="flex flex-col justify-center">
                     <p className='my-8'>Un code de vérification vous a été envoyé par mail !</p>
                     <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
                         <label className="pt-1" style={{
@@ -336,7 +336,7 @@ const CreateUserForm = () => {
                             className="mt-8 mb-8 text-right duration-200 md:mt-12 hover:text-pink">Vérifier le code
                     </button>
                     <p style={{color: 'lime', marginBottom: '20px'}}>{returnMessage}</p>
-                </form>
+                </form>)
             }
         </>
     )
