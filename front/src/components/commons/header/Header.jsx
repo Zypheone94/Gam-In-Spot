@@ -35,8 +35,9 @@ function Header() {
                 py-8 md:bg-white md:flex md:flex-col md:justify-center md:items-center md:w-full
                 fixed top-0 bg-white flex flex-col w-full items-center'>
                 <div className="lg:flex-1 lg:pb-0 md:pb-4">
-                    <img src={logo} alt="Logo Gam'In-Spot" className='lg:w-56 md:w-44 md:object-contain md:block hidden'
-                         id='logo'/>
+                    <img src={logo} alt="Logo Gam'In-Spot"
+                         className='lg:w-56 md:w-44 md:object-contain md:block hidden cursor-pointer'
+                         id='logo' onClick={() => navigate('/')}/>
                 </div>
                 <div className="
                 lg:flex lg:flex-1 lg:justify-center lg:pb-0
@@ -51,7 +52,7 @@ function Header() {
                             border: '1px solid silver',
                             borderRadius: '5px',
                             padding: '7px'
-                        }}>
+                        }} onClick={navigate('/product-management/create')}>
                             <p className="text-purple">Ajouter article +</p>
                         </div>
                     )

@@ -1,5 +1,6 @@
 import ProductList from "../pages/products/ProductList.jsx";
 import ProductDetail from "../pages/products/ProductDetail.jsx";
+import CreateProduct from "../pages/products/CreateProduct.jsx";
 
 // Import Components
 import Header from "../components/commons/header/Header.jsx";
@@ -13,6 +14,10 @@ const ProductRoutes = [
     {
         path: "/product/:productId",
         element: <><Header/> <ProductDetail/> <Footer/></>,
+    },
+    {
+        path: "/product-management/create",
+        element: <><Header/> <CreateProduct/> <Footer/></>,
     },
 ]
 

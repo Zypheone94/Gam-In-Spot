@@ -49,7 +49,6 @@ function App() {
                 Cookies.set('access_token', access, {secure: true, sameSite: 'strict', expires: 30});
             })
             .catch((error) => {
-                // Gérez les erreurs ici
                 console.warn('Error refreshing token:', error);
             });
     };
@@ -57,7 +56,6 @@ function App() {
     const authToken = Cookies.get('access_token');
     if (authToken) {
         try {
-            // Déchiffrez le jeton pour obtenir les données utilisateur
             const decodedPayload = decodeJWT(authToken);
 
             const userPayload = {
