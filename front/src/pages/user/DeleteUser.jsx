@@ -35,15 +35,15 @@ const DeleteUser = () => {
                 <h1 className="text-pink md:text-xl">Supprimer votre profil</h1>
                 <p className='mt-6'>Afin de valider la suppression de votre compte, merci de taper votre nom
                     d'utilisateur puis de valider votre demande</p>
-                <form onSubmit={(e) => handleSubmit(e)} className="mt-6">
-                    <input type="text" onChange={e => setDeleteValue(e.target.value)} className="w-3/4 p-1 md:w-2/4"
+                <form onSubmit={(e) => handleSubmit(e)} className="mt-6 flex flex-col md:flex-row justify-between items-end md:items-center">
+                    <input type="text" onChange={e => setDeleteValue(e.target.value)}
+                           className="w-full p-1 md:w-2/4"
                            style={{
                                border: '1px solid #F72585',
                                borderRadius: '10px'
                            }}
                            placeholder="Nom d'utilisateur"/>
-                    <button className="mt-8 text-right duration-200
-                    md:mt-12
+                    <button className="mt-8 text-right duration-200 md:mt-0
                     hover:text-pink">Supprimer le compte
                     </button>
                 </form>
