@@ -60,7 +60,7 @@ const CreateProductForm = () => {
                     }}>Plateforme</label>
                     <input
                         type="text"
-                        name="Plateforme"
+                        name="plateforme"
                         placeholder="Plateforme"
                         required
                         value={formValue?.plateforme}
