@@ -51,8 +51,9 @@ function Header() {
                         <div style={{
                             border: '1px solid silver',
                             borderRadius: '5px',
-                            padding: '7px'
-                        }} onClick={navigate('/product-management/create')}>
+                            padding: '7px',
+                            cursor: 'pointer'
+                        }} onClick={() => navigate('/product-management/create')}>
                             <p className="text-purple">Ajouter article +</p>
                         </div>
                     )
