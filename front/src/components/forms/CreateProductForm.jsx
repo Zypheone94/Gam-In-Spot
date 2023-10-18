@@ -15,6 +15,11 @@ const CreateProductForm = () => {
         const {name, value, type} = e.target;
         if (type === "file") {
             const files = Array.from(e.target.files)
+            if (files.length > 3) {
+                setReturnError('Vous ne pouvez pas envoyer plus de 3 photos.')
+            } else {
+                setReturnError('')
+            }
             console.log("files:", files)
         } else {
             setFormValue({...formValue, [name]: value});
@@ -52,13 +57,13 @@ const CreateProductForm = () => {
                 <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
                     <label className="pt-1" style={{
                         width: '100px'
-                    }}>Titre</label>
+                    }}>Plateforme</label>
                     <input
                         type="text"
                         name="Plateforme"
-                        placeholder="Titre"
+                        placeholder="Plateforme"
                         required
-                        value={formValue?.title}
+                        value={formValue?.plateforme}
                         onChange={(e) => handleInputChange(e)}
                         className="w-3/4 p-1 md:w-2/4"
                         style={{
@@ -111,6 +116,8 @@ const CreateProductForm = () => {
                         type="file"
                         name="images"
                         multiple
+                        accept=".jpg, .jpeg, .png"
+                        max="3"
                         onChange={(e) => handleInputChange(e)}
                         className="w-3/4 p-1 md:w-2/4"
                     />
@@ -122,7 +129,10 @@ const CreateProductForm = () => {
                         <></>
                     )
                 }
-                <button type="submit" className="hover:text-pink my-12 text-right">
+                <button type="submit" className="hover:text-pink my-12 text-right" disabled={returnError !== ''}
+                        style={{
+                            color: returnError !== '' ? 'grey' : ''
+                        }}>
                     Mettre en ligne l'annonce
                 </button>
             </form>
