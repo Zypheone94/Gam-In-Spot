@@ -57,17 +57,17 @@ class ProductCreateView(APIView):
     def post(self, request):
 
         data = request.data
-        seller_id = data.get('userId')
 
         try:
-            seller_username = CustomUser.objects.get(id=seller_id).username
-            data['seller'] = seller_id
+            seller_username = CustomUser.objects.get(id=data['seller']).username
         except CustomUser.DoesNotExist:
             seller_username = None
 
         title = data.get('title')
         if seller_username and title:
-            data['slug'] = slugify(f"{seller_username}-{title}")
+            base_slug = slugify(f"{seller_username}-{title}")
+            unique_slug = self.generate_unique_slug(base_slug)
+            data['slug'] = unique_slug
 
         data['createdDate'] = timezone.now().date()
 
@@ -76,6 +76,16 @@ class ProductCreateView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def generate_unique_slug(self, base_slug):
+        slug = base_slug
+        counter = 1
+
+        while Product.objects.filter(slug=slug).exists():
+            slug = f"{base_slug}-{counter}"
+            counter += 1
+
+        return slug
 
 
 

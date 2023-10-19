@@ -16,10 +16,10 @@ const CreateProductForm = () => {
     }, [])
 
     const [formValue, setFormValue] = useState({
-        userId: user.id,
+        seller: user.id,
         title: "",
-        plateforme: "",
-        description: "",
+        plateform: "",
+        productDescription: "",
         price: "",
         images: [],
     })
@@ -76,10 +76,10 @@ const CreateProductForm = () => {
                     }}>Plateforme</label>
                     <input
                         type="text"
-                        name="plateforme"
+                        name="plateform"
                         placeholder="Plateforme"
                         required
-                        value={formValue?.plateforme}
+                        value={formValue?.plateform}
                         onChange={(e) => handleInputChange(e)}
                         className="w-3/4 p-1 md:w-2/4"
                         style={{
@@ -94,10 +94,10 @@ const CreateProductForm = () => {
                     }}>Description</label>
                     <input
                         type="text"
-                        name="description"
+                        name="productDescription"
                         placeholder="Description"
                         required
-                        value={formValue?.description}
+                        value={formValue?.productDescription}
                         onChange={(e) => handleInputChange(e)}
                         className="w-3/4 p-1 md:w-2/4"
                         style={{
