@@ -1,8 +1,22 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import {api} from "../../utils/api.jsx";
+
+import {useSelector} from "react-redux"
+import {useNavigate} from "react-router-dom"
 
 const CreateProductForm = () => {
 
+    const navigate = useNavigate()
+    const user = useSelector(state => state.user)
+
+    useEffect(() => {
+        if (user === null || user.email === undefined) {
+            navigate('/login')
+        }
+    }, [])
+
     const [formValue, setFormValue] = useState({
+        userId: user.id,
         title: "",
         plateforme: "",
         description: "",
@@ -28,8 +42,10 @@ const CreateProductForm = () => {
     }
 
 
-    const handleSubmit = () => {
-        console.log('sub')
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const response = await api('products/product/create', 'POST', formValue);
+        console.log(response)
     }
 
     return (

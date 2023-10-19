@@ -11,7 +11,11 @@ class CategorySerializer(ModelSerializer):
 
 
 class ProductSerializer(ModelSerializer):
+    seller_id = serializers.SerializerMethodField()
+
     class Meta:
         model = Product
-        fields = ['productId', 'title', 'price', 'plateform', 'productDescription', 'createdDate', 'category', 'seller']
-        
+        fields = '__all__'
+
+    def get_seller_id(self, obj):
+        return obj.seller.id if obj.seller else None

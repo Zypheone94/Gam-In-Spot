@@ -14,9 +14,6 @@ class Category(models.Model):
         return self.title
 
     def generate_slug(self):
-        """
-        Fonction pour générer automatiquement le slug à partir du champ 'seller' et du 'title'.
-        """
         slug = slugify(self.title)
         self.slug = slug
 
@@ -40,27 +37,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
-
-    def generate_slug(self):
-        """
-        Fonction pour générer automatiquement le slug à partir du champ 'seller' et du 'title'.
-        """
-        slug = slugify(self.seller.username + '-' + self.title)
-        self.slug = slug
-
-    def generate_date(self):
-        date = datetime.date.today()
-        self.createdDate = date
-
-    def save(self, *args, **kwargs):
-        """
-        Redéfinition de la méthode save pour générer automatiquement le slug et la date avant l'enregistrement.
-        """
-        if not self.slug:
-            self.generate_slug()
-
-        if not self.createdDate:
-            self.generate_date()
-
-        super().save(*args, **kwargs)
-
