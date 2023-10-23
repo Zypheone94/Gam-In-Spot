@@ -9,13 +9,16 @@ function ProductDetail() {
     const [loading, setLoading] = useState(true)
     // State qui va permettre de savoir si les données de l'api sont en cours de récupération
 
-    const {productId}= useParams()
+    const url = window.location.pathname;
+    const productSlug = url.split('/').pop();
     // Récupère l'id de mon produit afin de faire l'appel API correctement
+    console.log(productSlug)
 
     useEffect(() => {
+        console.log(productSlug)
         const getData = async () => {
             try {
-                const response = await api(`/products/api/product/${productId}`);
+                const response = await api(`products/product/${productSlug}`);
                 setProductDetail(response);
                 setLoading(false);
             } catch (error) {
@@ -23,7 +26,7 @@ function ProductDetail() {
             }
         };
         getData();
-    }, []);
+    }, [productSlug]);
 
     return (
         <div>

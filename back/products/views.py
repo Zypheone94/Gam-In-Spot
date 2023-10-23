@@ -14,7 +14,6 @@ from .serializer import CategorySerializer, ProductSerializer
 
 
 class CategoryViewSet(ModelViewSet):
-
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     filter_backends = [SearchFilter]
@@ -36,7 +35,6 @@ class CategoryViewSet(ModelViewSet):
 
 
 class ProductViewSet(ModelViewSet):
-
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [SearchFilter]
@@ -51,6 +49,17 @@ class ProductViewSet(ModelViewSet):
             return Response(serializer.data)
         else:
             return Response([])
+
+
+class ProductDetailView(APIView):
+    def get(self, request, productSlug):
+
+        try:
+            product = Product.objects.get(slug=productSlug)
+            serializer = ProductSerializer(product) 
+            return Response(serializer.data)
+        except Product.DoesNotExist:
+            return Response({'message': 'Produit non trouvé'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class ProductCreateView(APIView):
@@ -86,6 +95,3 @@ class ProductCreateView(APIView):
             counter += 1
 
         return slug
-
-
-
