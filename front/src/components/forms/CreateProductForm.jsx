@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {api} from "../../utils/api.jsx";
+import {apiFile} from "../../utils/apiFile.jsx";
 
 import {useSelector} from "react-redux"
 import {useNavigate} from "react-router-dom"
@@ -42,12 +42,13 @@ const CreateProductForm = () => {
             const {value} = e.target;
             setFormValue({...formValue, [name]: value});
         }
+        console.log(formValue)
     }
 
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const response = await api('products/product/create', 'POST', formValue);
+        const response = await apiFile('products/product/create',  formValue);
         console.log(response)
     }
 

@@ -1,17 +1,10 @@
-const sendDataWithImages = async (data, files) => {
+const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+import axios from "axios";
+
+export const apiFile = async (apiDetailRoad, data) => {
     try {
-        const formData = new FormData();
-
-        // Ajoutez les données JSON à FormData
-        formData.append('jsonData', JSON.stringify(data));
-
-        // Ajoutez les fichiers image à FormData
-        files.forEach((file, index) => {
-            formData.append(`image${index}`, file);
-        });
-
-        // Effectuez la requête POST avec Axios
-        const response = await axios.post(`${apiUrl}/votre-endpoint-api`, formData, {
+        console.log(data)
+        const response = await axios.post(`${apiUrl}/${apiDetailRoad}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -21,6 +14,7 @@ const sendDataWithImages = async (data, files) => {
     } catch (error) {
         throw error;
     }
+
 };
 
 
