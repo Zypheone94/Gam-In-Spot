@@ -27,21 +27,30 @@ function ProductDetail() {
     }, [productSlug]);
 
     return (
-        <section>
+        <section className='flex flex-col px-12 py-8'>
             {loading ? (
                 <p>Chargement...</p>
             ) : (
                 <>
-                    <div>
-                        <div id='images'>
-                            Image
+                    <div className='flex' style={{height: '25vw'}}>
+                        <div id='images flex'>
+                            <img className='rounded-xl h-full'
+                                 src='https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'/>
                         </div>
-                        <div id="product_info">
+                        <div id="product_info" className='rounded-xl' style={{
+                            border: '1px solid #4261EE',
+                            background: '#ebebeb',
+                            minWidth: '70%'
+                        }}>
                             <h1>{productDetail.title}</h1>
                         </div>
                     </div>
 
-                    <div id="api_description">
+                    <div id="api_description" className='rounded-xl w-full mt-12' style={{
+                        border: '1px solid #4261EE',
+                        background: '#ebebeb',
+                        height: '25vh'
+                    }}>
                         Lorem ipsum
                     </div>
                 </>
