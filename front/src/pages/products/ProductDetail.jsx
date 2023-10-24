@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
-import {useParams} from 'react-router-dom';
 import {api} from "../../utils/api.jsx";
+import dateFormat from "../../utils/DateFormat.jsx";
+import DateFormat from "../../utils/DateFormat.jsx";
 
 function ProductDetail() {
 
@@ -24,6 +25,8 @@ function ProductDetail() {
             }
         };
         getData();
+        console.log(productDetail)
+
     }, [productSlug]);
 
     return (
@@ -33,16 +36,25 @@ function ProductDetail() {
             ) : (
                 <>
                     <div className='flex' style={{height: '25vw'}}>
-                        <div id='images flex'>
+                        <div id='images'>
                             <img className='rounded-xl h-full'
                                  src='https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'/>
                         </div>
-                        <div id="product_info" className='rounded-xl' style={{
+                        <div id="product_info" className='flex rounded-xl px-4 py-6' style={{
                             border: '1px solid #4261EE',
                             background: '#ebebeb',
                             minWidth: '70%'
                         }}>
-                            <h1>{productDetail.title}</h1>
+                            <div className='flex flex-col justify-between w-4/6'>
+                                <div>
+                                    <h1 className='text-purple text-xl font-bold'>{productDetail.title}</h1>
+                                    <p className='text-lightPurple'>{productDetail.productDescription}</p>
+                                </div>
+                                <p className='text-purple'><b className='underline'>Mise en ligne :</b> <DateFormat value={productDetail.createdDate}/></p>
+                            </div>
+                            <div className='flex flex-col w-2/6'>
+                                <h1 className='text-purple text-xl font-bold'>{productDetail.price}€</h1>
+                            </div>
                         </div>
                     </div>
 

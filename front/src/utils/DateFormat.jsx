@@ -1,15 +1,18 @@
 import {useSelector} from "react-redux";
 
-const DateFormat = ({type}) => {
+const DateFormat = ({type, value}) => {
 
     const user = useSelector(state => state.user)
 
     let sliced = null
 
-    if (user !== null && user.email !== undefined) {
+    if (user !== null && user.email !== undefined && type !== null) {
         sliced = type === 'birthDate' ? user.birthDate.split('-')
             : type === 'creationAccountDate' ? user.creationAccountDate.split('-')
                 : null
+    }
+    else if (value !== null) {
+        sliced = value.split('-')
     }
 
     return (
