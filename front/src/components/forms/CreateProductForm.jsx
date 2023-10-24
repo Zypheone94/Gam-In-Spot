@@ -28,17 +28,20 @@ const CreateProductForm = () => {
     const handleInputChange = (e) => {
         const {name, value, type} = e.target;
         if (type === "file") {
-            const files = Array.from(e.target.files)
-            if (files.length > 3) {
-                setReturnError('Vous ne pouvez pas envoyer plus de 3 photos.')
+            const files = e.target.files;
+            const filesArray = Array.from(files);
+
+            if (filesArray.length > 3) {
+                setReturnError('Vous ne pouvez pas envoyer plus de 3 photos.');
             } else {
-                setReturnError('')
+                setFormValue({...formValue, ['images']: filesArray});
+                setReturnError('');
+                console.log("files:", filesArray);
             }
-            console.log("files:", files)
         } else {
+            const {value} = e.target;
             setFormValue({...formValue, [name]: value});
         }
-        console.log(formValue);
     }
 
 
@@ -50,9 +53,9 @@ const CreateProductForm = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit} className="flex flex-col">
+            <form onSubmit={handleSubmit} encType="multipart/form-data" className="flex flex-col">
 
-                <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
+            <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
                     <label className="pt-1" style={{
                         width: '100px'
                     }}>Titre</label>

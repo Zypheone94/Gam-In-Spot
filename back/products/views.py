@@ -66,6 +66,7 @@ class ProductCreateView(APIView):
     def post(self, request):
 
         data = request.data
+        print(data)
 
         try:
             seller_username = CustomUser.objects.get(id=data['seller']).username
