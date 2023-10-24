@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 from rest_framework import status
 from django.utils.text import slugify
 from django.utils import timezone
+import os
 
 from .models import Category, Product
 from users.models import CustomUser
@@ -56,7 +57,7 @@ class ProductDetailView(APIView):
 
         try:
             product = Product.objects.get(slug=productSlug)
-            serializer = ProductSerializer(product) 
+            serializer = ProductSerializer(product)
             return Response(serializer.data)
         except Product.DoesNotExist:
             return Response({'message': 'Produit non trouvé'}, status=status.HTTP_404_NOT_FOUND)
@@ -70,6 +71,12 @@ class ProductCreateView(APIView):
 
         try:
             seller_username = CustomUser.objects.get(id=data['seller']).username
+            static_directory = os.path.join(os.path.dirname(__file__), f"static/{seller_username}/")
+            if not os.path.exists(static_directory):
+                os.mkdir(static_directory)
+                print(f"Le dossier '{seller_username}' a été créé.")
+            else:
+                print(f"Le dossier '{seller_username}' existe déjà.")
         except CustomUser.DoesNotExist:
             seller_username = None
 
