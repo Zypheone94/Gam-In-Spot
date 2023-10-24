@@ -12,10 +12,8 @@ function ProductDetail() {
     const url = window.location.pathname;
     const productSlug = url.split('/').pop();
     // Récupère l'id de mon produit afin de faire l'appel API correctement
-    console.log(productSlug)
 
     useEffect(() => {
-        console.log(productSlug)
         const getData = async () => {
             try {
                 const response = await api(`products/product/${productSlug}`);
@@ -29,16 +27,26 @@ function ProductDetail() {
     }, [productSlug]);
 
     return (
-        <div>
-            <h1>Mon produit</h1>
+        <section>
             {loading ? (
                 <p>Chargement...</p>
             ) : (
-                <div>
-                    <h1>{productDetail.title}</h1>
-                </div>
+                <>
+                    <div>
+                        <div id='images'>
+                            Image
+                        </div>
+                        <div id="product_info">
+                            <h1>{productDetail.title}</h1>
+                        </div>
+                    </div>
+
+                    <div id="api_description">
+                        Lorem ipsum
+                    </div>
+                </>
             )}
-        </div>
+        </section>
     );
 }
 

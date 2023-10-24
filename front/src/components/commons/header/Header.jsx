@@ -9,6 +9,7 @@ import SearchBar from "../searchbar/SearchBar.jsx";
 
 import {useSelector} from 'react-redux'
 import {useNavigate, useLocation} from 'react-router-dom'
+import {useEffect} from "react";
 
 function Header() {
 
@@ -28,12 +29,21 @@ function Header() {
         navigate('/logout')
     }
 
+    const style = {
+        borderBottom: '2px solid #7029b7',
+    };
+
+    if (window.innerWidth <= 768) {
+        style.borderBottom = 'none';
+    }
+
     return (
         <>
             <header className='
                 lg:flex lg:items-center lg:h-28 lg:px-12 lg:relative lg:flex-row
                 py-8 md:bg-white md:flex md:flex-col md:justify-center md:items-center md:w-full
-                fixed top-0 bg-white flex flex-col w-full items-center'>
+                fixed top-0 bg-white flex flex-col w-full items-center '
+                    style={style}>
                 <div className="lg:flex-1 lg:pb-0 md:pb-4">
                     <img src={logo} alt="Logo Gam'In-Spot"
                          className='lg:w-56 md:w-44 md:object-contain md:block hidden cursor-pointer'
@@ -78,7 +88,7 @@ function Header() {
 
             </header>
             <div className='my-8 h-36 md:hidden'></div>
-            {locate.pathname === '/profile' ? (
+            {locate.pathname === '/profile' || locate.pathname.includes('/product') ? (
                 <></>
             ) : (
                 <div className="lg:mt-0 md:block md:mt-32 hidden" id="mainBanner" style={{
