@@ -50,20 +50,40 @@ function ProductDetail() {
                                     <h1 className='text-purple text-xl font-bold'>{productDetail.title}</h1>
                                     <p className='text-lightPurple'>{productDetail.productDescription}</p>
                                 </div>
-                                <p className='text-purple'><b className='underline'>Mise en ligne :</b> <DateFormat value={productDetail.createdDate}/></p>
+                                <p className='text-purple'><b className='underline'>Mise en ligne :</b> <DateFormat
+                                    value={productDetail.createdDate}/></p>
                             </div>
-                            <div className='flex flex-col w-2/6'>
-                                <h1 className='text-purple text-xl font-bold'>{productDetail.price}€</h1>
+                            <div className='flex flex-col justify-between w-2/6'>
+                                <div>
+                                    <h1 className='text-purple text-xl font-bold'>{productDetail.price}€</h1>
+                                    <div style={{
+                                        border: '1px solid #5F70BD',
+                                        borderRadius: '5px',
+                                        padding: '7px',
+                                        cursor: 'pointer'
+                                    }} onClick={() => navigate('/product-management/create')}>
+                                        <p className="text-deepPurple">Ajouter au panier +</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className='text-purple'><b className='underline'>Vendeur
+                                        :</b> Trouver un moyen de récupérer le vendeur</p>
+                                    <p className='text-purple mt-6'><b className='underline'>Plateforme
+                                        :</b> {productDetail.plateform}</p>
+                                    <p className='text-purple mt-6'><b className='underline'>Édition
+                                        :</b> à ajouter en bdd</p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div id="api_description" className='rounded-xl w-full mt-12' style={{
+                    <div id="api_description" className='rounded-xl w-full mt-12 px-4 py-6' style={{
                         border: '1px solid #4261EE',
                         background: '#ebebeb',
                         height: '25vh'
                     }}>
-                        Lorem ipsum
+                        <h1 className='text-purple text-lg font-bold'>Description du jeu :</h1>
+                        <p className='text-lightPurple'>Récupérer une description depuis l'api</p>
                     </div>
                 </>
             )}
