@@ -59,7 +59,13 @@ class ProductDetailView(APIView):
         try:
             product = Product.objects.get(slug=productSlug)
             serializer = ProductSerializer(product)
-            return Response(serializer.data)
+
+            seller = CustomUser.objects.get(pk=serializer.data['seller_id'])
+            data = serializer.data
+            data['seller'] = seller.__str__()
+            print(data)
+
+            return Response(data)
         except Product.DoesNotExist:
             return Response({'message': 'Produit non trouvé'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -71,7 +77,7 @@ class ProductCreateView(APIView):
         print(data)
 
         try:
-            seller_username = CustomUser.objects.get(id=data['seller']).username
+            seller_username = CustomUser.objects.get(id=data['seller_id'])
             user_directory = os.path.join(os.path.dirname(__file__), f"static/{seller_username}/")
             if not os.path.exists(user_directory):
                 os.mkdir(user_directory)
@@ -96,11 +102,14 @@ class ProductCreateView(APIView):
                 print(f"Le sous-dossier '{unique_slug}' existe déjà.")
 
             if 'images[]' in request.FILES:
-                for file in request.FILES.getlist('images[]'):
-                    with open(os.path.join(slug_directory, file.name), 'wb') as destination:
+                for i, file in enumerate(request.FILES.getlist('images[]'), start=1):
+                    new_file_name = f"image_{i}{os.path.splitext(file.name)[-1]}"  # Renomme le fichier
+
+                    with open(os.path.join(slug_directory, new_file_name), 'wb') as destination:
                         for chunk in file.chunks():
                             destination.write(chunk)
-                    print(f"Le fichier '{file.name}' a été stocké dans '{unique_slug}'.")
+
+                    print(f"Le fichier '{file.name}' a été stocké en tant que '{new_file_name}' dans '{unique_slug}'.")
 
         data['createdDate'] = timezone.now().date()
 

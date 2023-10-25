@@ -33,7 +33,7 @@ class Product(models.Model):
     productDescription = models.TextField(null=True, blank=True)
     createdDate = models.DateField()
     category = models.ManyToManyField(Category, null=True, blank=True)
-    seller = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    seller_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

@@ -16,7 +16,7 @@ const CreateProductForm = () => {
     }, [])
 
     const [formValue, setFormValue] = useState({
-        seller: user.id,
+        seller_id: user.id,
         title: "",
         plateform: "",
         productDescription: "",

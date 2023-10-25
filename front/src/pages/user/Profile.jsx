@@ -40,12 +40,19 @@ const Profile = () => {
                             </p>
                             <p className='text-deepPurple mt-4'><span
                                 className='underline font-bold'>Prénom :</span> {user.first_name}</p>
-                            <p className='text-deepPurple mt-4'><span
-                                className='underline font-bold'>Date de naissance :</span> <DateFormat
-                                type="birthDate"/></p>
-                            <p className='text-deepPurple mt-4 mb-2'><span
-                                className='underline font-bold'>Date de création du compte :</span> <DateFormat
-                                type="creationAccountDate"/></p>
+                            {
+                                user !== '' && (
+                                    <>
+                                        <p className='text-deepPurple mt-4'><span
+                                            className='underline font-bold'>Date de naissance :</span> <DateFormat
+                                            type="birthDate" value=""/></p>
+                                        <p className='text-deepPurple mt-4 mb-2'><span
+                                            className='underline font-bold'>Date de création du compte :</span> <DateFormat
+                                            type="creationAccountDate" value=""/></p>
+                                    </>
+                                )
+                            }
+
                         </div>
                     </div>
                     <div className="lg:w-9/12 lg:ml-6">

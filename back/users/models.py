@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
     creationAccountDate = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name
+        return self.username
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
