@@ -77,7 +77,7 @@ class ProductDetailView(APIView):
             images = []
 
             for i in range(1, 4):
-                url = f"http://localhost:8000/static/{data['seller']}/{data['slug']}/image_{i}.png"
+                url = f"http://localhost:8000/static/{data['seller']}/{data['slug']}/image_{i}.jpg"
                 if check_url_status(url):
                     images.append(url)
                 else:
@@ -126,7 +126,7 @@ class ProductCreateView(APIView):
 
             if 'images[]' in request.FILES:
                 for i, file in enumerate(request.FILES.getlist('images[]'), start=1):
-                    new_file_name = f"image_{i}{os.path.splitext(file.name)[-1]}"  # Renomme le fichier
+                    new_file_name = f"image_{i}{os.path.splitext(file.name)[-1]}.jpg"
 
                     with open(os.path.join(slug_directory, new_file_name), 'wb') as destination:
                         for chunk in file.chunks():

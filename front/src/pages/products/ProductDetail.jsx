@@ -36,10 +36,10 @@ function ProductDetail() {
                 <>
                     <div className='flex' style={{height: '25vw'}}>
                         <div id='images'>
-                            <img className='rounded-xl h-full'
-                                 src={ 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}/>
+                            <img className='rounded-xl h-full' style={{objectFit: 'cover', objectPosition: '50% 50%'}}
+                                 src={productDetail.images ? productDetail.images[0] : 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}/>
                         </div>
-                        <div id="product_info" className='flex rounded-xl px-4 py-6' style={{
+                        <div id="product_info" className='flex rounded-xl px-4 py-6 ml-12' style={{
                             border: '1px solid #4261EE',
                             background: '#ebebeb',
                             minWidth: '70%'
@@ -49,8 +49,8 @@ function ProductDetail() {
                                     <h1 className='text-purple text-xl font-bold'>{productDetail.title}</h1>
                                     <p className='text-lightPurple'>{productDetail.productDescription}</p>
                                 </div>
-                                <p className='text-purple'><b className='underline'>Mise en ligne :</b> <DateFormat
-                                    value={productDetail.createdDate}/></p>
+                                <p className='text-purple'><b className='underline'>Mise en ligne
+                                    :</b> {productDetail.createdDate.split('-').reverse().join('/')}</p>
                             </div>
                             <div className='flex flex-col justify-between w-2/6'>
                                 <div>
@@ -66,7 +66,7 @@ function ProductDetail() {
                                 </div>
                                 <div>
                                     <p className='text-purple'><b className='underline'>Vendeur
-                                        :</b> Trouver un moyen de récupérer le vendeur</p>
+                                        :</b> {productDetail.seller}</p>
                                     <p className='text-purple mt-6'><b className='underline'>Plateforme
                                         :</b> {productDetail.plateform}</p>
                                     <p className='text-purple mt-6'><b className='underline'>Édition
