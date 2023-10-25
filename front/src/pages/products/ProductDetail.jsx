@@ -1,6 +1,5 @@
 import {useState, useEffect} from "react";
 import {api} from "../../utils/api.jsx";
-import dateFormat from "../../utils/DateFormat.jsx";
 import DateFormat from "../../utils/DateFormat.jsx";
 
 function ProductDetail() {
@@ -38,7 +37,7 @@ function ProductDetail() {
                     <div className='flex' style={{height: '25vw'}}>
                         <div id='images'>
                             <img className='rounded-xl h-full'
-                                 src='https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'/>
+                                 src={ 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}/>
                         </div>
                         <div id="product_info" className='flex rounded-xl px-4 py-6' style={{
                             border: '1px solid #4261EE',

@@ -7,7 +7,7 @@ from rest_framework import status
 from django.utils.text import slugify
 from django.utils import timezone
 import os
-import shutil
+import requests
 
 from .models import Category, Product
 from users.models import CustomUser
@@ -56,6 +56,16 @@ class ProductViewSet(ModelViewSet):
 class ProductDetailView(APIView):
     def get(self, request, productSlug):
 
+        def check_url_status(url):
+            try:
+                response = requests.get(url)
+                if response.status_code == 200:
+                    return True
+                else:
+                   return False
+            except requests.exceptions.RequestException as e:
+                print(f"Impossible d'accéder à l'URL {url}. Erreur : {e}")
+
         try:
             product = Product.objects.get(slug=productSlug)
             serializer = ProductSerializer(product)
@@ -63,7 +73,20 @@ class ProductDetailView(APIView):
             seller = CustomUser.objects.get(pk=serializer.data['seller_id'])
             data = serializer.data
             data['seller'] = seller.__str__()
-            print(data)
+
+            images = []
+
+            for i in range(1, 4):
+                url = f"http://localhost:8000/static/{data['seller']}/{data['slug']}/image_{i}.png"
+                if check_url_status(url):
+                    images.append(url)
+                else:
+                    None
+
+            if len(images) == 0:
+                None
+            else :
+                data['images'] = images
 
             return Response(data)
         except Product.DoesNotExist:
