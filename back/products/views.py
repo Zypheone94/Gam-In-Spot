@@ -7,6 +7,7 @@ from rest_framework import status
 from django.utils.text import slugify
 from django.utils import timezone
 import os
+import shutil
 
 from .models import Category, Product
 from users.models import CustomUser
@@ -71,9 +72,9 @@ class ProductCreateView(APIView):
 
         try:
             seller_username = CustomUser.objects.get(id=data['seller']).username
-            static_directory = os.path.join(os.path.dirname(__file__), f"static/{seller_username}/")
-            if not os.path.exists(static_directory):
-                os.mkdir(static_directory)
+            user_directory = os.path.join(os.path.dirname(__file__), f"static/{seller_username}/")
+            if not os.path.exists(user_directory):
+                os.mkdir(user_directory)
                 print(f"Le dossier '{seller_username}' a été créé.")
             else:
                 print(f"Le dossier '{seller_username}' existe déjà.")
@@ -85,6 +86,21 @@ class ProductCreateView(APIView):
             base_slug = slugify(f"{seller_username}-{title}")
             unique_slug = self.generate_unique_slug(base_slug)
             data['slug'] = unique_slug
+
+            slug_directory = os.path.join(os.path.dirname(__file__), f"static/{seller_username}/", unique_slug)
+
+            if not os.path.exists(slug_directory):
+                os.mkdir(slug_directory)
+                print(f"Le sous-dossier '{unique_slug}' a été créé.")
+            else:
+                print(f"Le sous-dossier '{unique_slug}' existe déjà.")
+
+            if 'images[]' in request.FILES:
+                for file in request.FILES.getlist('images[]'):
+                    with open(os.path.join(slug_directory, file.name), 'wb') as destination:
+                        for chunk in file.chunks():
+                            destination.write(chunk)
+                    print(f"Le fichier '{file.name}' a été stocké dans '{unique_slug}'.")
 
         data['createdDate'] = timezone.now().date()
 
