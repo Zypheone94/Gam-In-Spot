@@ -46,13 +46,13 @@ function ProductDetail() {
 
 
                         <>
-                            <div className='flex' style={{height: '25vw'}}>
+                            <div className='flex flex-col md:flex-row'>
                                 <div id='images'>
                                     <img className='rounded-xl h-full'
                                          style={{objectFit: 'cover', objectPosition: '50% 50%'}}
                                          src={productDetail.images ? productDetail.images[0] : 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}/>
                                 </div>
-                                <div id="product_info" className='flex rounded-xl px-4 py-6 ml-12' style={{
+                                <div id="product_info" className='flex rounded-xl mt-12 px-4 py-6 md:ml-12' style={{
                                     border: '1px solid #4261EE',
                                     background: '#ebebeb',
                                     minWidth: '70%'
