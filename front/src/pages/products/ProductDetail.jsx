@@ -70,7 +70,7 @@ function ProductDetail() {
                                     <p className='text-purple mt-6'><b className='underline'>Plateforme
                                         :</b> {productDetail.plateform}</p>
                                     <p className='text-purple mt-6'><b className='underline'>Édition
-                                        :</b> à ajouter en bdd</p>
+                                        :</b> {productDetail.edition}</p>
                                 </div>
                             </div>
                         </div>

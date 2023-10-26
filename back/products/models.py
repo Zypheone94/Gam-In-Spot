@@ -34,6 +34,7 @@ class Product(models.Model):
     createdDate = models.DateField()
     category = models.ManyToManyField(Category, null=True, blank=True)
     seller_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    edition = models.CharField(max_length=50, default="Normal")
 
     def __str__(self):
         return self.title
