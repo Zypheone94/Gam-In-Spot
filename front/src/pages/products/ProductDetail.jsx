@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {api} from "../../utils/api.jsx";
 import WrongPage from "../WrongPage.jsx";
+import {nommage} from "../../utils/nommage.jsx";
 
 function ProductDetail() {
 
@@ -58,7 +59,7 @@ function ProductDetail() {
                                 }}>
                                     <div className='flex flex-col justify-between w-4/6'>
                                         <div>
-                                            <h1 className='text-purple text-xl font-bold'>{productDetail.title}</h1>
+                                            <h1 className='text-purple text-xl font-bold'>{nommage(productDetail.title, 25)}</h1>
                                             <p className='text-lightPurple overflow-y-auto mt-2' style={{height: '220px', maxWidth: '550px'}}>{productDetail.productDescription}</p>
                                         </div>
                                         <p className='text-purple'><b className='underline'>Mise en ligne
