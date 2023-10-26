@@ -59,7 +59,7 @@ function ProductDetail() {
                                     <div className='flex flex-col justify-between w-4/6'>
                                         <div>
                                             <h1 className='text-purple text-xl font-bold'>{productDetail.title}</h1>
-                                            <p className='text-lightPurple'>{productDetail.productDescription}</p>
+                                            <p className='text-lightPurple overflow-y-auto mt-2' style={{height: '220px', maxWidth: '550px'}}>{productDetail.productDescription}</p>
                                         </div>
                                         <p className='text-purple'><b className='underline'>Mise en ligne
                                             :</b> {productDetail.createdDate.split('-').reverse().join('/')}</p>
