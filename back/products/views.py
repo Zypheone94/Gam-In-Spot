@@ -90,7 +90,7 @@ class ProductDetailView(APIView):
 
             return Response(data)
         except Product.DoesNotExist:
-            return Response({'message': 'Produit non trouvé'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'message': 'Produit non trouvé', 'error' : 100}, status=status.HTTP_404_NOT_FOUND)
 
 
 class ProductCreateView(APIView):
