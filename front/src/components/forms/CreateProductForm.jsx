@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {apiFile} from "../../utils/apiFile.jsx";
+import {api} from "../../utils/api.jsx";
 
 import {useSelector} from "react-redux"
 import {useNavigate} from "react-router-dom"
@@ -13,6 +14,13 @@ const CreateProductForm = () => {
         if (user === null || user.email === undefined) {
             navigate('/login')
         }
+        api('products/product/loadcat')
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }, [])
 
     const [formValue, setFormValue] = useState({

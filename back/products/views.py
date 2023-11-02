@@ -62,7 +62,7 @@ class ProductDetailView(APIView):
                 if response.status_code == 200:
                     return True
                 else:
-                   return False
+                    return False
             except requests.exceptions.RequestException as e:
                 print(f"Impossible d'accéder à l'URL {url}. Erreur : {e}")
 
@@ -85,12 +85,12 @@ class ProductDetailView(APIView):
 
             if len(images) == 0:
                 None
-            else :
+            else:
                 data['images'] = images
 
             return Response(data)
         except Product.DoesNotExist:
-            return Response({'message': 'Produit non trouvé', 'error' : 100}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'message': 'Produit non trouvé', 'error': 100}, status=status.HTTP_404_NOT_FOUND)
 
 
 class ProductCreateView(APIView):
@@ -151,3 +151,10 @@ class ProductCreateView(APIView):
             counter += 1
 
         return slug
+
+class LoadCategory(APIView):
+    def get(self, request):
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+

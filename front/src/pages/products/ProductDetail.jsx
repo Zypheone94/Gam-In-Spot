@@ -3,6 +3,8 @@ import {api} from "../../utils/api.jsx";
 import WrongPage from "../WrongPage.jsx";
 import {nommage} from "../../utils/nommage.jsx";
 
+import axios from "axios";
+
 function ProductDetail() {
 
     const [productDetail, setProductDetail] = useState([])
@@ -14,12 +16,11 @@ function ProductDetail() {
 
     const url = window.location.pathname;
     const productSlug = url.split('/').pop();
-    // Récupère l'id de mon produit afin de faire l'appel API correctement
 
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await api(`products/product/${productSlug}`);
+                const response = await api(`products/read-product/${productSlug}`);
                 setProductDetail(response);
                 if (response.error === 100) {
                     setDisplay404(true)
