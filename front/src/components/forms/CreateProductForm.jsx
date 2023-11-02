@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {apiFile} from "../../utils/apiFile.jsx";
 import {api} from "../../utils/api.jsx";
+import Selector from "../commons/Selector.jsx";
 
 import {useSelector} from "react-redux"
 import {useNavigate} from "react-router-dom"
@@ -9,6 +10,7 @@ const CreateProductForm = () => {
 
     const navigate = useNavigate()
     const user = useSelector(state => state.user)
+    const tabl = [1,2,3]
 
     useEffect(() => {
         if (user === null || user.email === undefined) {
@@ -157,6 +159,7 @@ const CreateProductForm = () => {
                         <></>
                     )
                 }
+                <Selector selectorList={tabl}/>
                 <button type="submit" className="hover:text-pink my-12 text-right" disabled={returnError !== ''}
                         style={{
                             color: returnError !== '' ? 'grey' : ''
