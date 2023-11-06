@@ -10,15 +10,25 @@ const CreateProductForm = () => {
 
     const navigate = useNavigate()
     const user = useSelector(state => state.user)
-    const tabl = [1,2,3]
+    const [categoryList, setCategoryList] = useState([])
+    const [selectedValue, setSelectedValue] = useState()
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         if (user === null || user.email === undefined) {
             navigate('/login')
         }
+        setIsLoading(true)
         api('products/product/loadcat')
             .then(response => {
                 console.log(response);
+                response.forEach((value) => {
+                    if (!categoryList.includes(value.title)) {
+                        categoryList.push(value.title)
+                    }
+                })
+                setIsLoading(false)
+                console.log(categoryList)
             })
             .catch(error => {
                 console.error(error);
@@ -58,7 +68,7 @@ const CreateProductForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const response = await apiFile('products/product/create',  formValue);
+        const response = await apiFile('products/product/create', formValue);
         console.log(response)
     }
 
@@ -66,7 +76,7 @@ const CreateProductForm = () => {
         <>
             <form onSubmit={handleSubmit} encType="multipart/form-data" className="flex flex-col">
 
-            <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
+                <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
                     <label className="pt-1" style={{
                         width: '100px'
                     }}>Titre</label>
@@ -159,7 +169,13 @@ const CreateProductForm = () => {
                         <></>
                     )
                 }
-                <Selector selectorList={tabl}/>
+                {!isLoading ? (
+                    <Selector selectorList={categoryList} setValue={setSelectedValue}/>
+
+                ) : (
+                    <p>Loading...</p>
+                )
+                }
                 <button type="submit" className="hover:text-pink my-12 text-right" disabled={returnError !== ''}
                         style={{
                             color: returnError !== '' ? 'grey' : ''

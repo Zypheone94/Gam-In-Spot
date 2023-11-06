@@ -1,13 +1,12 @@
 import React, {useEffect, useState, useRef} from 'react';
 
-function Selector({selectorList, isSearch, setValue, defaultValue, placeHolder, width, openHeight}) {
+function Selector({selectorList, isSearch, setValue, defaultValue, placeHolder, width, openHeight, multiple}) {
 
 
     const [isOpen, setIsOpen] = useState(false);
     const [searchContent, setSearchContent] = useState('');
     const [selectedValue, setSelectedValue] = useState(defaultValue ? defaultValue : '');
     const [isDisable, setIsDisable] = useState(true);
-
 
     function useOutsideAlerter(ref) {
         useEffect(() => {
@@ -41,7 +40,6 @@ function Selector({selectorList, isSearch, setValue, defaultValue, placeHolder, 
                 setValue(selectedValue);
             }
         }
-        // eslint-disable-next-line
     }, [isOpen]);
 
     const onSearch = e => {
@@ -52,6 +50,16 @@ function Selector({selectorList, isSearch, setValue, defaultValue, placeHolder, 
 
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
+
+    const setter = (data) => {
+        if (multiple) {
+            console.log('ok')
+        } else {
+            setSelectedValue(data);
+            setValue(data);
+            setSearchContent(data);
+        }
+    }
 
     return (
         <div
@@ -121,11 +129,7 @@ function Selector({selectorList, isSearch, setValue, defaultValue, placeHolder, 
                                     <div
                                         className=''
                                         key={id}
-                                        onClick={() => {
-                                            setSelectedValue(data);
-                                            setValue(data);
-                                            setSearchContent(data);
-                                        }}
+                                        onClick={() => setter(data)}
                                         style={{
                                             padding: '7px 13px',
                                             color: 'lime',
@@ -142,11 +146,7 @@ function Selector({selectorList, isSearch, setValue, defaultValue, placeHolder, 
                                     <div
                                         className=''
                                         key={id}
-                                        onClick={() => {
-                                            setSelectedValue(data);
-                                            setValue(data);
-                                            setSearchContent(data);
-                                        }}
+                                        onClick={() => setter(data)}
                                         style={{
                                             padding: '7px 13px',
                                             color: 'lime',
