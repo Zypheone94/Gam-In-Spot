@@ -11,7 +11,7 @@ const CreateProductForm = () => {
     const navigate = useNavigate()
     const user = useSelector(state => state.user)
     const [categoryList, setCategoryList] = useState([])
-    const [selectedValue, setSelectedValue] = useState()
+    const [selectedValue, setSelectedValue] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
@@ -170,12 +170,22 @@ const CreateProductForm = () => {
                     )
                 }
                 {!isLoading ? (
-                    <Selector selectorList={categoryList} setValue={setSelectedValue}/>
-
+                    <Selector selectorList={categoryList} setValue={setSelectedValue} value={selectedValue} multiple/>
                 ) : (
                     <p>Loading...</p>
                 )
                 }
+                <div>
+                    {
+                        selectedValue && selectedValue.length > 0 ? (
+                            selectedValue.map((value, index) => (
+                                <p key={index}>{value}</p>
+                            ))
+                        ) : null
+                    }
+                </div>
+
+
                 <button type="submit" className="hover:text-pink my-12 text-right" disabled={returnError !== ''}
                         style={{
                             color: returnError !== '' ? 'grey' : ''

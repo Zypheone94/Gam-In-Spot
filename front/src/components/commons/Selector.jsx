@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 
-function Selector({selectorList, isSearch, setValue, defaultValue, placeHolder, width, openHeight, multiple}) {
+function Selector({selectorList, isSearch, value, setValue, defaultValue, placeHolder, width, openHeight, multiple}) {
 
 
     const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +53,16 @@ function Selector({selectorList, isSearch, setValue, defaultValue, placeHolder, 
 
     const setter = (data) => {
         if (multiple) {
-            console.log('ok')
+
+            const updatedValue = [...value]; // Crée une copie du tableau value
+
+            if (updatedValue.includes(data)) {
+                const index = updatedValue.indexOf(data);
+                updatedValue.splice(index, 1);
+            } else {
+                updatedValue.push(data);
+            }
+            setValue(updatedValue)
         } else {
             setSelectedValue(data);
             setValue(data);
