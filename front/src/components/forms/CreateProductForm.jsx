@@ -10,6 +10,7 @@ const CreateProductForm = () => {
 
     const navigate = useNavigate()
     const user = useSelector(state => state.user)
+    const [categoryDetailList, setCategoryDetailList] = useState()
     const [categoryList, setCategoryList] = useState([])
     const [selectedValue, setSelectedValue] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -21,12 +22,12 @@ const CreateProductForm = () => {
         setIsLoading(true)
         api('products/product/loadcat')
             .then(response => {
-                console.log(response);
                 response.forEach((value) => {
                     if (!categoryList.includes(value.title)) {
                         categoryList.push(value.title)
                     }
                 })
+                setCategoryDetailList(response)
                 setIsLoading(false)
                 console.log(categoryList)
             })
@@ -35,6 +36,26 @@ const CreateProductForm = () => {
             });
     }, [])
 
+    useEffect(() => {
+        setFormValue({
+            ...formValue,
+            category: []
+        });
+
+        let selectedCat = []
+        selectedValue.forEach((val) => {
+            categoryDetailList.forEach((cat) => {
+                if (val === cat.title) {
+                    selectedCat.push(cat.categoryId)
+                }
+            })
+        })
+        setFormValue({
+            ...formValue,
+            category: [...selectedCat]
+        })
+    }, [selectedValue]);
+
     const [formValue, setFormValue] = useState({
         seller_id: user.id,
         title: "",
@@ -42,6 +63,7 @@ const CreateProductForm = () => {
         productDescription: "",
         price: "",
         images: [],
+        category: []
     })
     const [returnError, setReturnError] = useState('')
 
@@ -62,12 +84,12 @@ const CreateProductForm = () => {
             const {value} = e.target;
             setFormValue({...formValue, [name]: value});
         }
-        console.log(formValue)
     }
 
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        console.log(formValue)
         const response = await apiFile('products/product/create', formValue);
         console.log(response)
     }
