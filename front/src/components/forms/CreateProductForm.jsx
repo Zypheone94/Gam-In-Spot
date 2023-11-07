@@ -54,6 +54,7 @@ const CreateProductForm = () => {
             ...formValue,
             category: [...selectedCat]
         })
+        console.log(formValue)
     }, [selectedValue]);
 
     const [formValue, setFormValue] = useState({

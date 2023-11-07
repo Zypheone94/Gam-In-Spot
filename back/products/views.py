@@ -96,8 +96,9 @@ class ProductDetailView(APIView):
 class ProductCreateView(APIView):
     def post(self, request):
 
-        data = request.data
-        print(data)
+        data = request.data.copy()
+        data['category'] = data.pop('category[]')
+        print('test', data)
 
         try:
             seller_username = CustomUser.objects.get(id=data['seller_id'])
@@ -136,7 +137,15 @@ class ProductCreateView(APIView):
 
         data['createdDate'] = timezone.now().date()
 
-        serializer = ProductSerializer(data=request.data)
+        category_ids = request.data.getlist('category[]')
+        categories = Category.objects.filter(categoryId__in=category_ids)
+
+        serializer_data = data.copy()
+        serializer_data['category'] = category_ids
+
+        print(serializer_data)
+
+        serializer = ProductSerializer(data=serializer_data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -152,9 +161,9 @@ class ProductCreateView(APIView):
 
         return slug
 
+
 class LoadCategory(APIView):
     def get(self, request):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-

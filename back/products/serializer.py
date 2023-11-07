@@ -8,18 +8,15 @@ from .models import Product, Category
 class CategorySerializer(ModelSerializer):
     class Meta:
         model = Category
-        fields = ['categoryId', 'title', 'slug']
+        fields = '__all__'
 
 
 class ProductSerializer(ModelSerializer):
     seller = serializers.StringRelatedField()
-    print(seller)
-
 
     class Meta:
         model = Product
         fields = '__all__'
-
 
     def get_seller(self, obj):
         seller_id = obj.seller_id

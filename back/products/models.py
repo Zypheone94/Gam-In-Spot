@@ -32,7 +32,7 @@ class Product(models.Model):
     plateform = models.CharField(max_length=35, null=True, blank=True)
     productDescription = models.TextField(null=True, blank=True)
     createdDate = models.DateField()
-    category = models.ManyToManyField(Category, null=True, blank=True)
+    category = models.ManyToManyField(Category)
     seller_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     edition = models.CharField(max_length=50, default="Normal")
 
