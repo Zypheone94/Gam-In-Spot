@@ -197,7 +197,11 @@ const CreateProductForm = () => {
                             selectedValue && selectedValue.length > 0 ? (
                                 selectedValue.map((value, index) => (
                                     <div className='flex px-8'>
-                                        <p style={{color: 'red', cursor: 'pointer'}}>X</p>
+                                        <p style={{color: 'red', cursor: 'pointer'}} onClick={() => {
+                                            let updateValue = [...selectedValue]
+                                            updateValue.splice(index, 1);
+                                            setSelectedValue(updateValue)
+                                        }}>X</p>
                                         <p key={index} className='ml-2'>{value}</p>
                                     </div>
                                 ))
