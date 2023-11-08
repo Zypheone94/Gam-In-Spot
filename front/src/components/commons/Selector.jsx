@@ -76,7 +76,7 @@ function Selector({selectorList, isSearch, value, setValue, defaultValue, placeH
             ref={wrapperRef}
             className=''
             style={{
-                borderColor: isOpen && 'purple',
+                borderColor: isOpen && 'black',
                 display: 'flex',
                 justifyContent: 'center',
                 flexDirection: 'column',
@@ -89,7 +89,7 @@ function Selector({selectorList, isSearch, value, setValue, defaultValue, placeH
                 borderRadius: '8px',
                 border: '1px solid ',
                 '&:hover': {
-                    borderColor: 'green'
+                    borderColor: 'black'
                 }
             }}
         >
@@ -153,12 +153,11 @@ function Selector({selectorList, isSearch, value, setValue, defaultValue, placeH
                             } else if (!searchContent)
                                 return (
                                     <div
-                                        className=''
+                                        className='text-deepPurple'
                                         key={id}
                                         onClick={() => setter(data)}
                                         style={{
                                             padding: '7px 13px',
-                                            color: 'lime',
                                             '&:hover': {
                                                 backgroundColor: '#E5E5E5'
                                             }

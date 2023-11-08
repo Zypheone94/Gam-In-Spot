@@ -82,7 +82,7 @@ const CreateProductForm = () => {
         e.preventDefault()
         const response = await apiFile('products/product/create', formValue);
         console.log(response)
-        if(category.length > 0){
+        if (category.length > 0) {
             let reqValues = {'product_id': response.productId, 'category_ids': category}
             const req = await api('products/product/add-categories', 'POST', reqValues)
             console.log(req)
@@ -179,6 +179,35 @@ const CreateProductForm = () => {
                         className="w-3/4 p-1 md:w-2/4"
                     />
                 </div>
+                <div className='flex justify-between mt-8 mx-16 md:justify-around md:mt-12'>
+                    <div className='w-1/2'>
+                        {!isLoading ? (
+                            <div style={{
+                                minWidth: '200px',
+                                minHeight: '100px',
+                            }}>
+                                <Selector selectorList={categoryList} setValue={setSelectedValue} value={selectedValue}
+                                          multiple/>
+                            </div>
+                        ) : (
+                            <p>Loading...</p>
+                        )}
+                    </div>
+                    <div className='w-1/2 flex flex-wrap'>
+                        {
+                            selectedValue && selectedValue.length > 0 ? (
+                                selectedValue.map((value, index) => (
+                                    <div className='flex px-8'>
+                                        <p style={{color: 'red', cursor: 'pointer'}}>X</p>
+                                        <p key={index} className='ml-2'>{value}</p>
+                                    </div>
+                                ))
+                            ) : <p>Vous n'avez séléctionné(e) aucune catégorie</p>
+                        }
+                    </div>
+
+                </div>
+
                 {
                     returnError ? (
                         <p style={{color: 'red', marginTop: '20px'}}>{returnError}</p>
@@ -186,22 +215,6 @@ const CreateProductForm = () => {
                         <></>
                     )
                 }
-                {!isLoading ? (
-                    <Selector selectorList={categoryList} setValue={setSelectedValue} value={selectedValue} multiple/>
-                ) : (
-                    <p>Loading...</p>
-                )
-                }
-                <div>
-                    {
-                        selectedValue && selectedValue.length > 0 ? (
-                            selectedValue.map((value, index) => (
-                                <p key={index}>{value}</p>
-                            ))
-                        ) : null
-                    }
-                </div>
-
 
                 <button type="submit" className="hover:text-pink my-12 text-right" disabled={returnError !== ''}
                         style={{
