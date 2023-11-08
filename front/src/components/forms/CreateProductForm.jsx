@@ -182,8 +182,8 @@ const CreateProductForm = () => {
                         className="w-3/4 p-1 md:w-2/4"
                     />
                 </div>
-                <div className='flex justify-between mt-8 mx-14 md:justify-around md:mt-12'>
-                    <div className='w-1/4'>
+                <div className='flex justify-between mt-8 md:mx-14 md:justify-around md:mt-12'>
+                    <div className='w-1/2 md:w-1/4'>
                         {!isLoading ? (
                             <div style={{
                                 minWidth: '200px',
@@ -197,7 +197,7 @@ const CreateProductForm = () => {
                             <p>Loading...</p>
                         )}
                     </div>
-                    <div className='w-3/4 flex justify-end'>
+                    <div className='w-1/2 flex flex-col justify-end md:flex-wrap md:mx-8 md:w-3/4 md:flex-row lg:flex-nowrap lg:mx-2'>
                         {
                             selectedValue && selectedValue.length > 0 ? (
                                 selectedValue.map((value, index) => (
