@@ -139,7 +139,7 @@ class ProductCreateView(APIView):
         serializer = ProductSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response({'data' : serializer.data, 'code': 200}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def generate_unique_slug(self, base_slug):
@@ -179,7 +179,7 @@ class AddProductCategories(APIView):
         print("product_id:", product_id)
         print("categories:", category_ids)
 
-        return Response({'message': 'Catégories ajoutées au produit avec succès'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Catégories ajoutées au produit avec succès', 'code': 200}, status=status.HTTP_200_OK)
 
 
 class LoadCategory(APIView):

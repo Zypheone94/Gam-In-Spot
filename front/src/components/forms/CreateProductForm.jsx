@@ -86,10 +86,18 @@ const CreateProductForm = () => {
         const response = await apiFile('products/product/create', formValue);
         console.log(response)
         if (category.length > 0) {
-            let reqValues = {'product_id': response.productId, 'category_ids': category}
+            let reqValues = {'product_id': response.data.productId, 'category_ids': category}
             const req = await api('products/product/add-categories', 'POST', reqValues)
             console.log(req)
+            if (req.code === 200) {
+                navigate('/product/' + response.data.slug)
+            }
+        } else {
+            if (response.code === 200) {
+                navigate('/product/' + response.data.slug)
+            }
         }
+
     }
 
     return (
@@ -197,7 +205,8 @@ const CreateProductForm = () => {
                             <p>Loading...</p>
                         )}
                     </div>
-                    <div className='w-1/2 flex flex-col justify-end md:flex-wrap md:mx-8 md:w-3/4 md:flex-row lg:flex-nowrap lg:mx-2'>
+                    <div
+                        className='w-1/2 flex flex-col justify-end md:flex-wrap md:mx-8 md:w-3/4 md:flex-row lg:flex-nowrap lg:mx-2'>
                         {
                             selectedValue && selectedValue.length > 0 ? (
                                 selectedValue.map((value, index) => (
