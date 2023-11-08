@@ -184,10 +184,9 @@ const CreateProductForm = () => {
                         {!isLoading ? (
                             <div style={{
                                 minWidth: '200px',
-                                minHeight: '100px',
                             }}>
                                 <Selector selectorList={categoryList} setValue={setSelectedValue} value={selectedValue}
-                                          multiple/>
+                                          multiple isSearch disable={selectedValue.length === 4}/>
                             </div>
                         ) : (
                             <p>Loading...</p>

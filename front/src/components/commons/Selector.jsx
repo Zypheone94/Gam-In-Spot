@@ -1,12 +1,22 @@
 import React, {useEffect, useState, useRef} from 'react';
 
-function Selector({selectorList, isSearch, value, setValue, defaultValue, placeHolder, width, openHeight, multiple}) {
+function Selector({
+                      selectorList,
+                      isSearch,
+                      value,
+                      setValue,
+                      defaultValue,
+                      placeHolder,
+                      width,
+                      openHeight,
+                      multiple,
+                      disable
+                  }) {
 
 
     const [isOpen, setIsOpen] = useState(false);
     const [searchContent, setSearchContent] = useState('');
     const [selectedValue, setSelectedValue] = useState(defaultValue ? defaultValue : '');
-    const [isDisable, setIsDisable] = useState(true);
 
     function useOutsideAlerter(ref) {
         useEffect(() => {
@@ -22,10 +32,6 @@ function Selector({selectorList, isSearch, value, setValue, defaultValue, placeH
             };
         }, [ref]);
     }
-
-    useEffect(() => {
-        selectorList.length === 0 ? setIsDisable(true) : setIsDisable(false);
-    }, [selectorList]);
 
     useEffect(() => {
         if (selectedValue !== '') setIsOpen(false);
@@ -44,14 +50,14 @@ function Selector({selectorList, isSearch, value, setValue, defaultValue, placeH
 
     const onSearch = e => {
         setSearchContent(e.target.value);
-        setValue(e.target.value);
-        setSelectedValue('');
     };
 
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
     const setter = (data) => {
+        setIsOpen(!isOpen)
+        console.log(isOpen)
         if (multiple) {
 
             const updatedValue = [...value]; // Crée une copie du tableau value
@@ -63,6 +69,8 @@ function Selector({selectorList, isSearch, value, setValue, defaultValue, placeH
                 updatedValue.push(data);
             }
             setValue(updatedValue)
+            setSearchContent('');
+
         } else {
             setSelectedValue(data);
             setValue(data);
@@ -72,7 +80,7 @@ function Selector({selectorList, isSearch, value, setValue, defaultValue, placeH
 
     return (
         <div
-            onClick={isDisable ? null : () => setIsOpen(true)}
+            onClick={disable ? null : () => setIsOpen(!isOpen)}
             ref={wrapperRef}
             className=''
             style={{
@@ -81,11 +89,12 @@ function Selector({selectorList, isSearch, value, setValue, defaultValue, placeH
                 justifyContent: 'center',
                 flexDirection: 'column',
                 zIndex: isOpen ? 12 : 10,
-                cursor: isDisable ? 'not-allowed' : 'pointer',
-                background: isDisable ? '#EEEEEE' : '',
+                cursor: disable ? 'not-allowed' : 'pointer',
+                background: disable ? '#EEEEEE' : '',
                 position: isOpen ? 'absolute' : 'relative',
                 width: width ? width : '185px',
                 minHeight: '30px',
+                maxHeight: isOpen ? '150px' : '30px',
                 borderRadius: '8px',
                 border: '1px solid ',
                 '&:hover': {
@@ -101,10 +110,10 @@ function Selector({selectorList, isSearch, value, setValue, defaultValue, placeH
                         onChange={event => onSearch(event)}
                         value={searchContent !== '' ? searchContent : selectedValue}
                         placeholder={placeHolder}
-                        disabled={isDisable}
+                        disabled={disable}
                         style={{
-                            cursor: isDisable ? 'not-allowed' : 'pointer',
-                            background: isDisable ? '#EEEEEE' : '',
+                            cursor: disable ? 'not-allowed' : 'pointer',
+                            background: disable ? '#EEEEEE' : '',
                             width: '165px',
                             margin: '7px 13px',
                             fontSize: '14px',
