@@ -27,6 +27,9 @@ const CreateProductForm = () => {
                         categoryList.push(value.title)
                     }
                 })
+                let order = [...categoryList]
+                order.sort()
+                setCategoryList(order)
                 setCategoryDetailList(response)
                 setIsLoading(false)
                 console.log(categoryList)
