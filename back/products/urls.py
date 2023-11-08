@@ -3,7 +3,7 @@ from django.urls import path, include
 
 from rest_framework import routers
 
-from .views import CategoryViewSet, ProductViewSet, ProductCreateView, ProductDetailView, LoadCategory
+from .views import CategoryViewSet, ProductViewSet, ProductCreateView, ProductDetailView, LoadCategory, AddProductCategories
 
 app_name = 'product'
 
@@ -15,5 +15,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('product/create', ProductCreateView.as_view(), name='create'),
     path('product/loadcat', LoadCategory.as_view(), name='loadCategory'),
+    path('product/add-categories', AddProductCategories.as_view(), name='addCategories'),
     path('read-product/<str:productSlug>', ProductDetailView.as_view(), name='detailProduct'),
 ]

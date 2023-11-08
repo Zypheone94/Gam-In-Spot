@@ -97,8 +97,7 @@ class ProductCreateView(APIView):
     def post(self, request):
 
         data = request.data.copy()
-        data['category'] = data.pop('category[]')
-        print('test', data)
+        # data['category'] = data.pop('category[]')
 
         try:
             seller_username = CustomUser.objects.get(id=data['seller_id'])
@@ -137,15 +136,7 @@ class ProductCreateView(APIView):
 
         data['createdDate'] = timezone.now().date()
 
-        category_ids = request.data.getlist('category[]')
-        categories = Category.objects.filter(categoryId__in=category_ids)
-
-        serializer_data = data.copy()
-        serializer_data['category'] = category_ids
-
-        print(serializer_data)
-
-        serializer = ProductSerializer(data=serializer_data)
+        serializer = ProductSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -160,6 +151,35 @@ class ProductCreateView(APIView):
             counter += 1
 
         return slug
+
+
+class AddProductCategories(APIView):
+    def post(self, request):
+        data = request.data
+        print(data)
+        product_id = request.data.get('product_id')
+
+        if not product_id:
+            return Response({'message': 'Veuillez fournir un ID de produit'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            product = Product.objects.get(productId=product_id)
+        except Product.DoesNotExist:
+            return Response({'message': 'Le produit n\'existe pas'}, status=status.HTTP_404_NOT_FOUND)
+
+        category_ids = request.data.get('category_ids')
+        print('t', category_ids)
+        for category in category_ids:
+            print(category)
+
+            product.category.add(category)
+
+        product.save()
+
+        print("product_id:", product_id)
+        print("categories:", category_ids)
+
+        return Response({'message': 'Catégories ajoutées au produit avec succès'}, status=status.HTTP_200_OK)
 
 
 class LoadCategory(APIView):

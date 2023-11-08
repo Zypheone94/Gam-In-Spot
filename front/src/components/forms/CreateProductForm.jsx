@@ -37,24 +37,14 @@ const CreateProductForm = () => {
     }, [])
 
     useEffect(() => {
-        setFormValue({
-            ...formValue,
-            category: []
+        const selectedCat = selectedValue.map((val) => {
+            const selectedCategory = categoryDetailList.find((cat) => val === cat.title);
+            return selectedCategory ? selectedCategory.categoryId : null;
         });
 
-        let selectedCat = []
-        selectedValue.forEach((val) => {
-            categoryDetailList.forEach((cat) => {
-                if (val === cat.title) {
-                    selectedCat.push(cat.categoryId)
-                }
-            })
-        })
-        setFormValue({
-            ...formValue,
-            category: [...selectedCat]
-        })
-        console.log(formValue)
+        setCategory(selectedCat.filter((category) => category !== null));
+
+        console.log(category);
     }, [selectedValue]);
 
     const [formValue, setFormValue] = useState({
@@ -64,8 +54,8 @@ const CreateProductForm = () => {
         productDescription: "",
         price: "",
         images: [],
-        category: []
     })
+    const [category, setCategory] = useState([])
     const [returnError, setReturnError] = useState('')
 
     const handleInputChange = (e) => {
@@ -90,9 +80,13 @@ const CreateProductForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(formValue)
         const response = await apiFile('products/product/create', formValue);
         console.log(response)
+        if(category.length > 0){
+            let reqValues = {'product_id': response.productId, 'category_ids': category}
+            const req = await api('products/product/add-categories', 'POST', reqValues)
+            console.log(req)
+        }
     }
 
     return (
