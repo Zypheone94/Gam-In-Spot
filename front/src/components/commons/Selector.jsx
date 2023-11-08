@@ -46,6 +46,7 @@ function Selector({
                 setValue(selectedValue);
             }
         }
+        setSearchContent('')
     }, [isOpen]);
 
     const onSearch = e => {
@@ -57,7 +58,6 @@ function Selector({
 
     const setter = (data) => {
         setIsOpen(!isOpen)
-        console.log(isOpen)
         if (multiple) {
 
             const updatedValue = [...value]; // Crée une copie du tableau value
@@ -82,7 +82,6 @@ function Selector({
         <div
             onClick={disable ? null : () => setIsOpen(!isOpen)}
             ref={wrapperRef}
-            className=''
             style={{
                 borderColor: isOpen && 'black',
                 display: 'flex',
@@ -106,9 +105,9 @@ function Selector({
                 isSearch && (
                     <input
                         type="text"
-                        className=''
+                        className='text-deepPurple'
                         onChange={event => onSearch(event)}
-                        value={searchContent !== '' ? searchContent : selectedValue}
+                        value={searchContent !== '' ? searchContent : ''}
                         placeholder={placeHolder}
                         disabled={disable}
                         style={{
@@ -117,17 +116,16 @@ function Selector({
                             width: '165px',
                             margin: '7px 13px',
                             fontSize: '14px',
-                            color: 'red',
                             fontFamily: 'inherit',
                             fontWeight: '600',
-                            borderBottom: '1px solid ' + 'red',
+                            borderBottom: '1px solid #5F70BD',
                             '&:hover': {
-                                borderBottom: '2px solid ' + 'red',
+                                borderBottom: '2px solid #5F70BD',
                                 marginBottom: '6px'
                             },
                             '&:focus-visible': {
                                 outline: 'none',
-                                borderBottom: '2px solid ' + 'red'
+                                borderBottom: '2px solid #5F70BD'
                             }
                         }}
                     />
@@ -145,12 +143,11 @@ function Selector({
                             if (searchContent && data.toLowerCase().includes(searchContent.toLowerCase())) {
                                 return (
                                     <div
-                                        className=''
+                                        className='text-deepPurple'
                                         key={id}
                                         onClick={() => setter(data)}
                                         style={{
                                             padding: '7px 13px',
-                                            color: 'lime',
                                             '&:hover': {
                                                 backgroundColor: '#E5E5E5'
                                             }

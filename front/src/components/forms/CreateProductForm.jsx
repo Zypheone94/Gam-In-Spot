@@ -182,11 +182,13 @@ const CreateProductForm = () => {
                         className="w-3/4 p-1 md:w-2/4"
                     />
                 </div>
-                <div className='flex justify-between mt-8 mx-16 md:justify-around md:mt-12'>
-                    <div className='w-1/2'>
+                <div className='flex justify-between mt-8 mx-14 md:justify-around md:mt-12'>
+                    <div className='w-1/4'>
                         {!isLoading ? (
                             <div style={{
                                 minWidth: '200px',
+                                minHeight: '30px',
+                                position: 'relative'
                             }}>
                                 <Selector selectorList={categoryList} setValue={setSelectedValue} value={selectedValue}
                                           multiple isSearch disable={selectedValue.length === 4}/>
@@ -195,11 +197,11 @@ const CreateProductForm = () => {
                             <p>Loading...</p>
                         )}
                     </div>
-                    <div className='w-1/2 flex flex-wrap'>
+                    <div className='w-3/4 flex justify-end'>
                         {
                             selectedValue && selectedValue.length > 0 ? (
                                 selectedValue.map((value, index) => (
-                                    <div className='flex px-8'>
+                                    <div className='flex px-4'>
                                         <p style={{color: 'red', cursor: 'pointer'}} onClick={() => {
                                             let updateValue = [...selectedValue]
                                             updateValue.splice(index, 1);
@@ -222,12 +224,16 @@ const CreateProductForm = () => {
                     )
                 }
 
-                <button type="submit" className="hover:text-pink my-12 text-right" disabled={returnError !== ''}
-                        style={{
-                            color: returnError !== '' ? 'grey' : ''
-                        }}>
-                    Mettre en ligne l'annonce
-                </button>
+                <div className="text-right">
+                    <button type="submit" className="hover:text-pink mt-12 mb-20"
+                            disabled={returnError !== ''}
+                            style={{
+                                color: returnError !== '' ? 'grey' : ''
+                            }}>
+                        Mettre en ligne l'annonce
+                    </button>
+                </div>
+
             </form>
         </>
     )
