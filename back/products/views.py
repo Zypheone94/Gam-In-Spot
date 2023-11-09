@@ -141,7 +141,7 @@ class ProductCreateView(APIView):
         serializer = ProductSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'data' : serializer.data, 'code': 200}, status=status.HTTP_201_CREATED)
+            return Response({'data': serializer.data, 'code': 200}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def generate_unique_slug(self, base_slug):
@@ -158,8 +158,7 @@ class ProductCreateView(APIView):
 class AddProductCategories(APIView):
     def post(self, request):
         data = request.data
-        print(data)
-        product_id = request.data.get('product_id')
+        product_id = request.query.get('product_id')
 
         if not product_id:
             return Response({'message': 'Veuillez fournir un ID de produit'}, status=status.HTTP_400_BAD_REQUEST)
@@ -181,7 +180,8 @@ class AddProductCategories(APIView):
         print("product_id:", product_id)
         print("categories:", category_ids)
 
-        return Response({'message': 'Catégories ajoutées au produit avec succès', 'code': 200}, status=status.HTTP_200_OK)
+        return Response({'message': 'Catégories ajoutées au produit avec succès', 'code': 200},
+                        status=status.HTTP_200_OK)
 
 
 class LoadCategory(APIView):
@@ -191,26 +191,55 @@ class LoadCategory(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class LiteProductListView(ListAPIView):
-    serializer_class = LiteProductSerializer
+class LiteProductListView(APIView):
+    def post(self, request):
+        data = request.data
+        seller_id = data.get('seller_id', None)
+        limit = data.get('limit', None)
 
-    def get_queryset(self):
-        # Filtrer par vendeur
-        seller_id = self.request.query_params.get('seller_id', None)
-        queryset = Product.objects.all()
-        if seller_id:
-            queryset = queryset.filter(seller_id=seller_id)
+        def check_url_status(url):
+            try:
+                response = requests.get(url)
+                if response.status_code == 200:
+                    return True
+                else:
+                    return False
+            except requests.exceptions.RequestException as e:
+                print(f"Impossible d'accéder à l'URL {url}. Erreur : {e}")
+                return False
 
-        # Limiter le nombre de produits
-        limit = self.request.query_params.get('limit', None)
-        if limit:
-            queryset = queryset[:int(limit)]
+        try:
+            products = Product.objects.all()
 
-        # Filtrer par date d'ajout (par exemple, les produits ajoutés au cours des 7 derniers jours)
-        days_ago = self.request.query_params.get('days_ago', None)
-        if days_ago:
-            # Assure-toi d'importer timedelta de datetime
-            from datetime import timedelta
-            queryset = queryset.filter(date_added__gte=(timezone.now() - timedelta(days=int(days_ago))))
+            if seller_id:
+                products = products.filter(seller_id=seller_id)
 
-        return queryset
+            products = products.order_by('-productId')
+
+            if limit:
+                products = products[:int(limit)]
+
+            result_data = []
+
+            for product in products:
+                serialized_product = LiteProductSerializer(product).data
+                seller = CustomUser.objects.get(pk=serialized_product['seller_id'])
+                serialized_product['seller'] = seller.__str__()
+
+                images = []
+
+                for i in range(1, 4):
+                    url = f"http://localhost:8000/static/{serialized_product['seller']}/{serialized_product['slug']}/image_{i}.jpg"
+                    if check_url_status(url):
+                        images.append(url)
+
+                if images:
+                    serialized_product['images'] = images
+                print(images)
+
+                result_data.append(serialized_product)
+
+            return Response(result_data, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
