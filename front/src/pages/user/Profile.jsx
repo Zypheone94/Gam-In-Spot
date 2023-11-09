@@ -12,6 +12,8 @@ const Profile = () => {
     const user = useSelector(state => state.user)
     const navigate = useNavigate()
     const [productList, setProductList] = useState()
+    const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [deleteModalData, setDeleteModalData] = useState({title: "", id: ""});
 
     useEffect(() => {
         if (user === null || user.email === undefined) {
@@ -33,15 +35,32 @@ const Profile = () => {
     }
 
     const deleteProduct = async (productId) => {
-        console.log(productId)
-        try {
-            const response = await api('products/product/delete-product-list', 'DELETE', {'productId': productId});
-            console.log(response)
-        } catch (error) {
-            console.error('Error fetching product list:', error);
-        }
-        getLastProduct()
+        console.log(productId);
+        // Ouverture de la modale de confirmation avant la suppression
+        setDeleteModalData({title: "Confirmation de suppression", id: productId});
+        setDeleteModalOpen(true);
     }
+
+    const confirmDeleteProduct = async () => {
+        try {
+            const response = await api("products/product/delete-product-list", "DELETE", {
+                productId: deleteModalData.id,
+            });
+            console.log(response);
+        } catch (error) {
+            console.error("Error deleting product:", error);
+        }
+
+        setDeleteModalOpen(false);
+        setDeleteModalData({title: "", id: ""});
+
+        getLastProduct();
+    };
+
+    const closeDeleteModal = () => {
+        setDeleteModalOpen(false);
+        setDeleteModalData({title: "", id: ""});
+    };
 
     return (
 
@@ -197,6 +216,42 @@ const Profile = () => {
             ) : (
                 <></>
             )}
+            {isDeleteModalOpen && (
+                <div
+                    className="modal open"
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+
+                    onClick={(e) => {
+                        // Ferme la modale de confirmation si on clique en dehors d'elle
+                        if (e.target.classList.contains("modal")) {
+                            closeDeleteModal();
+                        }
+                    }}
+                >
+                    <div className="modal-content" style={{
+                        background: 'white',
+                        padding: '20px',
+                        borderRadius: '10px',
+                        zIndex: 9999
+                    }}>
+                        <h2>{deleteModalData.title}</h2>
+                        <p>ID: {deleteModalData.id}</p>
+                        <button onClick={confirmDeleteProduct}>Confirmer la suppression</button>
+                        <button onClick={closeDeleteModal}>Annuler</button>
+                    </div>
+                </div>
+            )
+            }
         </section>
 
     )
