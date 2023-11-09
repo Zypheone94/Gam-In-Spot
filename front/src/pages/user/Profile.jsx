@@ -27,10 +27,20 @@ const Profile = () => {
         try {
             const response = await api('products/product/loadProductList', 'POST', {'limit': 3, 'seller_id': user.id});
             setProductList(response)
-            console.log(productList)
         } catch (error) {
             console.error('Error fetching product list:', error);
         }
+    }
+
+    const deleteProduct = async (productId) => {
+        console.log(productId)
+        try {
+            const response = await api('products/product/delete-product-list', 'DELETE', {'productId': productId});
+            console.log(response)
+        } catch (error) {
+            console.error('Error fetching product list:', error);
+        }
+        getLastProduct()
     }
 
     return (
@@ -156,17 +166,21 @@ const Profile = () => {
                                 {
                                     productList && productList.length > 0 ?
                                         productList.map((product, index) =>
+
                                             (
                                                 <div className='relative'>
-                                                    <p className='absolute flex justify-center items-center text-xl' style={{
-                                                        right: '30px',
-                                                        top: '5px',
-                                                        width: '20px',
-                                                        height: '20px',
-                                                        backdropFilter: 'blur(10px)',
-                                                        borderRadius: '10px',
-                                                        color: 'red',
-                                                        cursor: 'pointer'
+                                                    <p className='absolute flex justify-center items-center text-xl'
+                                                       style={{
+                                                           right: '30px',
+                                                           top: '5px',
+                                                           width: '20px',
+                                                           height: '20px',
+                                                           backdropFilter: 'blur(10px)',
+                                                           borderRadius: '10px',
+                                                           color: 'red',
+                                                           cursor: 'pointer'
+                                                       }} onClick={() => {
+                                                        deleteProduct(product.productId);
                                                     }}>X</p>
                                                     <ProductCard productValue={product}/>
                                                 </div>

@@ -4,7 +4,7 @@ from django.urls import path, include
 from rest_framework import routers
 
 from .views import CategoryViewSet, ProductViewSet, ProductCreateView, ProductDetailView, LoadCategory, \
-    AddProductCategories, LiteProductListView
+    AddProductCategories, LiteProductListView, DeleteProductView
 
 app_name = 'product'
 
@@ -18,5 +18,6 @@ urlpatterns = [
     path('product/loadcat', LoadCategory.as_view(), name='loadCategory'),
     path('product/add-categories', AddProductCategories.as_view(), name='addCategories'),
     path('product/loadProductList', LiteProductListView.as_view(), name='loadProductList'),
+    path('product/delete-product-list', DeleteProductView.as_view(), name='deleteProductList'),
     path('read-product/<str:productSlug>', ProductDetailView.as_view(), name='detailProduct'),
 ]

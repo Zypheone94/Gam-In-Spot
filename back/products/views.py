@@ -1,6 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -9,7 +8,7 @@ from django.utils.text import slugify
 from django.utils import timezone
 import os
 import requests
-from datetime import timedelta
+from django.shortcuts import get_object_or_404
 
 from .models import Category, Product
 from users.models import CustomUser
@@ -243,3 +242,18 @@ class LiteProductListView(APIView):
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class DeleteProductView(APIView):
+    def delete(self, request):
+        product_id = request.data.get('productId')
+
+        if product_id is None:
+            return Response({'error': 'ID du produit manquant'}, status=status.HTTP_400_BAD_REQUEST)
+
+        product = get_object_or_404(Product, pk=product_id)
+
+        try:
+            product.delete()
+            return Response({'message': 'Produit supprimé avec succès'})
+        except Exception as e:
+            return Response({'error': 'Erreur lors de la suppression du produit'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

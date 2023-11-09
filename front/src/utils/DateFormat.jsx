@@ -1,10 +1,11 @@
 const DateFormat = ({value}) => {
 
-
     let sliced = null
 
-    if (value !== null) {
+    if (value !== undefined) {
         sliced = value.split('-')
+    } else {
+        sliced = null
     }
 
     return (
