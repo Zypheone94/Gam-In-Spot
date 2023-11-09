@@ -1,19 +1,37 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useSelector} from "react-redux"
 import {useNavigate} from "react-router-dom"
 
+import {api} from "../../utils/api.jsx";
+
 import DateFormat from "../../utils/DateFormat.jsx";
+import ProductCard from "../../components/commons/product/ProductCard.jsx";
 
 const Profile = () => {
 
     const user = useSelector(state => state.user)
     const navigate = useNavigate()
+    const [productList, setProductList] = useState()
 
     useEffect(() => {
         if (user === null || user.email === undefined) {
             navigate('/login')
         }
     }, [])
+
+    useEffect(() => {
+        getLastProduct();
+    }, []);
+
+    const getLastProduct = async () => {
+        try {
+            const response = await api('products/product/loadProductList', 'POST', {'limit': 3, 'seller_id': user.id});
+            setProductList(response)
+            console.log(productList)
+        } catch (error) {
+            console.error('Error fetching product list:', error);
+        }
+    }
 
     return (
 
@@ -134,6 +152,19 @@ const Profile = () => {
                                  background: "#EBEBEB"
                              }}>
                             <h3 className='text-pink font-bold'>Dernier produits en lignes</h3>
+                            <div className='flex'>
+                                {
+                                    productList && productList.length > 0 ?
+                                        productList.map((product, index) =>
+                                            (
+                                                <ProductCard productValue={product}/>
+                                            )
+                                        ) :
+                                        <p>
+                                            Vous n'avez pas encore de produit mis en ligne
+                                        </p>
+                                }
+                            </div>
                         </div>
                     </div>
                 </>

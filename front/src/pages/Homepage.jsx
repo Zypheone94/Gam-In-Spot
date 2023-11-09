@@ -37,7 +37,6 @@ function Homepage() {
                     )
                 }
             </div>
-
         </div>
     );
 }

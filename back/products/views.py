@@ -128,7 +128,7 @@ class ProductCreateView(APIView):
 
             if 'images[]' in request.FILES:
                 for i, file in enumerate(request.FILES.getlist('images[]'), start=1):
-                    new_file_name = f"image_{i}{os.path.splitext(file.name)[-1]}.jpg"
+                    new_file_name = f"image_{i}.jpg"
 
                     with open(os.path.join(slug_directory, new_file_name), 'wb') as destination:
                         for chunk in file.chunks():
@@ -158,7 +158,7 @@ class ProductCreateView(APIView):
 class AddProductCategories(APIView):
     def post(self, request):
         data = request.data
-        product_id = request.query.get('product_id')
+        product_id = request.data.get('product_id')
 
         if not product_id:
             return Response({'message': 'Veuillez fournir un ID de produit'}, status=status.HTTP_400_BAD_REQUEST)
