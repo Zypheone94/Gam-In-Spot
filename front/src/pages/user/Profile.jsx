@@ -36,9 +36,8 @@ const Profile = () => {
         }
     }
 
-    const deleteProduct = async (title, productId) => {
-        console.log(productId);
-        setDeleteModalData({title: title, id: productId});
+    const deleteProduct = async (title, productId, slug) => {
+        setDeleteModalData({title: title, id: productId, slug: slug, seller:user.username});
         setDeleteModalOpen(true);
     };
 
@@ -47,6 +46,8 @@ const Profile = () => {
             try {
                 const response = await api("products/product/delete-product-list", "DELETE", {
                     productId: deleteModalData.id,
+                    slug: deleteModalData.slug,
+                    seller: user.username
                 });
                 console.log(response);
             } catch (error) {
@@ -205,7 +206,7 @@ const Profile = () => {
                                                            color: 'red',
                                                            cursor: 'pointer'
                                                        }} onClick={() => {
-                                                        deleteProduct(product.title, product.productId);
+                                                        deleteProduct(product.title, product.productId, product.slug);
                                                     }}>X</p>
                                                     <ProductCard productValue={product}/>
                                                 </div>

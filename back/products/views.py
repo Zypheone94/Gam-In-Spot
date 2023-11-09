@@ -243,17 +243,30 @@ class LiteProductListView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class DeleteProductView(APIView):
     def delete(self, request):
         product_id = request.data.get('productId')
+        slug = request.data.get('slug')
+        seller = request.data.get('seller')
 
         if product_id is None:
             return Response({'error': 'ID du produit manquant'}, status=status.HTTP_400_BAD_REQUEST)
 
         product = get_object_or_404(Product, pk=product_id)
 
+        checkDir = os.path.join(os.path.dirname(__file__), f"static/{seller}/{slug}/")
+
+        if os.path.exists(checkDir):
+            os.rmdir(checkDir)
+            print('dossier supprimé')
+        else:
+            print("erreur lors de la suppression du dossier, slug éroné ou le dossier n'existe pas")
+            print(f"static/{seller}/{slug}/")
+
         try:
             product.delete()
             return Response({'message': 'Produit supprimé avec succès'})
         except Exception as e:
-            return Response({'error': 'Erreur lors de la suppression du produit'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': 'Erreur lors de la suppression du produit'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
