@@ -9,6 +9,7 @@ from django.utils import timezone
 import os
 import requests
 from django.shortcuts import get_object_or_404
+import shutil
 
 from .models import Category, Product
 from users.models import CustomUser
@@ -258,7 +259,7 @@ class DeleteProductView(APIView):
         checkDir = os.path.join(os.path.dirname(__file__), f"static/{seller}/{slug}/")
 
         if os.path.exists(checkDir):
-            os.rmdir(checkDir)
+            shutil.rmtree(checkDir)
             print('dossier supprimé')
         else:
             print("erreur lors de la suppression du dossier, slug éroné ou le dossier n'existe pas")
