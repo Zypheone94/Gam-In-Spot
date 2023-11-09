@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom"
 const ProductCard = ({productValue}) => {
 
     const navigate = useNavigate()
+    console.log(productValue)
 
     return (
         <div className='mx-4' style={{

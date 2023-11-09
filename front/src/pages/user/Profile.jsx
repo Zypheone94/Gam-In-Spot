@@ -62,11 +62,9 @@ const Profile = () => {
                                 user !== '' && (
                                     <>
                                         <p className='text-deepPurple mt-4'><span
-                                            className='underline font-bold'>Date de naissance :</span> <DateFormat
-                                            type="birthDate" value=""/></p>
+                                            className='underline font-bold'>Date de naissance :</span> <DateFormat value={user.birthDate}/></p>
                                         <p className='text-deepPurple mt-4 mb-2'><span
-                                            className='underline font-bold'>Date de création du compte :</span> <DateFormat
-                                            type="creationAccountDate" value=""/></p>
+                                            className='underline font-bold'>Date de création du compte :</span> <DateFormat value={user.creationAccountDate}/></p>
                                     </>
                                 )
                             }
