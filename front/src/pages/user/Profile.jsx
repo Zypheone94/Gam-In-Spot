@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux"
 import {useNavigate} from "react-router-dom"
 
@@ -14,6 +14,8 @@ const Profile = () => {
     const [productList, setProductList] = useState()
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
     const [deleteModalData, setDeleteModalData] = useState({title: "", id: ""});
+    const [deleteValue, setDeleteValue] = useState('')
+    const [displayWrong, setDisplayWrong] = useState(false)
 
     useEffect(() => {
         if (user === null || user.email === undefined) {
@@ -34,25 +36,29 @@ const Profile = () => {
         }
     }
 
-    const deleteProduct = async (productId) => {
+    const deleteProduct = async (title, productId) => {
         console.log(productId);
-        // Ouverture de la modale de confirmation avant la suppression
-        setDeleteModalData({title: "Confirmation de suppression", id: productId});
+        setDeleteModalData({title: title, id: productId});
         setDeleteModalOpen(true);
-    }
+    };
 
     const confirmDeleteProduct = async () => {
-        try {
-            const response = await api("products/product/delete-product-list", "DELETE", {
-                productId: deleteModalData.id,
-            });
-            console.log(response);
-        } catch (error) {
-            console.error("Error deleting product:", error);
+        if (deleteModalData.title === deleteValue) {
+            try {
+                const response = await api("products/product/delete-product-list", "DELETE", {
+                    productId: deleteModalData.id,
+                });
+                console.log(response);
+            } catch (error) {
+                console.error("Error deleting product:", error);
+            }
+            setDisplayWrong(false)
+            setDeleteModalOpen(false);
+            setDeleteModalData({title: "", id: ""});
+        } else {
+            console.log(deleteValue)
+            setDisplayWrong(true)
         }
-
-        setDeleteModalOpen(false);
-        setDeleteModalData({title: "", id: ""});
 
         getLastProduct();
     };
@@ -199,7 +205,7 @@ const Profile = () => {
                                                            color: 'red',
                                                            cursor: 'pointer'
                                                        }} onClick={() => {
-                                                        deleteProduct(product.productId);
+                                                        deleteProduct(product.title, product.productId);
                                                     }}>X</p>
                                                     <ProductCard productValue={product}/>
                                                 </div>
@@ -232,22 +238,38 @@ const Profile = () => {
                     }}
 
                     onClick={(e) => {
-                        // Ferme la modale de confirmation si on clique en dehors d'elle
                         if (e.target.classList.contains("modal")) {
                             closeDeleteModal();
                         }
                     }}
                 >
-                    <div className="modal-content" style={{
+                    <div className="modal-content w-1/2 flex flex-col justify-between" style={{
                         background: 'white',
                         padding: '20px',
                         borderRadius: '10px',
-                        zIndex: 9999
+                        zIndex: 9999,
+                        height: '300px'
                     }}>
                         <h2>{deleteModalData.title}</h2>
-                        <p>ID: {deleteModalData.id}</p>
-                        <button onClick={confirmDeleteProduct}>Confirmer la suppression</button>
-                        <button onClick={closeDeleteModal}>Annuler</button>
+                        <p>Merci d'entrer le titre de votre annonce pour valider sa suppression</p>
+                        <input
+                            type="text"
+                            name="deleteValue"
+                            onChange={e => setDeleteValue(e.target.value)}
+                            className="w-3/4 p-1 md:w-2/4"
+                            style={{
+                                border: '1px solid #F72585',
+                                borderRadius: '10px'
+                            }}
+                        />
+                        <p style={{color: 'red'}}>{displayWrong ? 'Vous avez entré un titre éroné' : ''}</p>
+
+                        <div className='flex justify-between'>
+                            <button className='hover:text-pink' onClick={confirmDeleteProduct}>Confirmer la
+                                suppression
+                            </button>
+                            <button onClick={closeDeleteModal} style={{color: 'red'}}>Annuler</button>
+                        </div>
                     </div>
                 </div>
             )
