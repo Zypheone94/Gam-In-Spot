@@ -27,3 +27,9 @@ class ProductSerializer(ModelSerializer):
             return seller.username
         except CustomUser.DoesNotExist:
             return None
+
+
+class LiteProductSerializer(ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['title', 'slug', 'price', 'createDate', 'seller_id']

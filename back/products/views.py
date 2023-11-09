@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -8,11 +9,12 @@ from django.utils.text import slugify
 from django.utils import timezone
 import os
 import requests
+from datetime import timedelta
 
 from .models import Category, Product
 from users.models import CustomUser
 
-from .serializer import CategorySerializer, ProductSerializer
+from .serializer import CategorySerializer, ProductSerializer, LiteProductSerializer
 
 
 class CategoryViewSet(ModelViewSet):
@@ -187,3 +189,28 @@ class LoadCategory(APIView):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class LiteProductListView(ListAPIView):
+    serializer_class = LiteProductSerializer
+
+    def get_queryset(self):
+        # Filtrer par vendeur
+        seller_id = self.request.query_params.get('seller_id', None)
+        queryset = Product.objects.all()
+        if seller_id:
+            queryset = queryset.filter(seller_id=seller_id)
+
+        # Limiter le nombre de produits
+        limit = self.request.query_params.get('limit', None)
+        if limit:
+            queryset = queryset[:int(limit)]
+
+        # Filtrer par date d'ajout (par exemple, les produits ajoutés au cours des 7 derniers jours)
+        days_ago = self.request.query_params.get('days_ago', None)
+        if days_ago:
+            # Assure-toi d'importer timedelta de datetime
+            from datetime import timedelta
+            queryset = queryset.filter(date_added__gte=(timezone.now() - timedelta(days=int(days_ago))))
+
+        return queryset
