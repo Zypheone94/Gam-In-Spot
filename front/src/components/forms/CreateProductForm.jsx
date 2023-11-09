@@ -56,6 +56,7 @@ const CreateProductForm = () => {
         plateform: "",
         productDescription: "",
         price: "",
+        edition: "Normale",
         images: [],
     })
     const [category, setCategory] = useState([])
@@ -168,6 +169,23 @@ const CreateProductForm = () => {
                         placeholder="Prix"
                         required
                         value={formValue?.price}
+                        onChange={(e) => handleInputChange(e)}
+                        className="w-3/4 p-1 md:w-2/4"
+                        style={{
+                            border: '1px solid #F72585',
+                            borderRadius: '10px'
+                        }}
+                    />
+                </div>
+                <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
+                    <label className="pt-1" style={{
+                        width: '100px'
+                    }}>Édition</label>
+                    <input
+                        type="text"
+                        name="edition"
+                        placeholder="Édition"
+                        value={formValue?.edition}
                         onChange={(e) => handleInputChange(e)}
                         className="w-3/4 p-1 md:w-2/4"
                         style={{

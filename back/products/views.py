@@ -97,7 +97,7 @@ class ProductCreateView(APIView):
     def post(self, request):
 
         data = request.data.copy()
-        # data['category'] = data.pop('category[]')
+        print(data['edition'])
 
         try:
             seller_username = CustomUser.objects.get(id=data['seller_id'])
