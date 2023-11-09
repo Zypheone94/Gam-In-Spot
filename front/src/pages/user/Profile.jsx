@@ -62,9 +62,11 @@ const Profile = () => {
                                 user !== '' && (
                                     <>
                                         <p className='text-deepPurple mt-4'><span
-                                            className='underline font-bold'>Date de naissance :</span> <DateFormat value={user.birthDate}/></p>
+                                            className='underline font-bold'>Date de naissance :</span> <DateFormat
+                                            value={user.birthDate}/></p>
                                         <p className='text-deepPurple mt-4 mb-2'><span
-                                            className='underline font-bold'>Date de création du compte :</span> <DateFormat value={user.creationAccountDate}/></p>
+                                            className='underline font-bold'>Date de création du compte :</span> <DateFormat
+                                            value={user.creationAccountDate}/></p>
                                     </>
                                 )
                             }
@@ -150,12 +152,24 @@ const Profile = () => {
                                  background: "#EBEBEB"
                              }}>
                             <h3 className='text-pink font-bold'>Dernier produits en lignes</h3>
-                            <div className='flex'>
+                            <div className='flex justify-between mt-8'>
                                 {
                                     productList && productList.length > 0 ?
                                         productList.map((product, index) =>
                                             (
-                                                <ProductCard productValue={product}/>
+                                                <div className='relative'>
+                                                    <p className='absolute flex justify-center items-center text-xl' style={{
+                                                        right: '30px',
+                                                        top: '5px',
+                                                        width: '20px',
+                                                        height: '20px',
+                                                        backdropFilter: 'blur(10px)',
+                                                        borderRadius: '10px',
+                                                        color: 'red',
+                                                        cursor: 'pointer'
+                                                    }}>X</p>
+                                                    <ProductCard productValue={product}/>
+                                                </div>
                                             )
                                         ) :
                                         <p>

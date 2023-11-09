@@ -12,7 +12,7 @@ const ProductCard = ({productValue}) => {
             borderRadius: '20px',
             width: '200px',
             height: '300px',
-            cursor: 'pointer'
+            cursor: 'pointer',
         }} onClick={() => navigate('/product/' + productValue.slug)}>
             <div style={{
                 height: '55%'
