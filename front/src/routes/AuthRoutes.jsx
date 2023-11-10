@@ -9,6 +9,7 @@ import Profile from "../pages/user/Profile.jsx";
 import ModifyUser from "../pages/user/ModifyUser.jsx";
 import CreateUser from "../pages/user/CreateUser.jsx";
 import DeleteUser from "../pages/user/DeleteUser.jsx";
+import HistoryUser from "../pages/user/HistoryUser.jsx";
 
 const AuthRoutes = [
     {
@@ -42,6 +43,10 @@ const AuthRoutes = [
     {
         path: '/profile/delete',
         element: <><Header/><DeleteUser/></>
+    },
+    {
+        path: '/profile/list',
+        element: <><Header/><HistoryUser/></>
     }
 ]
 

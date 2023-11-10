@@ -192,7 +192,15 @@ const Profile = () => {
                                  borderRadius: '10px',
                                  background: "#EBEBEB"
                              }}>
-                            <h3 className='text-pink font-bold'>Dernier produits en lignes</h3>
+                            <div className='flex justify-between '>
+                                <h3 className='text-pink font-bold'>Dernier produits en lignes</h3>
+                                <p className='text-pink cursor-pointer flex justify-center' style={{
+                                    border: '1px solid #4361EE',
+                                    borderRadius: '20px',
+                                    width: '26px'
+                                }}
+                                onClick={() => navigate('/profile/list')}>+</p>
+                            </div>
                             <div className='flex flex-col mt-8 items-center md:flex-row md:flex-wrap lg:flex-nowrap '>
                                 {
                                     productList && productList.length > 0 ?
