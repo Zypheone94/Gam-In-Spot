@@ -42,7 +42,7 @@ function Header() {
             <header className='
                 lg:flex lg:items-center lg:h-28 lg:px-12 lg:relative lg:flex-row
                 py-8 md:bg-white md:flex md:flex-col md:justify-center md:items-center md:w-full
-                fixed top-0 bg-white flex flex-col w-full items-center '
+                fixed top-0 bg-white flex flex-col w-full items-center z-10'
                     style={style}>
                 <div className="lg:flex-1 lg:pb-0 md:pb-4">
                     <img src={logo} alt="Logo Gam'In-Spot"

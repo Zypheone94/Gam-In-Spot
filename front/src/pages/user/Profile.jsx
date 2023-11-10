@@ -181,23 +181,22 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='py-4 px-10 mt-6'
+                        <div className='py-4 px-10 my-6'
                              style={{
                                  border: "1px solid #4361EE",
                                  borderRadius: '10px',
                                  background: "#EBEBEB"
                              }}>
                             <h3 className='text-pink font-bold'>Dernier produits en lignes</h3>
-                            <div className='flex justify-between mt-8'>
+                            <div className='flex flex-col mt-8 items-center md:flex-row'>
                                 {
                                     productList && productList.length > 0 ?
                                         productList.map((product, index) =>
 
                                             (
-                                                <div className='relative'>
-                                                    <p className='absolute flex justify-center items-center text-xl'
+                                                <div className='relative z-0 mt-8 md:mt-0 md:w-1/3 md:flex md:justify-center'>
+                                                    <p className='absolute flex justify-center items-center text-xl right-8 lg:right-20'
                                                        style={{
-                                                           right: '30px',
                                                            top: '5px',
                                                            width: '20px',
                                                            height: '20px',
