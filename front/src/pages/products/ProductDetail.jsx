@@ -3,8 +3,6 @@ import {api} from "../../utils/api.jsx";
 import WrongPage from "../WrongPage.jsx";
 import {nommage} from "../../utils/nommage.jsx";
 
-import axios from "axios";
-
 function ProductDetail() {
 
     const [productDetail, setProductDetail] = useState([])
@@ -31,7 +29,6 @@ function ProductDetail() {
             }
         };
         getData();
-        console.log(productDetail)
 
     }, [productSlug]);
 
@@ -47,11 +44,20 @@ function ProductDetail() {
 
 
                     <>
-                        <div className='flex flex-col md:flex-row'>
-                            <div id='images' className='md:w-5/12 shadow-2xl'>
-                                <img className='rounded-xl h-full'
-                                     style={{objectFit: 'cover', objectPosition: '50% 50%'}}
-                                     src={productDetail.images ? productDetail.images[0] : 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}/>
+                        <div className='flex flex-col md:flex-row' style={{
+                            minHeight: '40vh',
+                            maxHeight: '45vh'
+                        }}>
+                            <div id='images' className='md:w-5/12 shadow-2xl rounded-xl'>
+                                <img
+                                    className='rounded-xl h-full w-full'
+                                    style={{
+                                        objectFit: 'contain',
+                                        objectPosition: '50% 50%'
+                                    }}
+                                    src={productDetail.images ? productDetail.images[0] : 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}
+                                    alt="Product Image"
+                                />
                             </div>
                             <div id="product_info"
                                  className='flex flex-col md:flex-row rounded-xl mt-12 px-4 py-6 md:mt-0 md:ml-12 md:w-7/12 lg:w-8/12 shadow-lg'
@@ -60,12 +66,26 @@ function ProductDetail() {
                                      background: '#ebebeb',
                                  }}>
                                 <div className='flex flex-col justify-between w-full md:w-3/4 lg:w-4/6'>
-                                    <div>
-                                        <h1 className='text-purple text-xl font-bold'>{nommage(productDetail.title, 25)}</h1>
-                                        <p className='text-lightPurple overflow-y-auto mt-2 mb-4 md:mr-4' style={{
-                                            height: '220px',
-                                            maxWidth: '550px'
-                                        }}>{productDetail.productDescription}</p>
+                                    <h1 className='text-purple text-xl font-bold'>{nommage(productDetail.title, 25)}</h1>
+                                    <div className='flex'>
+                                        {productDetail.images ?
+                                            productDetail.images.map((image, index) => (
+                                                image && (
+                                                    <div style={{ minWidth: '100px', minHeight: '100px', maxHeight: '100px', maxWidth: '100px' }}>
+                                                        <img
+                                                            className='rounded-xl'
+                                                            style={{
+                                                                objectFit: 'cover',
+                                                                objectPosition: '50% 50%',
+                                                                width: '100%',
+                                                                height: '100%',
+                                                            }}
+                                                            src={image}
+                                                            alt={`Image ${index + 1}`}
+                                                        />
+                                                    </div>
+                                                )
+                                            )) : <p className='text-deepPurple'>Aucune image disponible pour se produit</p>}
                                     </div>
                                     <p className='text-purple mt-2 md:mt-0'><b className='underline'>Mise en ligne
                                         :</b> {productDetail.createdDate.split('-').reverse().join('/')}</p>
@@ -102,7 +122,9 @@ function ProductDetail() {
                             height: '25vh'
                         }}>
                             <h1 className='text-purple text-lg font-bold'>Description du jeu :</h1>
-                            <p className='text-lightPurple'>Récupérer une description depuis l'api</p>
+                            <p className='text-lightPurple overflow-y-auto mt-2 mb-4 md:mr-4' style={{
+                                height: '120px'
+                            }}>{productDetail.productDescription}</p>
                         </div>
                     </>
                 )
