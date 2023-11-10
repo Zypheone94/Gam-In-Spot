@@ -29,7 +29,7 @@ const Profile = () => {
 
     const getLastProduct = async () => {
         try {
-            const response = await api('products/product/loadProductList', 'POST', {'limit': 3, 'seller_id': user.id});
+            const response = await api('products/product/loadProductList', 'POST', {'limit': 5, 'seller_id': user.id});
             setProductList(response)
         } catch (error) {
             console.error('Error fetching product list:', error);
@@ -37,7 +37,7 @@ const Profile = () => {
     }
 
     const deleteProduct = async (title, productId, slug) => {
-        setDeleteModalData({title: title, id: productId, slug: slug, seller:user.username});
+        setDeleteModalData({title: title, id: productId, slug: slug, seller: user.username});
         setDeleteModalOpen(true);
     };
 
@@ -72,7 +72,7 @@ const Profile = () => {
     return (
 
         <section className='mx-4
-        lg:flex lg:f-width'>
+        lg:flex lg:flex-col lg:f-width'>
             <div className='hidden sm:block lg:hidden' style={{
                 height: '15rem',
             }}>
@@ -80,38 +80,41 @@ const Profile = () => {
             </div>
             {user !== null ? (
                 <>
-                    <div className='py-4 px-10
+                    <div className='flex flex-col md:flex-row'>
+                        <div className='py-4 px-10
                         lg:w-3/12'
-                         style={{
-                             border: "1px solid #4361EE",
-                             borderRadius: '10px',
-                             background: "#EBEBEB",
-                         }}>
-                        <h3 className='text-pink font-bold'>Information du compte</h3>
-                        <div>
-                            <p className='text-deepPurple mt-6'><span
-                                className='underline font-bold'>Nom :</span> {user.last_name}
-                            </p>
-                            <p className='text-deepPurple mt-4'><span
-                                className='underline font-bold'>Prénom :</span> {user.first_name}</p>
-                            {
-                                user !== '' && (
-                                    <>
-                                        <p className='text-deepPurple mt-4'><span
-                                            className='underline font-bold'>Date de naissance :</span> <DateFormat
-                                            value={user.birthDate}/></p>
-                                        <p className='text-deepPurple mt-4 mb-2'><span
-                                            className='underline font-bold'>Date de création du compte :</span> <DateFormat
-                                            value={user.creationAccountDate}/></p>
-                                    </>
-                                )
-                            }
+                             style={{
+                                 border: "1px solid #4361EE",
+                                 borderRadius: '10px',
+                                 background: "#EBEBEB",
+                             }}>
+                            <h3 className='text-pink font-bold'>Information du compte</h3>
+                            <div>
+                                <p className='text-deepPurple mt-6'><span
+                                    className='underline font-bold'>Nom :</span> {user.last_name}
+                                </p>
+                                <p className='text-deepPurple mt-4'><span
+                                    className='underline font-bold'>Prénom :</span> {user.first_name}</p>
+                                {
+                                    user !== '' && (
+                                        <>
+                                            <p className='text-deepPurple mt-4'><span
+                                                className='underline font-bold'>Date de naissance :</span> <DateFormat
+                                                value={user.birthDate}/></p>
+                                            <p className='text-deepPurple mt-4 mb-2'><span
+                                                className='underline font-bold'>Date de création du compte :</span>
+                                                <DateFormat
+                                                    value={user.creationAccountDate}/></p>
+                                        </>
+                                    )
+                                }
+
+                            </div>
 
                         </div>
-                    </div>
-                    <div className="lg:w-9/12 lg:ml-6">
-                        <div className='py-8 px-10 mt-6
-                            lg:mt-0'
+
+                        <div className='py-8 px-10 mt-6 md:mt-0 md:ml-6
+                            lg:ml-6'
                              style={{
                                  border: "1px solid #4361EE",
                                  borderRadius: '10px',
@@ -181,6 +184,8 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="lg:w-full">
                         <div className='py-4 px-10 my-6'
                              style={{
                                  border: "1px solid #4361EE",
@@ -188,14 +193,15 @@ const Profile = () => {
                                  background: "#EBEBEB"
                              }}>
                             <h3 className='text-pink font-bold'>Dernier produits en lignes</h3>
-                            <div className='flex flex-col mt-8 items-center md:flex-row'>
+                            <div className='flex flex-col mt-8 items-center md:flex-row md:flex-wrap lg:flex-nowrap '>
                                 {
                                     productList && productList.length > 0 ?
                                         productList.map((product, index) =>
 
                                             (
-                                                <div className='relative z-0 mt-8 md:mt-0 md:w-1/3 md:flex md:justify-center'>
-                                                    <p className='absolute flex justify-center items-center text-xl right-8 lg:right-20'
+                                                <div
+                                                    className='relative z-0 mt-8 md:mt-0 md:w-1/3 md:flex md:justify-center'>
+                                                    <p className='absolute flex justify-center items-center text-xl right-8 lg:right-12'
                                                        style={{
                                                            top: '5px',
                                                            width: '20px',

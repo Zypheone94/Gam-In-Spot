@@ -19,7 +19,6 @@ function Homepage() {
             const response = await api('products/product/loadProductList', 'POST', {'limit': 15});
             console.log(response);
             setProductList(response)
-            console.log(productList)
         } catch (error) {
             console.error('Error fetching product list:', error);
         }
@@ -27,10 +26,9 @@ function Homepage() {
 
     return (
         <div>
-            <h1 className="font-roboto">Homepage</h1>
             <div className='flex flex-wrap'>
                 {
-                    productList && productList.map((product, index) =>
+                    productList && productList.map((product) =>
                         (
                             <ProductCard productValue={product}/>
                         )
