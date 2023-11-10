@@ -11,6 +11,7 @@ function ProductDetail() {
     // State qui va permettre de savoir si les données de l'api sont en cours de récupération
     const [display404, setDisplay404] = useState(false)
     // State qui va retourner la page 404 en cas de produit non trouvé
+    const [selectedImage, setSelectedImage] = useState(0)
 
     const url = window.location.pathname;
     const productSlug = url.split('/').pop();
@@ -45,7 +46,7 @@ function ProductDetail() {
 
                     <>
                         <div className='flex flex-col md:flex-row' style={{
-                            minHeight: '40vh',
+                            minHeight: '45vh',
                             maxHeight: '45vh'
                         }}>
                             <div id='images' className='md:w-5/12 shadow-2xl rounded-xl'>
@@ -55,7 +56,7 @@ function ProductDetail() {
                                         objectFit: 'contain',
                                         objectPosition: '50% 50%'
                                     }}
-                                    src={productDetail.images ? productDetail.images[0] : 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}
+                                    src={productDetail.images ? productDetail.images[selectedImage] : 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}
                                     alt="Product Image"
                                 />
                             </div>
@@ -71,7 +72,8 @@ function ProductDetail() {
                                         {productDetail.images ?
                                             productDetail.images.map((image, index) => (
                                                 image && (
-                                                    <div style={{ minWidth: '100px', minHeight: '100px', maxHeight: '100px', maxWidth: '100px' }}>
+                                                    <div className='ml-4 cursor-pointer' style={{ minWidth: '100px', minHeight: '100px', maxHeight: '100px', maxWidth: '100px' }}
+                                                    onClick={() => {setSelectedImage(index)}}>
                                                         <img
                                                             className='rounded-xl'
                                                             style={{
