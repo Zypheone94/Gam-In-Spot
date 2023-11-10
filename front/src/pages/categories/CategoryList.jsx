@@ -1,6 +1,8 @@
 import {useState, useEffect} from "react";
 import {api} from "../../utils/api.jsx";
 
+import ProductCard from "../../components/commons/product/ProductCard.jsx";
+
 function CategoryList() {
 
     const [categoryList, setCategoryList] = useState([])

@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {useParams, Link} from 'react-router-dom';
 import {api} from "../../utils/api.jsx";
+import ProductCard from "../../components/commons/product/ProductCard.jsx";
 
 function CategoryDetail() {
 
@@ -48,13 +49,11 @@ function CategoryDetail() {
             {loading ? (
                 <p>Chargement...</p>
             ) : (
-                <ul>
+                <div className='flex'>
                     {productList !== null ? productList.map(product => (
-                        <li key={product.productId}>
-                            <Link to={`/product/${product.productId}`}>{product.title}</Link>
-                        </li>
+                        <ProductCard productValue={product}/>
                     )) : <p>Votre recherche n'a rien donnée malheureusement </p>}
-                </ul>
+                </div>
             )}
         </div>
     );

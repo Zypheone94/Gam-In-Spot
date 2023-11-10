@@ -16,7 +16,7 @@ function Homepage() {
 
     const getProductList = async () => {
         try {
-            const response = await api('products/product/loadProductList', 'POST', {'limit': 5});
+            const response = await api('products/product/loadProductList', 'POST', {'limit': 15});
             console.log(response);
             setProductList(response)
             console.log(productList)
@@ -28,7 +28,7 @@ function Homepage() {
     return (
         <div>
             <h1 className="font-roboto">Homepage</h1>
-            <div className='flex'>
+            <div className='flex flex-wrap'>
                 {
                     productList && productList.map((product, index) =>
                         (
