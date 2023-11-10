@@ -1,11 +1,9 @@
 import json
 import random
 
-from django.contrib.auth import logout, authenticate, update_session_auth_hash
-from django.contrib.auth.hashers import make_password, check_password
 from django.core.cache import cache
 from django.core.mail import send_mail
-from rest_framework import status
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -16,6 +14,9 @@ from django.contrib.auth import logout, authenticate, update_session_auth_hash
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import get_object_or_404
 import json
+import os
+from pathlib import Path
+import shutil
 
 from .serializer import CustomUserSerializer
 
@@ -214,11 +215,23 @@ class PasswordChangeView(APIView):
 class DeleteUserView(APIView):
     def delete(self, request):
         user_id = request.data.get('id')
+        seller = request.data.get('username')
 
         if user_id is None:
             return Response({'error': 'ID de l\'utilisateur manquant'}, status=status.HTTP_400_BAD_REQUEST)
 
         user = get_object_or_404(CustomUser, pk=user_id)
+
+        currentDir = Path(__file__).resolve().parent.parent
+        sellerDir = currentDir / "products" / "static" / seller
+        print(sellerDir)
+
+        if os.path.exists(sellerDir):
+            shutil.rmtree(sellerDir)
+            print('dossier supprimé')
+        else:
+            print("erreur lors de la suppression du dossier, slug éroné ou le dossier n'existe pas")
+            print(f"static/{seller}/")
 
         try:
             user.delete()
