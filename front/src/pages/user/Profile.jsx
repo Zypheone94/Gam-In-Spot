@@ -81,7 +81,7 @@ const Profile = () => {
             {user !== null ? (
                 <>
                     <div className='flex flex-col md:flex-row'>
-                        <div className='py-4 px-10 md:w-
+                        <div className='py-4 px-10 md:w-1/2
                         lg:w-3/12'
                              style={{
                                  border: "1px solid #4361EE",

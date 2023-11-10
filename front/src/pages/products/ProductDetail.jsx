@@ -44,12 +44,12 @@ function ProductDetail() {
                 ) : (
 
 
-                    <>
-                        <div className='flex flex-col md:flex-row' style={{
-                            minHeight: '45vh',
-                            maxHeight: '45vh'
-                        }}>
-                            <div id='images' className='md:w-5/12 shadow-2xl rounded-xl'>
+                    <div className='flex flex-col'>
+                        <div className='flex flex-col md:flex-row'>
+                            <div id='images' className='md:w-5/12 shadow-2xl rounded-xl' style={{
+                                minHeight: '45vh',
+                                maxHeight: '45vh'
+                            }}>
                                 <img
                                     className='rounded-xl h-full w-full'
                                     style={{
@@ -68,26 +68,80 @@ function ProductDetail() {
                                  }}>
                                 <div className='flex flex-col justify-between w-full md:w-3/4 lg:w-4/6'>
                                     <h1 className='text-purple text-xl font-bold'>{nommage(productDetail.title, 25)}</h1>
-                                    <div className='flex'>
+                                    <div className='flex justify-between my-6 lg:my-0 md:flex-col lg:flex-row lg:justify-start'>
                                         {productDetail.images ?
                                             productDetail.images.map((image, index) => (
                                                 image && (
-                                                    <div className='ml-4 cursor-pointer' style={{ minWidth: '100px', minHeight: '100px', maxHeight: '100px', maxWidth: '100px' }}
-                                                    onClick={() => {setSelectedImage(index)}}>
-                                                        <img
-                                                            className='rounded-xl'
-                                                            style={{
-                                                                objectFit: 'cover',
-                                                                objectPosition: '50% 50%',
-                                                                width: '100%',
-                                                                height: '100%',
-                                                            }}
-                                                            src={image}
-                                                            alt={`Image ${index + 1}`}
-                                                        />
-                                                    </div>
+                                                    <>
+                                                        <div className='flex md:hidden' style={{
+                                                            minWidth: '80px',
+                                                            minHeight: '80px',
+                                                            maxHeight: '80px',
+                                                            maxWidth: '80px'
+                                                        }}
+                                                             onClick={() => {
+                                                                 setSelectedImage(index)
+                                                             }}>
+                                                            <img
+                                                                className='rounded-xl'
+                                                                style={{
+                                                                    objectFit: 'cover',
+                                                                    objectPosition: '50% 50%',
+                                                                    width: '100%',
+                                                                    height: '100%',
+                                                                }}
+                                                                src={image}
+                                                                alt={`Image ${index + 1}`}
+                                                            />
+                                                        </div>
+                                                        <div className='hidden md:flex lg:hidden' style={{
+                                                            minWidth: '80px',
+                                                            minHeight: '80px',
+                                                            maxHeight: '80px',
+                                                            maxWidth: '80px',
+                                                            margin: '5px 0',
+                                                        }}
+                                                             onClick={() => {
+                                                                 setSelectedImage(index)
+                                                             }}>
+                                                            <img
+                                                                className='rounded-xl'
+                                                                style={{
+                                                                    objectFit: 'cover',
+                                                                    objectPosition: '50% 50%',
+                                                                    width: '100%',
+                                                                    height: '100%',
+                                                                }}
+                                                                src={image}
+                                                                alt={`Image ${index + 1}`}
+                                                            />
+                                                        </div>
+                                                        <div className='hidden lg:block cursor-pointer' style={{
+                                                            minWidth: '100px',
+                                                            minHeight: '100px',
+                                                            maxHeight: '100px',
+                                                            maxWidth: '100px',
+                                                            marginRight: '15px'
+                                                        }}
+                                                             onClick={() => {
+                                                                 setSelectedImage(index)
+                                                             }}>
+                                                            <img
+                                                                className='rounded-xl'
+                                                                style={{
+                                                                    objectFit: 'cover',
+                                                                    objectPosition: '50% 50%',
+                                                                    width: '100%',
+                                                                    height: '100%',
+                                                                }}
+                                                                src={image}
+                                                                alt={`Image ${index + 1}`}
+                                                            />
+                                                        </div>
+                                                    </>
                                                 )
-                                            )) : <p className='text-deepPurple'>Aucune image disponible pour se produit</p>}
+                                            )) :
+                                            <p className='text-deepPurple'>Aucune image disponible pour se produit</p>}
                                     </div>
                                     <p className='text-purple mt-2 md:mt-0'><b className='underline'>Mise en ligne
                                         :</b> {productDetail.createdDate.split('-').reverse().join('/')}</p>
@@ -118,7 +172,7 @@ function ProductDetail() {
                             </div>
                         </div>
 
-                        <div id="api_description" className='rounded-xl w-full mt-12 px-4 py-6 shadow-2xl' style={{
+                        <div id="description" className='rounded-xl w-full mt-12 px-4 py-6 shadow-2xl' style={{
                             border: '1px solid #4261EE',
                             background: '#ebebeb',
                             height: '25vh'
@@ -128,7 +182,7 @@ function ProductDetail() {
                                 height: '120px'
                             }}>{productDetail.productDescription}</p>
                         </div>
-                    </>
+                    </div>
                 )
 
             )}
