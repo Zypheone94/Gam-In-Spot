@@ -243,14 +243,14 @@ const Profile = () => {
                         }
                     }}
                 >
-                    <div className="modal-content w-1/2 flex flex-col justify-between" style={{
+                    <div className="modal-content w-5/6 flex flex-col justify-between md:w-3/4 lg:w-1/2" style={{
                         background: 'white',
                         padding: '20px',
                         borderRadius: '10px',
                         zIndex: 9999,
                         height: '300px'
                     }}>
-                        <h2>{deleteModalData.title}</h2>
+                        <h2 className='text-pink'>{deleteModalData.title}</h2>
                         <p>Merci d'entrer le titre de votre annonce pour valider sa suppression</p>
                         <input
                             type="text"
