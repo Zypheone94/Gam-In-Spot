@@ -120,13 +120,13 @@ class ProductCreateView(APIView):
 
             slug_directory = os.path.join(os.path.dirname(__file__), f"static/{seller_username}/", unique_slug)
 
-            if not os.path.exists(slug_directory):
-                os.mkdir(slug_directory)
-                print(f"Le sous-dossier '{unique_slug}' a été créé.")
-            else:
-                print(f"Le sous-dossier '{unique_slug}' existe déjà.")
-
             if 'images[]' in request.FILES:
+                if not os.path.exists(slug_directory):
+                    os.mkdir(slug_directory)
+                    print(f"Le sous-dossier '{unique_slug}' a été créé.")
+                else:
+                    print(f"Le sous-dossier '{unique_slug}' existe déjà.")
+
                 for i, file in enumerate(request.FILES.getlist('images[]'), start=1):
                     new_file_name = f"image_{i}.jpg"
 
