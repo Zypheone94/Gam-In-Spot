@@ -13,6 +13,10 @@ const HistoryUser = () => {
     const navigate = useNavigate()
 
     const [productList, setProductList] = useState()
+    const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [deleteModalData, setDeleteModalData] = useState({title: "", id: ""});
+    const [deleteValue, setDeleteValue] = useState('')
+    const [displayWrong, setDisplayWrong] = useState(false)
 
     useEffect(() => {
         if (user === null || user.email === undefined) {
@@ -32,17 +36,62 @@ const HistoryUser = () => {
         }
     }
 
+    const deleteProduct = async (title, productId, slug) => {
+        setDeleteModalData({title: title, id: productId, slug: slug, seller: user.username});
+        setDeleteModalOpen(true);
+    };
+
+    const confirmDeleteProduct = async () => {
+        if (deleteModalData.title === deleteValue) {
+            try {
+                const response = await api("products/product/delete-product-list", "DELETE", {
+                    productId: deleteModalData.id,
+                    slug: deleteModalData.slug,
+                    seller: user.username
+                });
+                console.log(response);
+            } catch (error) {
+                console.error("Error deleting product:", error);
+            }
+            setDisplayWrong(false)
+            setDeleteModalOpen(false);
+            setDeleteModalData({title: "", id: ""});
+        } else {
+            console.log(deleteValue)
+            setDisplayWrong(true)
+        }
+
+        getAllUserProducts()
+    };
+
+    const closeDeleteModal = () => {
+        setDeleteModalOpen(false);
+        setDeleteModalData({title: "", id: ""});
+    };
 
     return (
         <>
-            <h3 className='text-pink'>historique</h3>
-            <div className='flex flex-wrap'>
+            <h3 className='text-pink ml-6'>Historique</h3>
+            <div className='flex flex-wrap w-full'>
                 {
                     productList && productList.length > 0 ?
                         productList.map((product, index) =>
 
                             (
-                                <HistoryCard productValue={product}/>
+                                <div className='relative w-full mx-4'>
+                                    <p className='absolute flex justify-center items-center text-xl top-4 right-0 lg:right-12'
+                                       style={{
+                                           width: '25px',
+                                           height: '25px',
+                                           backdropFilter: 'blur(10px)',
+                                           borderRadius: '10px',
+                                           color: 'red',
+                                           cursor: 'pointer'
+                                       }} onClick={() => {
+                                        deleteProduct(product.title, product.productId, product.slug);
+                                    }}>X</p>
+                                    <HistoryCard productValue={product}/>
+                                </div>
                             )
                         ) :
                         <p>
@@ -50,6 +99,58 @@ const HistoryUser = () => {
                         </p>
                 }
             </div>
+            {isDeleteModalOpen && (
+                <div
+                    className="modal open"
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+
+                    onClick={(e) => {
+                        if (e.target.classList.contains("modal")) {
+                            closeDeleteModal();
+                        }
+                    }}
+                >
+                    <div className="modal-content w-5/6 flex flex-col justify-between md:w-3/4 lg:w-1/2" style={{
+                        background: 'white',
+                        padding: '20px',
+                        borderRadius: '10px',
+                        zIndex: 9999,
+                        height: '300px'
+                    }}>
+                        <h2 className='text-pink'>{deleteModalData.title}</h2>
+                        <p>Merci d'entrer le titre de votre annonce pour valider sa suppression</p>
+                        <input
+                            type="text"
+                            name="deleteValue"
+                            onChange={e => setDeleteValue(e.target.value)}
+                            className="w-3/4 p-1 md:w-2/4"
+                            style={{
+                                border: '1px solid #F72585',
+                                borderRadius: '10px'
+                            }}
+                        />
+                        <p style={{color: 'red'}}>{displayWrong ? 'Vous avez entré un titre éroné' : ''}</p>
+
+                        <div className='flex justify-between'>
+                            <button className='hover:text-pink' onClick={confirmDeleteProduct}>Confirmer la
+                                suppression
+                            </button>
+                            <button onClick={closeDeleteModal} style={{color: 'red'}}>Annuler</button>
+                        </div>
+                    </div>
+                </div>
+            )
+            }
         </>
 
     )

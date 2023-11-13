@@ -8,7 +8,7 @@ const HistoryCard = ({productValue}) => {
     const navigate = useNavigate()
 
     return (
-        <div className='mx-4 w-full mt-6 h-20 lg:h-32' style={{
+        <div className='w-full mt-6 h-20 lg:h-32' style={{
             border: '1px solid #4361EE',
             borderRadius: '20px',
             cursor: 'pointer',
