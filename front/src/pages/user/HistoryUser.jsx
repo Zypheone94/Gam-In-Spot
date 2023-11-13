@@ -5,6 +5,7 @@ import {api} from "../../utils/api.jsx";
 import {useNavigate} from "react-router-dom";
 
 import ProductCard from "../../components/commons/product/ProductCard.jsx";
+import HistoryCard from "../../components/commons/product/HistoryCard.jsx";
 
 const HistoryUser = () => {
 
@@ -41,7 +42,7 @@ const HistoryUser = () => {
                         productList.map((product, index) =>
 
                             (
-                                <ProductCard productValue={product}/>
+                                <HistoryCard productValue={product}/>
                             )
                         ) :
                         <p>
