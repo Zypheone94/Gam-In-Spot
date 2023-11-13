@@ -71,7 +71,7 @@ const HistoryUser = () => {
 
     return (
         <>
-            <h3 className='text-pink ml-6'>Historique</h3>
+            <h3 className='text-pink ml-6 mt-6'>Historique</h3>
             <div className='flex flex-wrap w-full'>
                 {
                     productList && productList.length > 0 ?
@@ -79,14 +79,14 @@ const HistoryUser = () => {
 
                             (
                                 <div className='relative w-full mx-4'>
-                                    <p className='absolute flex justify-center items-center text-xl top-4 right-0 lg:right-12'
+                                    <p className='absolute flex justify-center items-center text-xl top-4 right-0 h-6 w-6 lg:top-2 lg:w-10 lg:h-10 lg:left-0 lg:text-3xl'
                                        style={{
-                                           width: '25px',
-                                           height: '25px',
                                            backdropFilter: 'blur(10px)',
-                                           borderRadius: '10px',
+                                           borderRadius: '20px',
                                            color: 'red',
-                                           cursor: 'pointer'
+                                           cursor: 'pointer',
+                                           zIndex: 50,
+                                           border: '1px solid #F72585'
                                        }} onClick={() => {
                                         deleteProduct(product.title, product.productId, product.slug);
                                     }}>X</p>
