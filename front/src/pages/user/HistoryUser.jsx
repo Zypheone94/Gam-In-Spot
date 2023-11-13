@@ -85,7 +85,7 @@ const HistoryUser = () => {
                                            borderRadius: '20px',
                                            color: 'red',
                                            cursor: 'pointer',
-                                           zIndex: 50,
+                                           zIndex: 40,
                                            border: '1px solid #F72585'
                                        }} onClick={() => {
                                         deleteProduct(product.title, product.productId, product.slug);

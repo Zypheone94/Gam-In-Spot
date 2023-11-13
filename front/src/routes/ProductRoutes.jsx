@@ -1,6 +1,7 @@
 import ProductList from "../pages/products/ProductList.jsx";
 import ProductDetail from "../pages/products/ProductDetail.jsx";
 import CreateProduct from "../pages/products/CreateProduct.jsx";
+import ModifyProduct from "../pages/products/ModifyProduct.jsx";
 
 // Import Components
 import Header from "../components/commons/header/Header.jsx";
@@ -14,6 +15,10 @@ const ProductRoutes = [
     {
         path: "/product/:productId",
         element: <><Header/> <ProductDetail/> <Footer/></>,
+    },
+    {
+        path: "/product/modify/:productId",
+        element: <><Header/> <ModifyProduct/> <Footer/></>
     },
     {
         path: "/product-management/create",
