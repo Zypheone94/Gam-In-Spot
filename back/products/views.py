@@ -271,3 +271,16 @@ class DeleteProductView(APIView):
         except Exception as e:
             return Response({'error': 'Erreur lors de la suppression du produit'},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ModifyProductView(APIView):
+    def put(self, request, slug):
+        try:
+            product = Product.objects.get(slug=slug)
+        except Product.DoesNotExist:
+            return Response({"message": "Le produit n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
+
+        '''product.name = request.data.get('name', product.name)
+        product.save()'''
+
+        return Response({"message": "Produit mis à jour avec succès."}, status=status.HTTP_200_OK)
