@@ -96,7 +96,6 @@ const ModifyProductForm = ({productDetail, setProductDetail, slug}) => {
                 navigate('/product/' + slug)
             }
         }
-
     }
 
     return (

@@ -72,7 +72,7 @@ const Profile = () => {
     return (
 
         <section className='mx-4
-        lg:flex lg:flex-col lg:f-width'>
+        lg:flex lg:flex-col md:mt-6'>
             <div className='hidden sm:block lg:hidden' style={{
                 height: '15rem',
             }}>
@@ -113,7 +113,7 @@ const Profile = () => {
 
                         </div>
 
-                        <div className='py-8 px-10 mt-6 md:mt-0 md:ml-6 md:w-1/2
+                        <div className='py-8 px-10 mt-6 md:mt-0 md:ml-6 md:w-1/2 lg:w-full
                             lg:ml-6'
                              style={{
                                  border: "1px solid #4361EE",
