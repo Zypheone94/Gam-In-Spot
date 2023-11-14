@@ -49,7 +49,7 @@ const ModifyProductForm = ({productDetail, setProductDetail}) => {
 
         console.log(category);
     }, [selectedValue]);
-    
+
     const [category, setCategory] = useState([])
     const [returnError, setReturnError] = useState('')
 
@@ -217,19 +217,33 @@ const ModifyProductForm = ({productDetail, setProductDetail}) => {
                     <div
                         className='w-1/2 flex flex-col justify-end md:flex-wrap md:mx-8 md:w-3/4 md:flex-row lg:flex-nowrap lg:mx-2'>
                         {
-                            selectedValue && selectedValue.length > 0 ? (
-                                selectedValue.map((value, index) => (
-                                    <div className='flex px-4'>
-                                        <p style={{color: 'red', cursor: 'pointer'}} onClick={() => {
-                                            let updateValue = [...selectedValue]
-                                            updateValue.splice(index, 1);
-                                            setSelectedValue(updateValue)
-                                        }}>X</p>
-                                        <p key={index} className='ml-2'>{value}</p>
-                                    </div>
-                                ))
-                            ) : <p>Vous n'avez séléctionné(e) aucune catégorie</p>
+                            !isLoading && categoryDetailList && productDetail &&
+                            productDetail.category.length > 0 &&
+                            productDetail.category.map((id, index) => {
+                                const matchedCategory = categoryDetailList.find((category) => category.categoryId === id);
+
+                                return (
+                                    matchedCategory && (
+                                        <div className='flex px-4' key={index}>
+                                            <p
+                                                style={{color: 'red', cursor: 'pointer'}}
+                                                onClick={() => {
+                                                    let updateValue = [...selectedValue];
+                                                    updateValue.splice(index, 1);
+                                                    setSelectedValue(updateValue);
+                                                }}
+                                            >
+                                                X
+                                            </p>
+                                            <p className='ml-2' key={index}>
+                                                {matchedCategory.title}
+                                            </p>
+                                        </div>
+                                    )
+                                );
+                            })
                         }
+
                     </div>
 
                 </div>
