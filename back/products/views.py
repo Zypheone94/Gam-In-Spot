@@ -169,7 +169,9 @@ class AddProductCategories(APIView):
             return Response({'message': 'Le produit n\'existe pas'}, status=status.HTTP_404_NOT_FOUND)
 
         category_ids = request.data.get('category_ids')
-        print('t', category_ids)
+
+        product.category.clear()
+
         for category in category_ids:
             print(category)
 
