@@ -6,41 +6,52 @@ import Selector from "../commons/Selector.jsx";
 import {useSelector} from "react-redux"
 import {useNavigate} from "react-router-dom"
 
-const ModifyProductForm = ({productDetail, setProductDetail}) => {
+const ModifyProductForm = ({productDetail, setProductDetail, slug}) => {
 
-    const navigate = useNavigate()
-    const user = useSelector(state => state.user)
-    const [categoryDetailList, setCategoryDetailList] = useState()
-    const [categoryList, setCategoryList] = useState([])
-    const [selectedValue, setSelectedValue] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+    const navigate = useNavigate();
+    const user = useSelector(state => state.user);
+    const [categoryDetailList, setCategoryDetailList] = useState([])
+    const [categoryList, setCategoryList] = useState([]);
+    const [category, setCategory] = useState([])
+    const [selectedValue, setSelectedValue] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [returnError, setReturnError] = useState('')
 
     useEffect(() => {
         if (user === null || user.email === undefined) {
-            navigate('/login')
+            navigate('/login');
         }
-        setIsLoading(true)
+
+        setIsLoading(true);
+
         api('products/product/loadcat')
             .then(response => {
-                response.forEach((value) => {
-                    if (!categoryList.includes(value.title)) {
-                        categoryList.push(value.title)
-                    }
-                })
-                let order = [...categoryList]
-                order.sort()
-                setCategoryList(order)
                 setCategoryDetailList(response)
-                setIsLoading(false)
-                console.log(categoryList)
+                const categories = response.map(category => category.title);
+                categories.sort()
+                setCategoryList(categories);
+
+                if (productDetail?.category?.length > 0) {
+                    const updatedValues = productDetail.category.map(id => {
+                        const matchedCategory = response.find(category => category.categoryId === id);
+                        return matchedCategory ? matchedCategory.title : null;
+                    }).filter(Boolean);
+
+                    setSelectedValue(updatedValues);
+                }
             })
             .catch(error => {
                 console.error(error);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
-    }, [])
+    }, [user, navigate, productDetail]);
 
     useEffect(() => {
         const selectedCat = selectedValue.map((val) => {
+            console.log(selectedValue)
+            console.log(categoryDetailList)
             const selectedCategory = categoryDetailList.find((cat) => val === cat.title);
             return selectedCategory ? selectedCategory.categoryId : null;
         });
@@ -49,9 +60,6 @@ const ModifyProductForm = ({productDetail, setProductDetail}) => {
 
         console.log(category);
     }, [selectedValue]);
-
-    const [category, setCategory] = useState([])
-    const [returnError, setReturnError] = useState('')
 
     const handleInputChange = (e) => {
         const {name, value, type} = e.target;
@@ -72,21 +80,20 @@ const ModifyProductForm = ({productDetail, setProductDetail}) => {
         }
     }
 
-
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const response = await apiFile('products/product/create', productDetail);
+        const response = await api(`products/product/modify/${slug}`, 'PUT', productDetail);
         console.log(response)
         if (category.length > 0) {
-            let reqValues = {'product_id': response.data.productId, 'category_ids': category}
+            let reqValues = {'product_id': productDetail.productId, 'category_ids': category}
             const req = await api('products/product/add-categories', 'POST', reqValues)
             console.log(req)
             if (req.code === 200) {
-                navigate('/product/' + response.data.slug)
+                navigate('/product/' + slug)
             }
         } else {
             if (response.code === 200) {
-                navigate('/product/' + response.data.slug)
+                navigate('/product/' + slug)
             }
         }
 
@@ -216,34 +223,29 @@ const ModifyProductForm = ({productDetail, setProductDetail}) => {
                     </div>
                     <div
                         className='w-1/2 flex flex-col justify-end md:flex-wrap md:mx-8 md:w-3/4 md:flex-row lg:flex-nowrap lg:mx-2'>
-                        {
-                            !isLoading && categoryDetailList && productDetail &&
-                            productDetail.category.length > 0 &&
-                            productDetail.category.map((id, index) => {
-                                const matchedCategory = categoryDetailList.find((category) => category.categoryId === id);
-
-                                return (
-                                    matchedCategory && (
-                                        <div className='flex px-4' key={index}>
-                                            <p
-                                                style={{color: 'red', cursor: 'pointer'}}
-                                                onClick={() => {
-                                                    let updateValue = [...selectedValue];
-                                                    updateValue.splice(index, 1);
-                                                    setSelectedValue(updateValue);
-                                                }}
-                                            >
-                                                X
-                                            </p>
-                                            <p className='ml-2' key={index}>
-                                                {matchedCategory.title}
-                                            </p>
-                                        </div>
-                                    )
-                                );
-                            })
-                        }
-
+                        {!isLoading ? (
+                            selectedValue && selectedValue.length > 0 ? (
+                                selectedValue.map((value, index) => (
+                                    <div className='flex px-4' key={index}>
+                                        <p
+                                            style={{color: 'red', cursor: 'pointer'}}
+                                            onClick={() => {
+                                                let updateValue = [...selectedValue];
+                                                updateValue.splice(index, 1);
+                                                setSelectedValue(updateValue);
+                                            }}
+                                        >
+                                            X
+                                        </p>
+                                        <p className='ml-2' key={index}>
+                                            {value}
+                                        </p>
+                                    </div>
+                                ))
+                            ) : <p>Vous n'avez sélectionné aucune catégorie</p>
+                        ) : (
+                            <p>Loading...</p>
+                        )}
                     </div>
 
                 </div>
@@ -262,7 +264,7 @@ const ModifyProductForm = ({productDetail, setProductDetail}) => {
                             style={{
                                 color: returnError !== '' ? 'grey' : ''
                             }}>
-                        Mettre en ligne l'annonce
+                        Modifier l'annonce
                     </button>
                 </div>
 

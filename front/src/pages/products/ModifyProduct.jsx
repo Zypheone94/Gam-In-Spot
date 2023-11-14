@@ -11,14 +11,15 @@ const ModifyProduct = () => {
     const [productDetail, setProductDetail] = useState(null)
     const [display404, setDisplay404] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [productSlug, setProductSlug] = useState()
 
 
     const locate = useLocation().pathname
 
     useEffect(() => {
         const slug = locate.split('/').slice(3).join('/')
+        setProductSlug(slug)
         getProductData(slug)
-        // changeProductData(slug)
         console.log(productDetail)
 
     }, []);
@@ -36,15 +37,6 @@ const ModifyProduct = () => {
         }
     }
 
-    const changeProductData = async (slug) => {
-        try {
-            const response = await api(`products/product/modify/${slug}`, "PUT", {});
-            console.log(response);
-        } catch (error) {
-            console.error("Error deleting product:", error);
-        }
-    };
-
     return (
         <section>
             {loading ? (
@@ -54,7 +46,7 @@ const ModifyProduct = () => {
                 display404 === true ? (
                     <WrongPage/>
                 ) : (
-                    <ModifyProductForm productDetail={productDetail} setProductDetail={setProductDetail}/>
+                    <ModifyProductForm productDetail={productDetail} setProductDetail={setProductDetail} slug={productSlug}/>
                 )
 
             )}

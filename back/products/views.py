@@ -280,7 +280,8 @@ class ModifyProductView(APIView):
         except Product.DoesNotExist:
             return Response({"message": "Le produit n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
 
-        '''product.name = request.data.get('name', product.name)
-        product.save()'''
-
-        return Response({"message": "Produit mis à jour avec succès."}, status=status.HTTP_200_OK)
+        serialized_product = ProductSerializer(product, data=request.data, partial=True)
+        if serialized_product.is_valid():
+            serialized_product.save()
+            return Response({"message": "Produit mis à jour avec succès."}, status=status.HTTP_200_OK)
+        return Response(serialized_product.errors, status=status.HTTP_400_BAD_REQUEST)
