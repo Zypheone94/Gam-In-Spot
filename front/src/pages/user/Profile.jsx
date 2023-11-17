@@ -217,10 +217,24 @@ const Profile = () => {
                                                            backdropFilter: 'blur(10px)',
                                                            borderRadius: '10px',
                                                            color: 'red',
-                                                           cursor: 'pointer'
+                                                           cursor: 'pointer',
+                                                           border: '1px solid #7209B7'
                                                        }} onClick={() => {
                                                         deleteProduct(product.title, product.productId, product.slug);
                                                     }}>X</p>
+                                                    <p className='absolute flex justify-center items-center text-xl left-8 lg:left-12'
+                                                       style={{
+                                                           top: '5px',
+                                                           width: '20px',
+                                                           height: '20px',
+                                                           backdropFilter: 'blur(10px)',
+                                                           borderRadius: '10px',
+                                                           color: 'blue',
+                                                           cursor: 'pointer',
+                                                           border: '1px solid #7209B7'
+                                                       }} onClick={() => {
+                                                        navigate('/product/modify/' + product.slug)
+                                                    }}>?</p>
                                                     <ProductCard productValue={product}/>
                                                 </div>
                                             )

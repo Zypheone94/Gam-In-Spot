@@ -4,7 +4,6 @@ import {useSelector} from "react-redux"
 import {api} from "../../utils/api.jsx";
 import {useNavigate} from "react-router-dom";
 
-import ProductCard from "../../components/commons/product/ProductCard.jsx";
 import HistoryCard from "../../components/commons/product/HistoryCard.jsx";
 
 const HistoryUser = () => {
@@ -78,7 +77,7 @@ const HistoryUser = () => {
                         productList.map((product, index) =>
 
                             (
-                                <div className='relative w-full mx-4'>
+                                <div className='relative w-full mx-4 mt-4'>
                                     <p className='absolute flex justify-center items-center text-xl top-4 right-0 h-6 w-6 lg:top-2 lg:w-10 lg:h-10 lg:left-0 lg:text-3xl'
                                        style={{
                                            backdropFilter: 'blur(10px)',
@@ -90,6 +89,17 @@ const HistoryUser = () => {
                                        }} onClick={() => {
                                         deleteProduct(product.title, product.productId, product.slug);
                                     }}>X</p>
+                                    <p className='absolute flex justify-center items-center text-xl top-4 right-0 h-6 w-6 lg:top-32 lg:w-10 lg:h-10 lg:left-0 lg:text-3xl'
+                                       style={{
+                                           backdropFilter: 'blur(10px)',
+                                           borderRadius: '20px',
+                                           color: 'blue',
+                                           cursor: 'pointer',
+                                           zIndex: 40,
+                                           border: '1px solid #F72585'
+                                       }} onClick={() => {
+                                        navigate('/product/modify/' + product.slug)
+                                    }}>?</p>
                                     <HistoryCard productValue={product}/>
                                 </div>
                             )
