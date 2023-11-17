@@ -45,7 +45,7 @@ const ModifyProductForm = ({productDetail, setProductDetail, slug}) => {
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [user, navigate, productDetail]);
+    }, [user, navigate]);
 
     useEffect(() => {
         const selectedCat = selectedValue.map((val) => {

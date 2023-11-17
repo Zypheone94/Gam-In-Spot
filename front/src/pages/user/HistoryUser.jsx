@@ -22,7 +22,6 @@ const HistoryUser = () => {
             navigate('/login')
         } else {
             getAllUserProducts()
-            console.log(productList)
         }
     }, [])
 
@@ -48,7 +47,6 @@ const HistoryUser = () => {
                     slug: deleteModalData.slug,
                     seller: user.username
                 });
-                console.log(response);
             } catch (error) {
                 console.error("Error deleting product:", error);
             }
@@ -56,7 +54,6 @@ const HistoryUser = () => {
             setDeleteModalOpen(false);
             setDeleteModalData({title: "", id: ""});
         } else {
-            console.log(deleteValue)
             setDisplayWrong(true)
         }
 

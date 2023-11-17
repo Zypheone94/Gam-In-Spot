@@ -49,7 +49,6 @@ const Profile = () => {
                     slug: deleteModalData.slug,
                     seller: user.username
                 });
-                console.log(response);
             } catch (error) {
                 console.error("Error deleting product:", error);
             }
@@ -57,7 +56,6 @@ const Profile = () => {
             setDeleteModalOpen(false);
             setDeleteModalData({title: "", id: ""});
         } else {
-            console.log(deleteValue)
             setDisplayWrong(true)
         }
 
