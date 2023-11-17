@@ -46,10 +46,21 @@ function ProductDetail() {
 
                     <div className='flex flex-col'>
                         <div className='flex flex-col md:flex-row'>
-                            <div id='images' className='md:w-5/12 shadow-2xl rounded-xl' style={{
+                            <div id='images' className='hidden md:block md:w-5/12 shadow-2xl rounded-xl' style={{
                                 minHeight: '45vh',
                                 maxHeight: '45vh'
                             }}>
+                                <img
+                                    className='rounded-xl h-full w-full'
+                                    style={{
+                                        objectFit: 'contain',
+                                        objectPosition: '50% 50%'
+                                    }}
+                                    src={productDetail.images ? productDetail.images[selectedImage] : 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}
+                                    alt="Product Image"
+                                />
+                            </div>
+                            <div id='images' className='block md:hidden shadow-2xl rounded-xl'>
                                 <img
                                     className='rounded-xl h-full w-full'
                                     style={{
