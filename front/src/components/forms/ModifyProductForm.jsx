@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import {apiFile} from "../../utils/apiFile.jsx";
 import {api} from "../../utils/api.jsx";
 import Selector from "../commons/Selector.jsx";
 
@@ -58,7 +57,6 @@ const ModifyProductForm = ({productDetail, setProductDetail, slug}) => {
 
         setCategory(selectedCat.filter((category) => category !== null));
 
-        console.log(category);
     }, [selectedValue]);
 
     const handleInputChange = (e) => {
@@ -100,7 +98,7 @@ const ModifyProductForm = ({productDetail, setProductDetail, slug}) => {
 
     return (
         <>
-            <form onSubmit={handleSubmit} encType="multipart/form-data" className="flex flex-col">
+            <form onSubmit={handleSubmit} encType="multipart/form-data" className="flex flex-col mx-4">
 
                 <div className="flex justify-between mt-8 text-center md:justify-around md:mt-12">
                     <label className="pt-1" style={{
@@ -142,8 +140,7 @@ const ModifyProductForm = ({productDetail, setProductDetail, slug}) => {
                     <label className="pt-1" style={{
                         width: '100px'
                     }}>Description</label>
-                    <input
-                        type="text"
+                    <textarea
                         name="productDescription"
                         placeholder="Description"
                         required
@@ -189,20 +186,6 @@ const ModifyProductForm = ({productDetail, setProductDetail, slug}) => {
                             border: '1px solid #F72585',
                             borderRadius: '10px'
                         }}
-                    />
-                </div>
-                <div className="flex justify-between mt-8 items-center md:justify-around md:mt-12">
-                    <label className="pt-1" style={{
-                        width: '100px'
-                    }}>Photo de votre article</label>
-                    <input
-                        type="file"
-                        name="images"
-                        multiple
-                        accept=".jpg, .jpeg, .png"
-                        max="3"
-                        onChange={(e) => handleInputChange(e)}
-                        className="w-3/4 p-1 md:w-2/4"
                     />
                 </div>
                 <div className='flex justify-between mt-8 md:mx-14 md:justify-around md:mt-12'>

@@ -1,13 +1,15 @@
 import {useEffect, useState} from "react";
-import {useLocation} from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom'
 
 import {api} from "../../utils/api.jsx";
 import WrongPage from "../WrongPage.jsx";
 
 import ModifyProductForm from "../../components/forms/ModifyProductForm.jsx";
+import {useSelector} from "react-redux";
 
 const ModifyProduct = () => {
 
+    const user = useSelector(state => state.user)
     const [productDetail, setProductDetail] = useState(null)
     const [display404, setDisplay404] = useState(false)
     const [loading, setLoading] = useState(true)
@@ -15,13 +17,18 @@ const ModifyProduct = () => {
 
 
     const locate = useLocation().pathname
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (user === null || user.email === undefined) {
+            navigate('/login')
+        }
+    }, [])
 
     useEffect(() => {
         const slug = locate.split('/').slice(3).join('/')
         setProductSlug(slug)
         getProductData(slug)
-        console.log(productDetail)
-
     }, []);
 
     const getProductData = async (slug) => {
@@ -38,7 +45,7 @@ const ModifyProduct = () => {
     }
 
     return (
-        <section>
+        <section className='md:mt-64 lg:mt-0'>
             {loading ? (
                 <p>Chargement...</p>
             ) : (
