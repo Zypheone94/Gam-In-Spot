@@ -157,7 +157,6 @@ class ProductCreateView(APIView):
 
 class AddProductCategories(APIView):
     def post(self, request):
-        data = request.data
         product_id = request.data.get('product_id')
 
         if not product_id:
@@ -173,14 +172,11 @@ class AddProductCategories(APIView):
         product.category.clear()
 
         for category in category_ids:
-            print(category)
 
             product.category.add(category)
 
         product.save()
 
-        print("product_id:", product_id)
-        print("categories:", category_ids)
 
         return Response({'message': 'Catégories ajoutées au produit avec succès', 'code': 200},
                         status=status.HTTP_200_OK)

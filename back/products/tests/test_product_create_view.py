@@ -16,7 +16,7 @@ class ProductCreateViewTest(APITestCase):
             first_name='John',
             last_name='Doe'
         )
-        self.url = reverse('product:createProduct') 
+        self.url = reverse('product:createProduct')
 
     def test_create_product(self):
         data = {
