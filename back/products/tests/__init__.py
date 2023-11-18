@@ -1,0 +1,1 @@
+from .test_product_detail_view import ProductDetailViewTest
