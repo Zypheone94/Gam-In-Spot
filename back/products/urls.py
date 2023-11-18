@@ -14,7 +14,7 @@ router.register('product', ProductViewSet, basename='product')
 
 urlpatterns = [
     path('api/', include(router.urls)),
-    path('product/create', ProductCreateView.as_view(), name='create'),
+    path('product/create', ProductCreateView.as_view(), name='createProduct'),
     path('product/loadcat', LoadCategory.as_view(), name='loadCategory'),
     path('product/add-categories', AddProductCategories.as_view(), name='addCategories'),
     path('product/loadProductList', LiteProductListView.as_view(), name='loadProductList'),
