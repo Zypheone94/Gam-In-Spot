@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import {api} from "../../utils/api.jsx";
 
-import ProductCard from "../../components/commons/product/ProductCard.jsx";
+import CategoryCard from "../../components/commons/product/CategoryCard.jsx";
 
 function CategoryList() {
 
@@ -39,11 +39,12 @@ function CategoryList() {
             {loading ? (
                 <p>Chargement...</p>
             ) : (
-                <ul>
+                <div className='flex flex-wrap'>
                     {categoryList !== null ? categoryList.map(category => (
-                        <li key={category.categoryId}>{category.title}</li>
+                        <CategoryCard key={category.categoryId} categorySlug={category.slug}
+                                      categoryTitle={category.title}></CategoryCard>
                     )) : <p>Votre recherche n'a rien donnée malheureusement </p>}
-                </ul>
+                </div>
             )}
         </div>
     );
