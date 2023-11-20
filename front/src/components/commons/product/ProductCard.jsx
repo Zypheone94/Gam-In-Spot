@@ -27,12 +27,21 @@ const ProductCard = ({productValue}) => {
                 borderTop: '2px solid #4361EE'
             }}>
                 <div className='flex justify-between text-deepPurple'>
-                    <p className='font-semibold'>{nommage(productValue.title, 12)}</p>
+                    {
+                        productValue && productValue.title && (
+                            <p className='font-semibold'>{nommage(productValue.title, 12)}</p>
+                        )
+                    }
                     <p className='font-semibold'>{productValue.price}€</p>
                 </div>
-                <p>
-                    De: {nommage(productValue.seller, 15)}
-                </p>
+                {
+                    productValue && productValue.seller && (
+                        <p>
+                            De: {nommage(productValue.seller, 15)}
+                        </p>
+                    )
+                }
+
                 <p>
                     Mise en ligne : <DateFormat value={productValue.createdDate}/>
                 </p>
