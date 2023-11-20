@@ -4,3 +4,4 @@ from .test_add_product_categories import AddProductCategoriesViewTest
 from .test_load_category import LoadCategoryViewTest
 from .test_lite_product_list import LiteProductListViewTest
 from .test_delete_product import DeleteProductViewTest
+from .test_modify_product import ModifyProductViewTest
