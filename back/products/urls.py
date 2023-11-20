@@ -18,7 +18,7 @@ urlpatterns = [
     path('product/loadcat', LoadCategory.as_view(), name='loadCategory'),
     path('product/add-categories', AddProductCategories.as_view(), name='addCategories'),
     path('product/loadProductList', LiteProductListView.as_view(), name='loadProductList'),
-    path('product/delete-product-list', DeleteProductView.as_view(), name='deleteProductList'),
+    path('product/delete-product-list', DeleteProductView.as_view(), name='deleteProduct'),
     path('product/modify/<slug:slug>', ModifyProductView.as_view(), name='ModifyProduct'),
     path('read-product/<str:productSlug>', ProductDetailView.as_view(), name='detailProduct'),
 ]
