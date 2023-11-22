@@ -23,7 +23,8 @@ function CategoryList() {
                     url += `/?search=${getSearchParam()}` : null
                 const response = await api(url);
                 console.log(response)
-                setCategoryList(response);
+                let orderValue = response.sort()
+                setCategoryList(orderValue);
                 setLoading(false);
             } catch (error) {
                 console.error('Erreur lors de la récupération des données:', error);
@@ -35,11 +36,11 @@ function CategoryList() {
 
     return (
         <div>
-            <h1>Liste des catégories</h1>
+            <h1 className='text-pink text-xl mt-4 ml-8 mb-10'>Liste des catégories</h1>
             {loading ? (
                 <p>Chargement...</p>
             ) : (
-                <div className='flex flex-wrap'>
+                <div className='flex justify-between flex-wrap'>
                     {categoryList !== null ? categoryList.map(category => (
                         <CategoryCard key={category.categoryId} categorySlug={category.slug}
                                       categoryTitle={category.title}></CategoryCard>

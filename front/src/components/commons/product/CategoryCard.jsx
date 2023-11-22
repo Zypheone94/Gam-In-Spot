@@ -7,7 +7,7 @@ const CategoryCard = ({categorySlug, categoryTitle}) => {
     const navigate = useNavigate()
 
     return (
-        <div className='mx-4' style={{
+        <div className='mx-8 my-4' style={{
             border: '1px solid #4361EE',
             borderRadius: '20px',
             width: '200px',
