@@ -40,7 +40,7 @@ function CategoryList() {
             {loading ? (
                 <p>Chargement...</p>
             ) : (
-                <div className='flex justify-between flex-wrap'>
+                <div className='flex justify-center flex-wrap'>
                     {categoryList !== null ? categoryList.map(category => (
                         <CategoryCard key={category.categoryId} categorySlug={category.slug}
                                       categoryTitle={category.title}></CategoryCard>

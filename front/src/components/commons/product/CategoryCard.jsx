@@ -38,11 +38,9 @@ const CategoryCard = ({categorySlug, categoryTitle}) => {
     }, [])
 
     return (
-        <div className='mx-8 my-4' style={{
+        <div className='mx-4 my-4 w-36 h-52 md:mx-10 md:w-48 md:h-72' style={{
             border: '1px solid #4361EE',
             borderRadius: '20px',
-            width: '200px',
-            height: '300px',
             cursor: 'pointer',
             backgroundImage: `url(${imageExists})`,
             backgroundSize: 'cover',
