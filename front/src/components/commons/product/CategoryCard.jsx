@@ -15,11 +15,10 @@ const CategoryCard = ({categorySlug, categoryTitle}) => {
         img.src = `../../src/assets/images/category/${categorie}.jpg`;
         img.onload = () => {
             setImageExists(img.src);
-            console.log('ok')
         };
         img.onerror = () => {
-            setImageExists(false);
-            console.log('nope')
+            console.log(`../../src/assets/images/category/${categorie}.jpg`)
+            setImageExists('../../src/assets/images/Placeholder.jpg');
         };
     }
 
@@ -34,7 +33,7 @@ const CategoryCard = ({categorySlug, categoryTitle}) => {
     };
 
     useEffect(() => {
-        checkImageExist(categoryTitle)
+        checkImageExist(categorySlug)
     }, [])
 
     return (
