@@ -34,9 +34,20 @@ const CategoryCard = ({categorySlug, categoryTitle}) => {
             width: '200px',
             height: '300px',
             cursor: 'pointer',
+            backgroundImage: `url(${imageExists})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
         }} onClick={() => navigate('/category/' + categorySlug)}>
+            <div style={{
+                backgroundColor: 'rgba(0,0,0,0.6)',
+
+                height: '100%',
+                width: '100%',
+                borderRadius: '20px',
+            }}>
+
+            </div>
             {categoryTitle}
-            <img src={imageExists}/>
         </div>
     )
 }
