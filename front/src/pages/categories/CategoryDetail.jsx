@@ -49,9 +49,11 @@ function CategoryDetail() {
             {loading ? (
                 <p>Chargement...</p>
             ) : (
-                <div className='flex mb-12'>
+                <div className='flex flex-wrap justify-start'>
                     {productList !== null ? productList.map(product => (
-                        <ProductCard productValue={product}/>
+                        <div className='flex justify-center w-1/5'>
+                            <ProductCard productValue={product}/>
+                        </div>
                     )) : <p>Votre recherche n'a rien donnée malheureusement </p>}
                 </div>
             )}
