@@ -28,7 +28,7 @@ const CategoryCard = ({categorySlug, categoryTitle}) => {
     };
 
     const restoreBackgroundColor = (element) => {
-        element.style.backgroundColor = 'rgba(0,0,0,0.6)';
+        element.style.backgroundColor = 'rgba(0,0,0,0.4)';
         element.children[0].style.opacity = 1;
     };
 
@@ -46,7 +46,7 @@ const CategoryCard = ({categorySlug, categoryTitle}) => {
             backgroundPosition: 'center',
         }} onClick={() => navigate('/category/' + categorySlug)}>
             <div style={{
-                backgroundColor: 'rgba(0,0,0,0.6)',
+                backgroundColor: 'rgba(0,0,0,0.4)',
                 height: '100%',
                 width: '100%',
                 borderRadius: '20px',
