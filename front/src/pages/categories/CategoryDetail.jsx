@@ -45,11 +45,11 @@ function CategoryDetail() {
 
     return (
         <div>
-            <h1>{categoryDetail.title}</h1>
+            <h1 className='text-pink text-xl mt-4 ml-8 mb-10'>{categoryDetail.title}</h1>
             {loading ? (
                 <p>Chargement...</p>
             ) : (
-                <div className='flex'>
+                <div className='flex mb-12'>
                     {productList !== null ? productList.map(product => (
                         <ProductCard productValue={product}/>
                     )) : <p>Votre recherche n'a rien donnée malheureusement </p>}
