@@ -20,7 +20,7 @@ const ProductCard = ({productValue}) => {
             }}>
                 <img className='h-full w-full'
                      style={{objectFit: 'cover', objectPosition: '50% 50%', borderRadius: '20px 20px 0 0'}}
-                     src={productValue.images ? productValue.images[0] : 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}/>
+                     src={productValue.images ? productValue.images[0] : '../../src/assets/images/Placeholder.jpg'}/>
             </div>
             <div className='text-lightPurple p-2 flex flex-col justify-between' style={{
                 height: '45%',
