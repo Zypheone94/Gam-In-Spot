@@ -4,14 +4,19 @@
 //import CategoryDetail from "./components/categories/CategoryDetail.jsx";
 import ProductCard from "../components/commons/product/ProductCard.jsx";
 import {api} from "../utils/api.jsx";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import CategoryCard from "../components/commons/product/CategoryCard.jsx";
 
+import {useNavigate} from "react-router-dom"
+
 function Homepage() {
+
+    const navigate = useNavigate()
 
     const [productList, setProductList] = useState()
     const [categoryList, setCategoryList] = useState()
     const [categoryStar, setCategoryStar] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         getProductList();
@@ -19,12 +24,18 @@ function Homepage() {
     }, []);
 
     useEffect(() => {
-        let values = []
-        for (let i = 0; i < 5; i++) {
-            categoryList &&
-            categoryStar.push(categoryList[Math.floor(Math.random() * categoryList.length)])
+        if (categoryList && categoryList.length > 0) {
+            while (categoryStar.length < 5) {
+                const randomIndex = Math.floor(Math.random() * categoryList.length);
+                const randomCategory = categoryList[randomIndex];
+                if (!categoryStar.includes(randomCategory)) {
+                    categoryStar.push(randomCategory);
+                }
+            }
+            console.log(categoryStar);
         }
-    }, [categoryList])
+    }, [categoryList]);
+
 
     const getData = async () => {
         function getSearchParam() {
@@ -47,6 +58,7 @@ function Homepage() {
     const getProductList = async () => {
         try {
             const response = await api('products/product/loadProductList', 'POST', {'limit': 15});
+            setProductList(response)
         } catch (error) {
             console.error('Error fetching product list:', error);
         }
@@ -55,7 +67,16 @@ function Homepage() {
     return (
         <div>
             <div className='flex flex-col'>
-                <h1 className='text-pink text-xl mt-4 ml-8 mb-10'>Catégories en vedette</h1>
+                <div className='flex items-center mt-4 mb-10'>
+                    <h1 className='text-pink text-xl ml-8 '>Catégories en vedette</h1>
+                    <p className='text-pink cursor-pointer flex justify-center ml-4' style={{
+                        border: '1px solid #F72585',
+                        borderRadius: '20px',
+                        width: '26px',
+                        height: '26px'
+                    }}
+                       onClick={() => navigate('/category')}>+</p>
+                </div>
                 <div className='flex flex-wrap'>
                     {
                         categoryStar && categoryStar.map((categorie, index) =>
