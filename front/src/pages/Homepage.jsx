@@ -11,7 +11,7 @@ function Homepage() {
 
     const [productList, setProductList] = useState()
     const [categoryList, setCategoryList] = useState()
-    const [categoryStar, setCategoryStar] = useState()
+    const [categoryStar, setCategoryStar] = useState([])
 
     useEffect(() => {
         getProductList();
@@ -22,10 +22,8 @@ function Homepage() {
         let values = []
         for (let i = 0; i < 5; i++) {
             categoryList &&
-            values.push(categoryList[Math.floor(Math.random() * categoryList.length)])
+            categoryStar.push(categoryList[Math.floor(Math.random() * categoryList.length)])
         }
-        setCategoryStar([...values]);
-        console.log(values)
     }, [categoryList])
 
     const getData = async () => {
