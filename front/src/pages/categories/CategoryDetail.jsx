@@ -3,6 +3,8 @@ import {useParams, Link} from 'react-router-dom';
 import {api} from "../../utils/api.jsx";
 import ProductCard from "../../components/commons/product/ProductCard.jsx";
 
+import {useNavigate} from "react-router-dom"
+
 function CategoryDetail() {
 
     const [categoryDetail, setCategoryDetail] = useState([])
@@ -14,6 +16,7 @@ function CategoryDetail() {
 
     const {slug} = useParams()
     // Récupère le slug, afin de récupérer la bonne catégorie
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getData = async () => {
@@ -45,7 +48,8 @@ function CategoryDetail() {
 
     return (
         <div>
-            <h1 className='text-pink text-xl mt-4 ml-8 mb-10'>{categoryDetail.title}</h1>
+            <h1 className='text-pink text-xl mt-4 ml-8 mb-10 cursor-pointer' onClick={() => navigate('/category')}>Retour</h1>
+            <h1 className='text-pink text-xl mt-2 ml-8 mb-10'>{categoryDetail.title}</h1>
             {loading ? (
                 <p>Chargement...</p>
             ) : (

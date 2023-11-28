@@ -32,7 +32,6 @@ function Homepage() {
                     categoryStar.push(randomCategory);
                 }
             }
-            console.log(categoryStar);
         }
     }, [categoryList]);
 
