@@ -194,6 +194,9 @@ class LiteProductListView(APIView):
         data = request.data
         seller_id = data.get('seller_id', None)
         limit = data.get('limit', None)
+        title = data.get('title', None)
+
+        print(data)
 
         def check_url_status(url):
             try:
@@ -211,6 +214,11 @@ class LiteProductListView(APIView):
 
             if seller_id:
                 products = products.filter(seller_id=seller_id)
+
+            products = products.order_by('-productId')
+
+            if title:
+                products = products.filter(title__contains=title)
 
             products = products.order_by('-productId')
 
