@@ -183,10 +183,23 @@ class AddProductCategories(APIView):
 
 
 class LoadCategory(APIView):
-    def get(self, request):
-        categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def post(self, request):
+        data = request.data
+        title = data.get('title', None)
+
+        print(data)
+
+        try:
+            categories = Category.objects.all()
+            if title :
+
+                categories = categories.filter(title__contains=title)
+
+            serializer = CategorySerializer(categories, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class LiteProductListView(APIView):
@@ -195,8 +208,6 @@ class LiteProductListView(APIView):
         seller_id = data.get('seller_id', None)
         limit = data.get('limit', None)
         title = data.get('title', None)
-
-        print(data)
 
         def check_url_status(url):
             try:
@@ -241,7 +252,6 @@ class LiteProductListView(APIView):
 
                 if images:
                     serialized_product['images'] = images
-                print(images)
 
                 result_data.append(serialized_product)
 
