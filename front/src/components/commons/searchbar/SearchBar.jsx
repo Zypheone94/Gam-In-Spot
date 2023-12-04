@@ -11,9 +11,11 @@ function SearchBar() {
     const [searchValue, setSearchValue] = useState()
 
     const search = e => {
+
         e.preventDefault()
-        console.log(searchValue)
+        navigate('/')
         navigate('/search?=' + searchValue)
+        window.location.reload();
     }
 
     return (

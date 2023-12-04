@@ -15,7 +15,13 @@ const Search = () => {
     const [productList, setProductList] = useState([])
 
     useEffect(() => {
-        setSearchValue(location.search.substring(2))
+        let value = location.search.substring(2)
+        if (value.includes('%20')) {
+            value = value.replaceAll('%20', ' ')
+            setSearchValue(value)
+        } else {
+            setSearchValue(location.search.substring(2))
+        }
     }, []);
 
     useEffect(() => {
@@ -38,8 +44,6 @@ const Search = () => {
                 console.error('Erreur lors de la récupération des données:', error);
             }
         };
-        console.log(productList)
-        console.log(categoryList)
         searchValue && getData();
         setLoading(false);
     }, [searchValue]);
