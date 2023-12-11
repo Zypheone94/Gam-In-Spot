@@ -35,6 +35,8 @@ class Product(models.Model):
     category = models.ManyToManyField(Category, null=True, blank=True)
     seller_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     edition = models.CharField(max_length=50, default="Normal")
+    quantity = models.IntegerField(default=1)
+    # Ajout d'une quantité par défaut 1 afin de vérifier qu'il reste des produit en stock avant achat
 
     def __str__(self):
         return self.title
