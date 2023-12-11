@@ -12,6 +12,7 @@ import MainRoutes from "./routes/MainRoutes.jsx";
 import AuthRoutes from "./routes/AuthRoutes.jsx";
 import CategoryRoutes from "./routes/CategoryRoutes.jsx";
 import ProductRoutes from "./routes/ProductRoutes.jsx";
+import PaymentRoutes from "./routes/PaymentRoutes.jsx";
 
 // Import des composants
 import Header from "./components/commons/header/Header.jsx";
@@ -79,7 +80,7 @@ function App() {
 
     setTimeout(handleTokenRefresh, 30 * 60 * 1000);
 
-    const allRoutes = [...MainRoutes, ...AuthRoutes, ...CategoryRoutes, ...ProductRoutes]
+    const allRoutes = [...MainRoutes, ...AuthRoutes, ...CategoryRoutes, ...ProductRoutes, ...PaymentRoutes]
     const router = createBrowserRouter(allRoutes);
 
     return (
