@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import CartElement, Cart
 from users.models import CustomUser
-from .serializers import CartSerializer
+from .serializer import CartSerializer
 from rest_framework.permissions import IsAuthenticated
 
 class CartView(APIView):
