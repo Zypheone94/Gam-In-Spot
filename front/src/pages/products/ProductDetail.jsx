@@ -2,8 +2,13 @@ import {useState, useEffect} from "react";
 import {api} from "../../utils/api.jsx";
 import WrongPage from "../WrongPage.jsx";
 import {nommage} from "../../utils/nommage.jsx";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 function ProductDetail() {
+
+    const user = useSelector(state => state.user)
+    const navigate = useNavigate()
 
     const [productDetail, setProductDetail] = useState([])
     // State qui va contenir tout les détails liées à mon produit
@@ -15,6 +20,25 @@ function ProductDetail() {
 
     const url = window.location.pathname;
     const productSlug = url.split('/').pop();
+
+    const addProductToCart = async () => {
+        if (user === null || user.email === undefined) {
+            navigate('/login')
+        } else {
+            try {
+                const req = await api('cart/add-to-cart/', "POST", {
+                    user_id: user.id,
+                    product_id: productDetail.productId,
+                })
+                console.log(req.data)
+            }
+            catch (err) {
+                console.log(err)
+            }
+        }
+
+
+    }
 
     useEffect(() => {
         const getData = async () => {
@@ -167,7 +191,7 @@ function ProductDetail() {
                                             borderRadius: '5px',
                                             padding: '7px',
                                             cursor: 'pointer'
-                                        }} onClick={() => navigate('/product-management/create')}>
+                                        }} onClick={addProductToCart}>
                                             <p className="text-deepPurple md:text-sm">Ajouter au panier</p>
                                         </div>
                                     </div>

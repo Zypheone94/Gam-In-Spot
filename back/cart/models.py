@@ -3,7 +3,7 @@ from users.models import CustomUser
 from products.models import Product
 
 class Cart(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
 
 class CartElement(models.Model):
