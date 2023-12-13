@@ -11,7 +11,8 @@ const Cart = () => {
     const getUserCart = async () => {
         try {
             const request = await api('cart/?user_id=' + user.id, "GET")
-            console.log(request.data)
+            const req = await api('cart/display-cart/' + user.id, "GET")
+            console.log(req.data)
         } catch (err) {
             console.log(err)
         }

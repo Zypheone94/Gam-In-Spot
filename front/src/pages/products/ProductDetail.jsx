@@ -31,6 +31,7 @@ function ProductDetail() {
                     product_id: productDetail.productId,
                 })
                 console.log(req.data)
+                navigate('/cart')
             }
             catch (err) {
                 console.log(err)
