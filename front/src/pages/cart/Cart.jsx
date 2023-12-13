@@ -8,15 +8,20 @@ const Cart = () => {
     const user = useSelector(state => state.user)
     const navigate = useNavigate()
 
+    const [cartContent, setCartContent] = useState([])
+
     const getUserCart = async () => {
         try {
-            const request = await api('cart/?user_id=' + user.id, "GET")
             const req = await api('cart/display-cart/' + user.id, "GET")
-            console.log(req.data)
+            setCartContent(req)
         } catch (err) {
             console.log(err)
         }
     }
+
+    useEffect(() => {
+        console.log(cartContent);
+    }, [cartContent]);
 
     useEffect(() => {
         if (user === null || user.email === undefined) {
@@ -29,7 +34,14 @@ const Cart = () => {
     return (
         <>
             <div>
-                Cart
+                <h1 className='text-pink text-xl mt-4 ml-8 mb-10'>Cart</h1>
+            </div>
+            <div className='mt-4 ml-8 mb-10'>
+                {
+                    cartContent && cartContent.map((element) => (
+                        <p>{element.title}</p>
+                    ))
+                }
             </div>
         </>
     )
