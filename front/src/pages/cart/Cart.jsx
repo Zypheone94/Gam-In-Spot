@@ -38,7 +38,7 @@ const Cart = () => {
             <div>
                 <h1 className='text-pink text-xl mt-4 ml-8 mb-10'>Cart</h1>
             </div>
-            <div className='mt-4 mx-8 mb-10'>
+            <div className='mt-8 mx-12 mb-10'>
                 {
                     cartContent && cartContent.map((element) => (
                         <ProductCartCard product={element}/>

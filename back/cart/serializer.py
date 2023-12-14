@@ -16,4 +16,4 @@ class CartElementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CartElement
-        fields = ('productId', 'title', 'price', 'slug', 'image')
+        fields = ('productId', 'title', 'price', 'slug', 'image', 'quantity')
