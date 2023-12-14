@@ -29,6 +29,7 @@ function ProductDetail() {
                 const req = await api('cart/add-to-cart/', "POST", {
                     user_id: user.id,
                     product_id: productDetail.productId,
+                    image: productDetail.images[0] || ''
                 })
                 console.log(req.data)
                 navigate('/cart')

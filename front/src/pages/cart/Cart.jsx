@@ -3,6 +3,8 @@ import {api} from "../../utils/api.jsx";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
+import ProductCartCard from "../../components/commons/product/ProductCartCard.jsx";
+
 const Cart = () => {
 
     const user = useSelector(state => state.user)
@@ -36,10 +38,10 @@ const Cart = () => {
             <div>
                 <h1 className='text-pink text-xl mt-4 ml-8 mb-10'>Cart</h1>
             </div>
-            <div className='mt-4 ml-8 mb-10'>
+            <div className='mt-4 mx-8 mb-10'>
                 {
                     cartContent && cartContent.map((element) => (
-                        <p>{element.title}</p>
+                        <ProductCartCard product={element}/>
                     ))
                 }
             </div>

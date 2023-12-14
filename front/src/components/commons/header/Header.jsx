@@ -77,6 +77,7 @@ function Header() {
                            onClick={redirection}>
                             {user && user.username ? user.username : "Mon compte"}
                         </p>
+                        <p className='cursor-pointer' onClick={() => {navigate('/cart')}}>P</p>
                         {user === null || user.username === undefined ? (
                             <></>
                         ) : (

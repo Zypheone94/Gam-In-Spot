@@ -57,6 +57,7 @@ function Homepage() {
     const getProductList = async () => {
         try {
             const response = await api('products/product/loadProductList', 'POST', {'limit': 15});
+            console.log(response)
             setProductList(response)
         } catch (error) {
             console.error('Error fetching product list:', error);
