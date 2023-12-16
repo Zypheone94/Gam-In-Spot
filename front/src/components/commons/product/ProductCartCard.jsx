@@ -2,6 +2,7 @@ import DateFormat from "../../../utils/DateFormat.jsx";
 import {useNavigate} from "react-router-dom"
 
 import {nommage} from "../../../utils/nommage.jsx";
+import X from '../../../assets/images/icons/X.jsx'
 
 const ProductCartCard = ({product}) => {
 
@@ -33,11 +34,7 @@ const ProductCartCard = ({product}) => {
                     </div>
 
                     <div className='flex justify-between'>
-                        <p className='text-xl'
-                            style={{
-                            cursor: 'pointer',
-                            color: 'red'
-                        }}>X</p>
+                        <X color='red'/>
                         <p className='font-semibold text-right'>{product.price}€</p>
                     </div>
                 </div>

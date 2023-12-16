@@ -5,6 +5,8 @@ import {nommage} from "../../utils/nommage.jsx";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
+
+
 function ProductDetail() {
 
     const user = useSelector(state => state.user)
@@ -93,7 +95,7 @@ function ProductDetail() {
                                         objectFit: 'contain',
                                         objectPosition: '50% 50%'
                                     }}
-                                    src={productDetail.images ? productDetail.images[selectedImage] : 'https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1'}
+                                    src={productDetail.images ? productDetail.images[selectedImage] : ''}
                                     alt="Product Image"
                                 />
                             </div>

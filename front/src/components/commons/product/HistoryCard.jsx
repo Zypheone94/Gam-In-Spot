@@ -23,7 +23,7 @@ const HistoryCard = ({productValue}) => {
                              borderRadius: '20px 0 20px 20px',
                              backgroundPosition: 'center',
                              backgroundSize: 'cover',
-                             backgroundImage: productValue.images ? `url(${productValue.images[0]})` : `url(https://i0.wp.com/leszackardises.com/wp-content/uploads/2020/09/D54E7AD0-1B8A-48F6-84E2-BDD90258F445.jpeg?w=1000&ssl=1)`
+                             backgroundImage: productValue.images ? `url(${productValue.images[0]})` : 'url(../../src/assets/images/Placeholder.jpg)'
                          }}>
                     </div>
                 </div>

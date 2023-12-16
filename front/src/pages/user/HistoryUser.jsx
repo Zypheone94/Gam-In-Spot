@@ -5,6 +5,7 @@ import {api} from "../../utils/api.jsx";
 import {useNavigate} from "react-router-dom";
 
 import HistoryCard from "../../components/commons/product/HistoryCard.jsx";
+import X from '../../assets/images/icons/X.jsx'
 
 const HistoryUser = () => {
 
@@ -85,7 +86,7 @@ const HistoryUser = () => {
                                            border: '1px solid #F72585'
                                        }} onClick={() => {
                                         deleteProduct(product.title, product.productId, product.slug);
-                                    }}>X</p>
+                                    }}><X size="25" color="red"/></p>
                                     <p className='absolute flex justify-center items-center text-xl top-4 right-0 h-6 w-6 lg:top-32 lg:w-10 lg:h-10 lg:left-0 lg:text-3xl'
                                        style={{
                                            backdropFilter: 'blur(10px)',

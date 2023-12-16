@@ -7,6 +7,8 @@ import {api} from "../../utils/api.jsx";
 import DateFormat from "../../utils/DateFormat.jsx";
 import ProductCard from "../../components/commons/product/ProductCard.jsx";
 
+import X from '../../assets/images/icons/X.jsx'
+
 const Profile = () => {
 
     const user = useSelector(state => state.user)
@@ -219,7 +221,7 @@ const Profile = () => {
                                                            border: '1px solid #7209B7'
                                                        }} onClick={() => {
                                                         deleteProduct(product.title, product.productId, product.slug);
-                                                    }}>X</p>
+                                                    }}><X color='red' size="15" /></p>
                                                     <p className='absolute flex justify-center items-center text-xl left-8 lg:left-12'
                                                        style={{
                                                            top: '5px',
