@@ -1,8 +1,9 @@
 // import images
 import logo from '../../../assets/images/logo.png'
 import logoutIcon from '../../../assets/images/icons/logout.svg'
-import User from '../../../assets/images/icons/user.svg'
+import User from '../../../assets/images/icons/User.jsx'
 import Main from '../../../assets/images/banner/main.jpg'
+import X from '../../../assets/images/icons/X.jsx'
 
 //import component
 import SearchBar from "../searchbar/SearchBar.jsx";
@@ -71,13 +72,16 @@ function Header() {
                     <div className="flex items-center" style={{
                         marginLeft: user !== null && user.email !== undefined ? '40px' : ''
                     }}>
-                        <img src={User} alt="Logo Gam'In-Spot" className='w-6 cursor-pointer'
-                             id='userIcon' onClick={redirection}/>
+                        <div onClick={redirection}>
+                            <User/>
+                        </div>
                         <p className='text-purple font-[Poppins] ml-2 cursor-pointer hidden md:block'
                            onClick={redirection}>
                             {user && user.username ? user.username : "Mon compte"}
                         </p>
-                        <p className='cursor-pointer' onClick={() => {navigate('/cart')}}>P</p>
+                        <X className='cursor-pointer' onClick={() => {
+                            navigate('/cart')
+                        }}/>
                         {user === null || user.username === undefined ? (
                             <></>
                         ) : (
