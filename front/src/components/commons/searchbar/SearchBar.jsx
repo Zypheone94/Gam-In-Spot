@@ -1,6 +1,5 @@
 import {useState} from "react";
 
-import square from '../../../assets/images/icons/square.svg'
 import {useNavigate} from "react-router-dom";
 
 

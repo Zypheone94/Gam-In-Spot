@@ -1,9 +1,9 @@
 // import images
 import logo from '../../../assets/images/logo.png'
-import logoutIcon from '../../../assets/images/icons/logout.svg'
+import Logout from '../../../assets/images/icons/Logout.jsx'
 import User from '../../../assets/images/icons/User.jsx'
 import Main from '../../../assets/images/banner/main.jpg'
-import X from '../../../assets/images/icons/X.jsx'
+import Cart from '../../../assets/images/icons/Cart.jsx'
 
 //import component
 import SearchBar from "../searchbar/SearchBar.jsx";
@@ -45,17 +45,17 @@ function Header() {
                 py-8 md:bg-white md:flex md:flex-col md:justify-center md:items-center md:w-full
                 fixed top-0 bg-white flex flex-col w-full items-center z-50'
                     style={style}>
-                <div className="lg:flex-1 lg:pb-0 md:pb-4">
+                <div className="lg:w-4/12 lg:pb-0 md:pb-4">
                     <img src={logo} alt="Logo Gam'In-Spot"
                          className='lg:w-56 md:w-44 md:object-contain md:block hidden cursor-pointer'
                          id='logo' onClick={() => navigate('/')}/>
                 </div>
                 <div className="
-                lg:flex lg:flex-1 lg:justify-center lg:pb-0
+                lg:flex lg:w-3/12 lg:justify-center lg:pb-0
                 md:pb-4">
                     <SearchBar/>
                 </div>
-                <div className='flex mt-6 md:mt-0 lg:flex-1 lg:justify-center'>
+                <div className='flex mt-6 md:mt-0  lg:w-5/12 lg:justify-center'>
                     {user === null || user.username === undefined ? (
                         <></>
                     ) : (
@@ -69,24 +69,26 @@ function Header() {
                         </div>
                     )
                     }
-                    <div className="flex items-center" style={{
+                    <div className="lg:w-4/12 flex items-center justify-between" style={{
                         marginLeft: user !== null && user.email !== undefined ? '40px' : ''
                     }}>
                         <div onClick={redirection}>
                             <User/>
                         </div>
-                        <p className='text-purple font-[Poppins] ml-2 cursor-pointer hidden md:block'
+                        <p className='text-purple font-[Poppins] cursor-pointer hidden md:block'
                            onClick={redirection}>
                             {user && user.username ? user.username : "Mon compte"}
                         </p>
-                        <X className='cursor-pointer' onClick={() => {
+                        <div onClick={() => {
                             navigate('/cart')
-                        }}/>
+                        }}>
+                            <Cart/>
+                        </div>
+
                         {user === null || user.username === undefined ? (
                             <></>
                         ) : (
-                            <img src={logoutIcon} alt="Deconnect Icon" className='w-6 cursor-pointer ml-6'
-                                 id='userIcon' onClick={disconnect}/>
+                            <div onClick={disconnect}><Logout/></div>
                         )}
                     </div>
                 </div>
