@@ -50,6 +50,21 @@ class AddToCartView(APIView):
             return Response({"message": "Product does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
 
+class UpdateCartItemQuantityView(APIView):
+    def put(self, request, user_id, item_id):
+        new_quantity = request.data.get('quantity')
+
+        try:
+            cart_item = CartElement.objects.get(cart__user_id=user_id, id=item_id)
+            cart_item.quantity = new_quantity
+            cart_item.save()
+
+            return Response({"message": "Cart item quantity updated successfully"}, status=status.HTTP_200_OK)
+
+        except CartElement.DoesNotExist:
+            return Response({"message": "Cart item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
 class CartProductsView(APIView):
     def get(self, request, user_id):
         try:

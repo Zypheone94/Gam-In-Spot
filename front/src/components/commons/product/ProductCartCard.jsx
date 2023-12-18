@@ -1,12 +1,24 @@
-import DateFormat from "../../../utils/DateFormat.jsx";
 import {useNavigate} from "react-router-dom"
 
-import {nommage} from "../../../utils/nommage.jsx";
 import X from '../../../assets/images/icons/X.jsx'
+
+import Selector from "../Selector.jsx";
+import {useEffect, useState} from "react";
 
 const ProductCartCard = ({product}) => {
 
     const navigate = useNavigate()
+
+    const [quantity, setQuantity] = useState(product.quantity)
+
+    const changeQuantity = () => {
+        console.log('ok')
+    }
+
+    useEffect(() => {
+        changeQuantity()
+    }, [quantity]);
+
 
     return (
         <div className='mx-4 my-4' style={{
@@ -28,9 +40,17 @@ const ProductCartCard = ({product}) => {
             }}>
                 <div className='flex flex-col justify-between text-deepPurple h-full'>
                     <div className='flex flex-col'>
-                        <p className='font-semibold w-full cursor-pointer'
+                        <p className='font-semibold cursor-pointer flex'
                            onClick={() => navigate('/product/' + product.slug)}>{product.title}</p>
-                        <p>Quantité : x{product.quantity}</p>
+                        <div className='flex items-center'>
+                            <p>Quantité : </p>
+                            <div style={{
+                                minHeight: '30px',
+                                marginLeft: '10px'
+                            }}><Selector selectorList={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]} defaultValue={product.quantity}
+                                         setValue={setQuantity} width="50px" openHeight="100px"/></div>
+                        </div>
+
                     </div>
 
                     <div className='flex justify-between'>
