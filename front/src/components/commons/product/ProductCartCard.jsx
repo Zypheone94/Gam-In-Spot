@@ -15,12 +15,12 @@ const ProductCartCard = ({product, user, getUserCart}) => {
 
     const changeQuantity = async () => {
         try {
-            if(quantity === 0){
+            if (quantity === 0) {
                 deleteItem()
-            }
-            else if (quantity !== 'undefined' && quantity !== product.quantity) {
+            } else if (quantity !== 'undefined' && quantity !== product.quantity) {
                 const req = await api(`cart/cart/update-quantity/${user}/${product.productId}/`, 'PUT', {'quantity': quantity});
                 console.log(req);
+                getUserCart()
             }
         } catch (err) {
             console.log(err);

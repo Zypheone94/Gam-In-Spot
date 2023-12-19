@@ -11,6 +11,7 @@ const Cart = () => {
     const navigate = useNavigate()
 
     const [cartContent, setCartContent] = useState([])
+    const [totalCart, setTotalCart] = useState()
 
     const getUserCart = async () => {
         try {
@@ -21,9 +22,13 @@ const Cart = () => {
         }
     }
 
-    useEffect(() => {
-        console.log(cartContent);
-    }, [cartContent]);
+    const totalCost = () => {
+        let total = 0
+        cartContent && cartContent.length > 0 && cartContent.map(element => (
+            total += element.price * element.quantity
+        ))
+        setTotalCart(total)
+    }
 
     useEffect(() => {
         if (user === null || user.email === undefined) {
@@ -33,10 +38,17 @@ const Cart = () => {
         }
     }, []);
 
+    useEffect(() => {
+        totalCost()
+    }, [cartContent])
+
+
     return (
         <>
-            <div>
-                <h1 className='text-pink text-xl mt-4 ml-8 mb-10'>Cart</h1>
+            <div className='flex items-center mt-4 mb-10 justify-between'>
+                <h1 className='text-pink text-xl  ml-8'>Cart</h1>
+                {cartContent && cartContent.length > 0 &&
+                    <p className='text-pink text-xl mr-32'>Total : {totalCart !== '' && totalCart} €</p>}
             </div>
             <div className='flex mt-8 mx-12 mb-10'>
                 {
