@@ -56,10 +56,8 @@ class UpdateCartItemQuantityView(APIView):
 
         try:
             user = CustomUser.objects.get(id=user_id)
-            print(f"User found: {user}")
 
             cart_item = CartElement.objects.get(cart__user_id=user, product_id=item_id)
-            print(f"Cart item found: {cart_item}")
 
             cart_item.quantity = new_quantity
             cart_item.save()
@@ -85,4 +83,25 @@ class CartProductsView(APIView):
 
         except CartElement.DoesNotExist:
             return Response({"message": "Cart elements not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class RemoveCartItemView(APIView):
+    def delete(self, request, user_id, item_id):
+        try:
+            user = CustomUser.objects.get(id=user_id)
+
+            cart_item = CartElement.objects.get(cart__user_id=user, product_id=item_id)
+            cart_item.delete()
+
+            return Response({"message": "Cart item deleted successfully"}, status=status.HTTP_200_OK)
+
+        except CustomUser.DoesNotExist:
+            raise Http404("User does not exist")
+
+        except Cart.DoesNotExist:
+            raise Http404("Cart does not exist for this user")
+
+        except CartElement.DoesNotExist:
+            raise Http404("Cart item not found")
+
 

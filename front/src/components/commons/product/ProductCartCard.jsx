@@ -7,7 +7,7 @@ import X from '../../../assets/images/icons/X.jsx'
 
 import Selector from "../Selector.jsx";
 
-const ProductCartCard = ({product, user}) => {
+const ProductCartCard = ({product, user, getUserCart}) => {
 
     const navigate = useNavigate()
 
@@ -23,6 +23,16 @@ const ProductCartCard = ({product, user}) => {
             console.log(err);
         }
     };
+
+    const deleteItem = async () => {
+        try {
+            const req = await api(`cart/cart/delete-item/${user}/${product.productId}/`, 'DELETE')
+            console.log(req)
+            getUserCart()
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     useEffect(() => {
         changeQuantity()
@@ -63,7 +73,7 @@ const ProductCartCard = ({product, user}) => {
                     </div>
 
                     <div className='flex justify-between'>
-                        <X color='red'/>
+                        <div className='cursor-pointer' onClick={deleteItem}><X color='red'/></div>
                         <p className='font-semibold text-right'>{product.price}€</p>
                     </div>
                 </div>
