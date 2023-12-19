@@ -40,9 +40,10 @@ const Cart = () => {
             </div>
             <div className='flex mt-8 mx-12 mb-10'>
                 {
-                    cartContent && cartContent.map((element) => (
-                        <ProductCartCard product={element} user={user.id} getUserCart={getUserCart}/>
-                    ))
+                    cartContent && cartContent.length > 0 ? cartContent.map((element) => (
+                            <ProductCartCard product={element} user={user.id} getUserCart={getUserCart}/>
+                        )) :
+                        <p>Votre panier est vide</p>
                 }
             </div>
         </>
