@@ -31,9 +31,8 @@ function ProductDetail() {
                 const req = await api('cart/cart/add-to-cart/', "POST", {
                     user_id: user.id,
                     product_id: productDetail.productId,
-                    image: productDetail.images[0] || ''
+                    image: productDetail.images ? productDetail.images[0] : 'src/assets/images/Placeholder.jpg'
                 })
-                console.log(req.data)
                 navigate('/cart')
             }
             catch (err) {

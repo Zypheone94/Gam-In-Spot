@@ -30,6 +30,8 @@ class AddToCartView(APIView):
             user_id = request.data.get('user_id')
             product_id = request.data.get('product_id')
             cover_image = request.data.get('image')
+            
+
 
             user = CustomUser.objects.get(id=user_id)
             product = Product.objects.get(productId=product_id)

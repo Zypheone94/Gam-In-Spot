@@ -50,12 +50,25 @@ const Cart = () => {
                 {cartContent && cartContent.length > 0 &&
                     <p className='text-pink text-xl mr-32'>Total : {totalCart !== '' && totalCart} €</p>}
             </div>
-            <div className='flex mt-8 mx-12 mb-10'>
+            <div className='flex mt-8 mx-12 mb-10' style={{
+                overflowX: "scroll"
+            }}>
                 {
                     cartContent && cartContent.length > 0 ? cartContent.map((element) => (
                             <ProductCartCard product={element} user={user.id} getUserCart={getUserCart}/>
                         )) :
                         <p>Votre panier est vide</p>
+                }
+            </div>
+            <div className='my-12 ml-4'>
+                {
+                    cartContent && cartContent.length > 0 && (
+                        <button className="cursor-pointer block p-4" style={{
+                            border: "1px solid #3A0CA3",
+                            borderRadius: "15px",
+                            color: '#F72585'
+                        }}>Procéder au payement</button>
+                    )
                 }
             </div>
         </>
