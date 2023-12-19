@@ -28,7 +28,7 @@ function ProductDetail() {
             navigate('/login')
         } else {
             try {
-                const req = await api('cart/add-to-cart/', "POST", {
+                const req = await api('cart/cart/add-to-cart/', "POST", {
                     user_id: user.id,
                     product_id: productDetail.productId,
                     image: productDetail.images[0] || ''

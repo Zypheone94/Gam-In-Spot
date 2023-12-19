@@ -55,14 +55,25 @@ class UpdateCartItemQuantityView(APIView):
         new_quantity = request.data.get('quantity')
 
         try:
-            cart_item = CartElement.objects.get(cart__user_id=user_id, id=item_id)
+            user = CustomUser.objects.get(id=user_id)
+            print(f"User found: {user}")
+
+            cart_item = CartElement.objects.get(cart__user_id=user, product_id=item_id)
+            print(f"Cart item found: {cart_item}")
+
             cart_item.quantity = new_quantity
             cart_item.save()
 
             return Response({"message": "Cart item quantity updated successfully"}, status=status.HTTP_200_OK)
 
+        except CustomUser.DoesNotExist:
+            raise Http404("User does not exist")
+
+        except Cart.DoesNotExist:
+            raise Http404("Cart does not exist for this user")
+
         except CartElement.DoesNotExist:
-            return Response({"message": "Cart item not found"}, status=status.HTTP_404_NOT_FOUND)
+            raise Http404("Cart item not found")
 
 
 class CartProductsView(APIView):

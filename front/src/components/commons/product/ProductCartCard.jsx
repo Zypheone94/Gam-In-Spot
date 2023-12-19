@@ -1,19 +1,28 @@
+import {useEffect, useState} from "react";
+
 import {useNavigate} from "react-router-dom"
+import {api} from "../../../utils/api.jsx";
 
 import X from '../../../assets/images/icons/X.jsx'
 
 import Selector from "../Selector.jsx";
-import {useEffect, useState} from "react";
 
-const ProductCartCard = ({product}) => {
+const ProductCartCard = ({product, user}) => {
 
     const navigate = useNavigate()
 
     const [quantity, setQuantity] = useState(product.quantity)
 
-    const changeQuantity = () => {
-        console.log('ok')
-    }
+    const changeQuantity = async () => {
+        try {
+            if (quantity !== 'undefined' && quantity !== product.quantity) {
+                const req = await api(`cart/cart/update-quantity/${user}/${product.productId}/`, 'PUT', {'quantity': quantity});
+                console.log(req);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     useEffect(() => {
         changeQuantity()

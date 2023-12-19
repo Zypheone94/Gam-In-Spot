@@ -14,7 +14,7 @@ const Cart = () => {
 
     const getUserCart = async () => {
         try {
-            const req = await api('cart/display-cart/' + user.id, "GET")
+            const req = await api('cart/cart/display-cart/' + user.id, "GET")
             setCartContent(req)
         } catch (err) {
             console.log(err)
@@ -41,7 +41,7 @@ const Cart = () => {
             <div className='flex mt-8 mx-12 mb-10'>
                 {
                     cartContent && cartContent.map((element) => (
-                        <ProductCartCard product={element}/>
+                        <ProductCartCard product={element} user={user.id}/>
                     ))
                 }
             </div>
