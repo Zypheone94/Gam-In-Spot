@@ -48,9 +48,9 @@ const Cart = () => {
             <div className='flex items-center mt-4 mb-10 justify-between'>
                 <h1 className='text-pink text-xl  ml-8'>Cart</h1>
                 {cartContent && cartContent.length > 0 &&
-                    <p className='text-pink text-xl mr-32'>Total : {totalCart !== '' && totalCart} €</p>}
+                    <p className='text-pink text-xl mr-8 sm:mr-32'>Total : {totalCart !== '' && totalCart} €</p>}
             </div>
-            <div className='flex mt-8 mx-12 mb-10' style={{
+            <div className='flex mt-8 mx-12 mb-10 flex-col sm:flex-row' style={{
                 overflowX: "scroll"
             }}>
                 {

@@ -52,9 +52,19 @@ const ProductCartCard = ({product, user, getUserCart}) => {
             <div style={{
                 height: '55%'
             }}>
-                <img className='h-full w-full'
+                <img className='h-full w-full hidden sm:block'
                      style={{objectFit: 'cover', objectPosition: '50% 50%', borderRadius: '20px 20px 0 0'}}
                      src={product.image ? product.image : '../../src/assets/images/Placeholder.jpg'}/>
+                <div className="block sm:hidden" style={{
+                    maxHeight: "17" +
+                        "5px",
+                    overflow: 'hidden'
+                }}>
+                    <img className='h-full w-full'
+                         style={{objectFit: 'contain', objectPosition: '50% 50%', borderRadius: '20px 20px 0 0', maxHeight:"300px"}}
+                         src={product.image ? product.image : '../../src/assets/images/Placeholder.jpg'}/>
+                </div>
+
             </div>
             <div className='text-lightPurple p-2 flex flex-col justify-between' style={{
                 height: '45%',
