@@ -47,6 +47,7 @@ const ProductCartCard = ({product, user, getUserCart}) => {
             border: '1px solid #4361EE',
             borderRadius: '20px',
             minWidth: '220px',
+            maxWidth: '220px',
             maxHeight: '300px',
         }}>
             <div style={{
