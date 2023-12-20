@@ -46,8 +46,8 @@ const ProductCartCard = ({product, user, getUserCart}) => {
         <div className='mx-4 my-4' style={{
             border: '1px solid #4361EE',
             borderRadius: '20px',
-            minWidth: '220px',
             maxWidth: '220px',
+            minWidth: '220px',
             maxHeight: '300px',
         }}>
             <div style={{
@@ -62,7 +62,12 @@ const ProductCartCard = ({product, user, getUserCart}) => {
                     overflow: 'hidden'
                 }}>
                     <img className='h-full w-full'
-                         style={{objectFit: 'contain', objectPosition: '50% 50%', borderRadius: '20px 20px 0 0', maxHeight:"300px"}}
+                         style={{
+                             objectFit: 'contain',
+                             objectPosition: '50% 50%',
+                             borderRadius: '20px 20px 0 0',
+                             maxHeight: "300px"
+                         }}
                          src={product.image ? product.image : '../../src/assets/images/Placeholder.jpg'}/>
                 </div>
 
