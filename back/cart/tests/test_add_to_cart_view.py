@@ -7,7 +7,6 @@ from users.models import CustomUser
 from products.models import Product, Category
 from datetime import date
 
-
 class AddToCartViewTestCase(APITestCase):
 
     def setUp(self):
