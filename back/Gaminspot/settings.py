@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'products',
     'users',
-    'cart'
+    'cart',
+    'payment'
 ]
 
 MIDDLEWARE = [
@@ -90,6 +91,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'magna94320@gmail.com'
 EMAIL_HOST_PASSWORD = 'lieoukisxlrktkjw'
+
+STRIPE_PUBLIC_KEY = "pk_live_51NBaR5FzsV3puliacBbddqNzIyK0uLg3mZEOOnqxBqXhMcYs8v821TQzzRxZD7xTnek0Bj8Dgez7XT3I1Z64nqC000cJtZ3NuB"
+STRIPE_SECRET_KEY = "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"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
