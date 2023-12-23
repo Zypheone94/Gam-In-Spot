@@ -27,6 +27,7 @@ const Cart = () => {
         cartContent && cartContent.length > 0 && cartContent.map(element => (
             total += element.price * element.quantity
         ))
+        total = Math.round(total * 100) / 100
         setTotalCart(total)
     }
 

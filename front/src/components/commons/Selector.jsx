@@ -89,7 +89,7 @@ function Selector({
                 flexDirection: 'column',
                 zIndex: isOpen ? 12 : 10,
                 cursor: disable ? 'not-allowed' : 'pointer',
-                background: disable ? '#EEEEEE' : '',
+                background: 'white',
                 position: isOpen ? 'absolute' : 'relative',
                 width: width ? width : '185px',
                 minHeight: '30px',
@@ -112,7 +112,7 @@ function Selector({
                         disabled={disable}
                         style={{
                             cursor: disable ? 'not-allowed' : 'pointer',
-                            background: disable ? '#EEEEEE' : '',
+                            background: disable ? '#EEEEEE' : '#EEEEEE',
                             width: '165px',
                             margin: '7px 13px',
                             fontSize: '14px',
