@@ -9,31 +9,35 @@ from rest_framework.views import APIView
 # Configurez la clé secrète de Stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+
 class TestPaymentSession(APIView):
     @staticmethod
     def post(request):
         if request.method == 'POST':
-            # Créez une session de paiement avec Stripe
             try:
-                session = stripe.checkout.Session.create(
-                    payment_method_types=['card'],
-                    line_items=[{
-                        'price_data': {
-                            'currency': 'eur',
-                            'product_data': {
-                                'name': 'Nom du produit',
-                                # Autres détails du produit...
-                            },
-                            'unit_amount': 2000,  # Montant en centimes (par exemple 20 EUR)
-                        },
-                        'quantity': 1,
-                    }],
-                    mode='payment',
-                    success_url='http://votre-site.com/success',
-                    cancel_url='http://votre-site.com/cancel',
+                amount = request.data.get('amount')
+                payment_method_id = request.data.get('id')
+
+                session = stripe.PaymentIntent.create(
+
+                    amount=amount,
+                    currency="Eur",
+                    payment_method=payment_method_id,
                 )
-                return Response({'id': session.id})
+
+                payment_intent_id = session.id
+                payment_method_key = session.payment_method
+
+                confirm = stripe.PaymentIntent.confirm(
+                    payment_intent_id,
+                    payment_method=payment_method_key,
+                    return_url='http://localhost:5173/profil'
+                )
+
+                return Response(confirm.status)
+
+            except stripe.error.StripeError as e:
+                return Response({'error': str(e)}, status=500)
+
             except Exception as e:
                 return Response({'error': str(e)}, status=500)
-        else:
-            return Response({'error': 'Méthode non autorisée'}, status=405)

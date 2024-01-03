@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
 import ProductCartCard from "../../components/commons/product/ProductCartCard.jsx";
+import StripeContainer from "../../stripe/StripeContainer.jsx";
 
 const Cart = () => {
 
@@ -29,6 +30,16 @@ const Cart = () => {
         ))
         total = Math.round(total * 100) / 100
         setTotalCart(total)
+    }
+
+    const processToPayment = async () => {
+        try {
+            const req = await api('payment/test', "POST")
+            console.log(req)
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 
     useEffect(() => {
@@ -71,6 +82,11 @@ const Cart = () => {
                         }}>Procéder au payement</button>
                     )
                 }
+            </div>
+
+            <StripeContainer/>
+            <div onClick={processToPayment}>
+                Payer
             </div>
         </>
     )
