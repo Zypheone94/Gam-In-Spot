@@ -72,22 +72,9 @@ const Cart = () => {
                         <p>Votre panier est vide</p>
                 }
             </div>
-            <div className='my-12 ml-4'>
-                {
-                    cartContent && cartContent.length > 0 && (
-                        <button className="cursor-pointer block p-4" style={{
-                            border: "1px solid #3A0CA3",
-                            borderRadius: "15px",
-                            color: '#F72585'
-                        }}>Procéder au payement</button>
-                    )
-                }
-            </div>
+
 
             <StripeContainer/>
-            <div onClick={processToPayment}>
-                Payer
-            </div>
         </>
     )
 }
