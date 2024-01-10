@@ -1,7 +1,7 @@
 from django.urls import path, include
 
-from .views import TestPaymentSession
+from .views import PaymentSession
 
 urlpatterns = [
-    path('test', TestPaymentSession.as_view(), name="test")
+    path('payement', PaymentSession.as_view(), name="payement")
 ]

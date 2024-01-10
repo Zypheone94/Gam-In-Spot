@@ -52,7 +52,7 @@ const CheckoutForm = () => {
             });
             try {
                 const id = paymentMethod.id
-                const req = await api('payment/test', "POST", {'id': id, 'amount': 2000})
+                const req = await api('payment/payement', "POST", {'id': id, 'amount': 2000})
                 console.log(req)
                 if (req === 'succeeded') {
                     navigate('/paiement/success')

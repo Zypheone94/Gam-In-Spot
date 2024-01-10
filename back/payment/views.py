@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class TestPaymentSession(APIView):
+class PaymentSession(APIView):
     @staticmethod
     def post(request):
         if request.method == 'POST':
