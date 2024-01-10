@@ -33,8 +33,7 @@ const CheckoutForm = () => {
     const handleSubmit = async e => {
         e.preventDefault()
         const addressElement = elements.getElement('address');
-        const {complete, value} = await addressElement.getValue();
-        console.log()
+        const {complete, value} = await addressElement.getValue()
 
         if (complete) {
             const {error, paymentMethod} = await stripe.createPaymentMethod({
