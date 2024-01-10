@@ -58,7 +58,7 @@ const Cart = () => {
     return (
         <>
             <div className='flex items-center mt-4 mb-10 justify-between'>
-                <h1 className='text-pink text-xl  ml-8'>Cart</h1>
+                <h1 className='text-pink text-xl ml-8'>Cart</h1>
                 {cartContent && cartContent.length > 0 &&
                     <p className='text-pink text-xl mr-8 sm:mr-32'>Total : {totalCart !== '' && totalCart} €</p>}
             </div>

@@ -8,6 +8,28 @@ const CheckoutForm = () => {
     const elements = useElements()
     const navigate = useNavigate()
 
+    const cardElementStyle = {
+        base: {
+            display: 'block',
+            width: '100%',
+            padding: '10px',
+            fontSize: '16px',
+            lineHeight: '1.5',
+            color: '#495057',
+            backgroundColor: '#fff',
+            backgroundClip: 'padding-box',
+            borderRadius: '0.25rem',
+            transition: 'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
+        },
+        invalid: {
+            borderColor: '#dc3545',
+        },
+        focus: {
+            borderColor: '#80bdff',
+            boxShadow: '0 0 0 0.2rem rgba(0, 123, 255, 0.25)',
+        },
+    };
+
     const handleSubmit = async e => {
         e.preventDefault()
         const addressElement = elements.getElement('address');
@@ -46,8 +68,10 @@ const CheckoutForm = () => {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <CardElement/>
+        <form onSubmit={handleSubmit} className='mx-12'>
+            <CardElement options={{
+                style: cardElementStyle,
+            }}/>
             <AddressElement options={{mode: 'shipping'}}/>
             <div className='my-12 ml-4'>
                 <button className="cursor-pointer block p-4" style={{

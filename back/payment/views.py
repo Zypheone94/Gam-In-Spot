@@ -15,24 +15,7 @@ class TestPaymentSession(APIView):
     def post(request):
         if request.method == 'POST':
             try:
-                amount = request.data.get('amount')
-                payment_method_id = request.data.get('id')
-
-                session = stripe.PaymentIntent.create(
-
-                    amount=amount,
-                    currency="Eur",
-                    payment_method=payment_method_id,
-                )
-
-                payment_intent_id = session.id
-                payment_method_key = session.payment_method
-
-                confirm = stripe.PaymentIntent.confirm(
-                    payment_intent_id,
-                    payment_method=payment_method_key,
-                    return_url='http://localhost:5173/profil'
-                )
+                
 
                 return Response(confirm.status)
 
