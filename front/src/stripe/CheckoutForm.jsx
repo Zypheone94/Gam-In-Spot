@@ -3,7 +3,7 @@ import {CardElement, AddressElement, useStripe, useElements} from "@stripe/react
 import {api} from "../utils/api.jsx";
 import {useNavigate} from "react-router-dom";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({totalPrice}) => {
     const stripe = useStripe()
     const elements = useElements()
     const navigate = useNavigate()
@@ -52,7 +52,7 @@ const CheckoutForm = () => {
             });
             try {
                 const id = paymentMethod.id
-                const req = await api('payment/payement', "POST", {'id': id, 'amount': 2000})
+                const req = await api('payment/payement', "POST", {'id': id, 'amount': totalPrice*100})
                 console.log(req)
                 if (req === 'succeeded') {
                     navigate('/paiement/success')

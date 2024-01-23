@@ -74,7 +74,7 @@ const Cart = () => {
             </div>
 
 
-            <StripeContainer/>
+            <StripeContainer totalPrice={totalCart}/>
         </>
     )
 }
