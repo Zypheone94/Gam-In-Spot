@@ -20,7 +20,7 @@ const CreateProductForm = () => {
             navigate('/login')
         }
         setIsLoading(true)
-        api('products/product/loadcat')
+        api('products/product/loadcat', "POST")
             .then(response => {
                 response.forEach((value) => {
                     if (!categoryList.includes(value.title)) {

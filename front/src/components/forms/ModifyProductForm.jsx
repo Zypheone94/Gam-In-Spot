@@ -23,7 +23,7 @@ const ModifyProductForm = ({productDetail, setProductDetail, slug}) => {
 
         setIsLoading(true);
 
-        api('products/product/loadcat')
+        api('products/product/loadcat', "POST")
             .then(response => {
                 setCategoryDetailList(response)
                 const categories = response.map(category => category.title);
