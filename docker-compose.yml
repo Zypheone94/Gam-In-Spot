@@ -3,8 +3,12 @@ version: "3"
 services:
   gaminspot-front:
     image: react-gaminspot
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    restart: always
     ports:
-      - "5173:5173"
+      - "80:80"
     networks:
       - gaminspot-network
     volumes:
@@ -13,6 +17,7 @@ services:
       - gaminspot-back
   gaminspot-back:
     image: django-gaminspot
+    restart: always
     ports:
       - "8000:8000"
     volumes:
