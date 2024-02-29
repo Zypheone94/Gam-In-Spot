@@ -10,6 +10,9 @@ COPY package*.json ./
 # Installe les dépendances
 RUN npm install
 
+# Installe vite globalement
+RUN npm install -g vite
+
 # Copie le reste des fichiers de l'application dans le conteneur
 COPY . .
 
