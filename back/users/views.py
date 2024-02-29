@@ -67,17 +67,20 @@ class LoginView(APIView):
 class CustomUserCreateView(APIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get('email', None)
+        # Check if mail already exist in database
         if CustomUser.objects.filter(email=email).exists():
             return Response({'status': 40}, status=status.HTTP_400_BAD_REQUEST)
 
         username = request.data.get('username', None)
         if CustomUser.objects.filter(username=username).exists():
+            # Check if username already exist in database
             return Response({'status': 50}, status=status.HTTP_400_BAD_REQUEST)
 
         request.data['password'] = make_password(request.data['password'])
 
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
+            # Check integrity of data before writting it in database
             serializer.save()
             return Response({'status': 10}, status=status.HTTP_201_CREATED)
 
@@ -87,6 +90,7 @@ class CustomUserCreateView(APIView):
 class UserDetailView(APIView):
     def post(self, request):
         user_id = request.data.get('id')
+        # get user thanks to his id
         if user_id is None:
             return Response({'error': 'ID de l\'utilisateur manquant'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -95,6 +99,7 @@ class UserDetailView(APIView):
             serializer = CustomUserSerializer(user)
             serialized_data = serializer.data
 
+        # Return the value if the user is found
             return Response({'user': serialized_data})
         except CustomUser.DoesNotExist:
             return Response({'error': 'L\'utilisateur n\'existe pas'}, status=status.HTTP_404_NOT_FOUND)
