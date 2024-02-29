@@ -10,11 +10,8 @@ COPY package*.json ./
 # Installe les dépendances
 RUN npm install
 
-# Installe vite globalement
-RUN npm install -g vite
-
 # Copie le reste des fichiers de l'application dans le conteneur
-COPY . .
+# COPY . .
 
 # Exécute la construction de l'application React
 RUN npm run build
@@ -32,4 +29,4 @@ COPY --from=build /app/front/build /app/front/build
 EXPOSE 80
 
 # Commande de démarrage pour lancer l'application lorsqu'un conteneur est démarré
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "run"]
