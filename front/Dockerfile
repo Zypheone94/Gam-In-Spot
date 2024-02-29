@@ -1,35 +1,33 @@
-# Stage 1: Build
-FROM node:14 as build
+# Utiliser l'image Node pour construire l'application
+FROM node:14 AS builder
 
-# Crée et définis le répertoire de travail dans le conteneur
-WORKDIR /app/front
+# Définir le répertoire de travail
+WORKDIR /app
 
-# Copie le fichier package.json et package-lock.json dans le conteneur
-COPY package*.json ./
+# Copier le fichier package.json et package-lock.json pour installer les dépendances
+COPY package.json .
+COPY package-lock.json .
 
-# Installe les dépendances
+# Installer les dépendances
 RUN npm install
 
-# Copie le reste des fichiers de l'application dans le conteneur
+# Copier le reste des fichiers de l'application
 COPY . .
 
-# Exécute la construction de l'application React
+# Construire l'application en mode production
 RUN npm run build
 
-# Stage 2: Production
-FROM nginx:latest
+# Utiliser une image légère d'Apache pour servir l'application construite
+FROM httpd:alpine
 
-# Crée et définis le répertoire de travail dans le conteneur
-WORKDIR /usr/share/nginx/html
+# Copier les fichiers construits de l'étape précédente vers le répertoire d'Apache
+COPY --from=builder /app/dist /usr/local/apache2/htdocs
 
-# Copie uniquement les fichiers nécessaires à partir de la première étape (build)
-COPY --from=build /app/front/build /usr/share/nginx/html
-
-# Copie le fichier de configuration Nginx personnalisé
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose le port 80
+# Exposer le port 80 (par défaut pour HTTP)
 EXPOSE 80
 
-# Commande de démarrage pour lancer Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Vous pouvez également personnaliser la configuration d'Apache si nécessaire
+# COPY apache-config.conf /usr/local/apache2/conf/httpd.conf
+
+# Commande pour démarrer Apache une fois le conteneur lancé
+CMD ["httpd-foreground"]
