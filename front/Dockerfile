@@ -17,17 +17,14 @@ COPY . .
 # Construire l'application en mode production
 RUN npm run build
 
-# Utiliser une image légère d'Apache pour servir l'application construite
-FROM httpd:alpine
+# Utiliser l'image légère de Nginx pour servir l'application construite
+FROM nginx:alpine
 
-# Copier les fichiers construits de l'étape précédente vers le répertoire d'Apache
-COPY --from=builder /app/dist /usr/local/apache2/htdocs
+# Copier les fichiers construits de l'étape précédente vers le répertoire de Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Exposer le port 80 (par défaut pour HTTP)
 EXPOSE 80
 
-# Vous pouvez également personnaliser la configuration d'Apache si nécessaire
-# COPY apache-config.conf /usr/local/apache2/conf/httpd.conf
-
-# Commande pour démarrer Apache une fois le conteneur lancé
-CMD ["httpd-foreground"]
+# Commande pour démarrer Nginx une fois le conteneur lancé
+CMD ["nginx", "-g", "daemon off;"]
