@@ -23,12 +23,8 @@ FROM nginx:alpine
 # Copier les fichiers construits de l'étape précédente vers le répertoire de Nginx
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Exposer le port 80 (par défaut pour HTTP) et le port 443 (pour HTTPS)
+# Exposer le port 80 (par défaut pour HTTP)
 EXPOSE 80
-EXPOSE 443
-
-# Installer Certbot
-RUN apk add --no-cache certbot certbot-nginx
 
 # Commande pour démarrer Nginx une fois le conteneur lancé
-CMD ["sh", "-c", "certbot --nginx && nginx -g 'daemon off;'"]
+CMD ["nginx", "-g", "daemon off;"]
