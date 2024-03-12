@@ -29,7 +29,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG")
 
-ALLOWED_HOSTS = ['gaminspot.games']
+ALLOWED_HOSTS = ['gaminspot.games',]
 
 # Application definition
 
@@ -147,7 +147,7 @@ AUTHENTICATION_BACKENDS = ['Gaminspot.backend.EmailBackend', 'django.contrib.aut
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = ["http://gaminspot.games", "https://gaminspot.games", "http://gaminspot.games:8000", "https://gaminspot.games:8000"]
+CORS_ALLOWED_ORIGINS = ["http://gaminspot.games", "http://gaminspot.games:8000",]
 
 SIMPLEREST_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
