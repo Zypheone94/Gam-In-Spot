@@ -8,8 +8,8 @@ services:
     restart: always
     ports:
       - "80:80"
-    # networks:
-    #   - gaminspot-network
+    networks:
+       - gaminspot-network
     volumes:
       - ./front:/app/front
     depends_on:
@@ -24,9 +24,9 @@ services:
       - "8000:8000"
     volumes:
       - ./back:/app
-    # networks:
-    #   - gaminspot-network
+    networks:
+       - gaminspot-network
 
-# networks:
-#   gaminspot-network:
-#     driver: bridge
+networks:
+   gaminspot-network:
+      driver: bridge
