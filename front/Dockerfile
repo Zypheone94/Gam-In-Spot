@@ -36,7 +36,7 @@ EXPOSE 80
 EXPOSE 443
 
 # Request SSL certificates using Certbot
-RUN certbot certonly --standalone -d gaminspot.games -d www.gaminspot.games --non-interactive --agree-tos -m maximerene.durand.pro@gmail.com
+RUN certbot certonly --standalone -d gaminspot.games -d --non-interactive --agree-tos -m maximerene.durand.pro@gmail.com
 
 # Commande pour démarrer Nginx une fois le conteneur lancé
 CMD ["nginx", "-g", "daemon off;"]
