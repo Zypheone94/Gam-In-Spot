@@ -29,7 +29,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG")
 
-ALLOWED_HOSTS = ['gaminspot.games',]
+ALLOWED_HOSTS = ['gaminspot.games', '34.148.196.246', ]
 
 # Application definition
 
