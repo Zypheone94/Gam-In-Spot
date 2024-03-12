@@ -21,10 +21,9 @@ RUN npm run build
 FROM nginx:alpine
 
 # Install Certbot
-RUN apt-get update && \
-    apt-get install -y certbot && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk update && \
+    apk add --no-cache certbot && \
+    rm -rf /var/cache/apk/*
 
 # Copy Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
