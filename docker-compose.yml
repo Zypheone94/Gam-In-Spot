@@ -19,7 +19,7 @@ services:
     # image: django-gaminspot
     build:
       context: ./back
-    restart: always
+    restart: no
     ports:
       - "8000:8000"
     volumes:
