@@ -37,8 +37,5 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 EXPOSE 80
 EXPOSE 443
 
-# Request SSL certificates using Certbot
-# RUN certbot certonly -d gaminspot.games --nginx --non-interactive --agree-tos -m maximerene.durand.pro@gmail.com
-
 # Commande pour démarrer Nginx une fois le conteneur lancé
 CMD ["nginx", "-g", "daemon off;"]
