@@ -22,8 +22,10 @@ FROM nginx:alpine
 
 # Install Certbot
 RUN apk update && \
-    apk add --no-cache certbot-nginx && \
+    apk add --no-cache certbot certbot-nginx && \
     rm -rf /var/cache/apk/*
+
+RUN mkdir -p /etc/letsencrypt
 
 # Copy Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -36,7 +38,7 @@ EXPOSE 80
 EXPOSE 443
 
 # Request SSL certificates using Certbot
-RUN certbot certonly -d gaminspot.games --nginx --non-interactive --agree-tos -m maximerene.durand.pro@gmail.com
+# RUN certbot certonly -d gaminspot.games --nginx --non-interactive --agree-tos -m maximerene.durand.pro@gmail.com
 
 # Commande pour démarrer Nginx une fois le conteneur lancé
 CMD ["nginx", "-g", "daemon off;"]
