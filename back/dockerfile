@@ -1,6 +1,7 @@
 FROM python:3.11
 
 RUN mkdir -p /app/letsencrypt/
+RUN mkdir -p /app/static/
 
 WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
