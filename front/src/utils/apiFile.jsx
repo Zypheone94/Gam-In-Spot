@@ -4,7 +4,7 @@ import axios from "axios";
 export const apiFile = async (apiDetailRoad, data) => {
     try {
         console.log(data)
-        const response = await axios.post(`${apiUrl}/${apiDetailRoad}`, data, {
+        const response = await axios.post(`https://gaminspot.games/${apiDetailRoad}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
