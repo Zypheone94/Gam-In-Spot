@@ -5,7 +5,7 @@ export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
     const requestOptions = {
         method: method,
         headers: {
-            'Content-Type': method === 'GET' ? 'application/json' : 'text/plain',
+            'Content-Type': 'application/json',
         },
     };
 
