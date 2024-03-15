@@ -5,7 +5,7 @@ export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
     const requestOptions = {
         method: method,
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': method === 'GET' ? 'application/json' : 'text/plain',
         },
     };
 
@@ -15,7 +15,7 @@ export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
     }
 
     try {
-        const response = await fetch(`https://gaminspot.games:8000/${apiDetailRoad}`, requestOptions);
+        const response = await fetch(`https://gaminspot.games:8000${apiDetailRoad}`, requestOptions);
         return await response.json();
     } catch (error) {
         throw error;
