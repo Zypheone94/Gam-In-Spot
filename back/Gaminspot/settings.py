@@ -147,8 +147,13 @@ AUTHENTICATION_BACKENDS = ['Gaminspot.backend.EmailBackend', 'django.contrib.aut
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ALLOWED_HOSTS = ['*']
-CORS_ALLOWED_ALL_ORIGINS = True
+ALLOWED_HOSTS = ['localhost', 'gaminspot.games']
+CORS_ORIGIN_WHITELIST = (
+    'https://localhost',
+    'https://localhost:8000',
+    'https://gaminspot.games',
+    'https://gaminspot.games:8000'
+)
 
 SIMPLEREST_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
