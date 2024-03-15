@@ -18,7 +18,7 @@ function CategoryList() {
             }
 
             try {
-                let url = '/products/api/category'
+                let url = 'products/api/category'
                 getSearchParam() !== null ?
                     url += `/?search=${getSearchParam()}` : null
                 const response = await api(url);
