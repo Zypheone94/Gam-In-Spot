@@ -40,7 +40,7 @@ function App() {
     const handleTokenRefresh = () => {
         const refreshToken = Cookies.get('refresh_token');
 
-        api('/users/token/refresh', 'POST', {
+        api('users/token/refresh', 'POST', {
             refresh: refreshToken
         })
             .then((response) => {

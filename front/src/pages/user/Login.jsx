@@ -21,7 +21,7 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await api('/users/login', 'POST', {
+            const response = await api('users/login', 'POST', {
                 email: email,
                 password: password
             });

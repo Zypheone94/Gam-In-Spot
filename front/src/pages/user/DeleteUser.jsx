@@ -13,7 +13,7 @@ const DeleteUser = () => {
     const handleSubmit = e => {
         e.preventDefault()
         if (deleteValue === user.username) {
-            api('/users/delete', 'DELETE', {'id': user.id, 'username': user.username})
+            api('users/delete', 'DELETE', {'id': user.id, 'username': user.username})
                 .then((response) => {
                     console.log(response)
                     setReturnMessage('Votre compte a bien été supprimé, vous allez être déconnecté !')
