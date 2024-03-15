@@ -31,7 +31,7 @@ class PaymentSession(APIView):
                 confirm = stripe.PaymentIntent.confirm(
                     payment_intent_id,
                     payment_method=payment_method_key,
-                    return_url='http://localhost:5173/profil'
+                    return_url='https://gaminspot.games/profil'
                 )
 
                 return Response(confirm.status)
