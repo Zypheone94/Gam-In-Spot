@@ -1,5 +1,5 @@
-const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
-const debugMode = import.meta.env.REACT_DEBUG_MODE === 'true';
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log(apiUrl)
 
 export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
     const requestOptions = {
@@ -15,7 +15,7 @@ export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
     }
 
     try {
-        const response = await fetch(`http://localhost:8000/${apiDetailRoad}`, requestOptions);
+        const response = await fetch(`${apiUrl}/${apiDetailRoad}`, requestOptions);
         return await response.json();
     } catch (error) {
         throw error;
