@@ -9,11 +9,10 @@ const CreateUser = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (user) {
-            if (user !== null || user.email !== undefined) {
+            if (user.email !== undefined) {
                 navigate('/profile')
             }
-        }
+
     }, []);
 
     return (

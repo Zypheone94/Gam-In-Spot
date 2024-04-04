@@ -89,8 +89,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'magna94320@gmail.com'
-EMAIL_HOST_PASSWORD = 'lieoukisxlrktkjw'
+EMAIL_HOST_USER = 'gaminspot.pro@gmail.com'
+EMAIL_HOST_PASSWORD = env("MAIL_PASSWORD")
 
 STRIPE_PUBLIC_KEY = "pk_test_51NBaR5FzsV3puliaHmrwBti6tPD0pYWKrP3eK9I9JfMovNtL9hv0EhzaNQ9vIsdB3ovwGoBaX5bVSFURs70SAcUH001YsdwGBd"
 STRIPE_SECRET_KEY = "sk_test_51NBaR5FzsV3puliayjLMzEqXVARf4rlbeLbxTGnr3tGpJIfI16Zjqt0LGCMZlADxjX8FK88sUddDcNo5LMWB5pKf00wSvBdRvz"
