@@ -17,7 +17,7 @@ const UserPasswordForm = ({user}) => {
 
     const handleUpdatePassword = async (updatedUserData) => {
         try {
-            const updatedUser = await api('/users/password', 'POST', updatedUserData);
+            const updatedUser = await api('users/password', 'POST', updatedUserData);
             updatedUser.error === 0 ?
                 navigate('/profile') :
                 updatedUser.error === 50 ?

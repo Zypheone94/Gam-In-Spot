@@ -10,7 +10,7 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - gaminspot-network
+       - gaminspot-network
     volumes:
       - ./front:/app/front
     depends_on:
@@ -26,8 +26,16 @@ services:
     volumes:
       - ./back:/app
     networks:
+<<<<<<< HEAD
       - gaminspot-network
 
 networks:
   gaminspot-network:
     driver: bridge
+=======
+       - gaminspot-network
+
+networks:
+   gaminspot-network:
+      driver: bridge
+>>>>>>> origin/http

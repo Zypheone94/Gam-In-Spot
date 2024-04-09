@@ -1,0 +1,18 @@
+ => ERROR [gaminspot-front stage-1 5/5] RUN certbot certonly --standalone -d gaminspot.games --non-interactive --agree-tos -m maximerene.durand.pro@gmail.com                  7.2s
+------
+ > [gaminspot-front stage-1 5/5] RUN certbot certonly --standalone -d gaminspot.games --non-interactive --agree-tos -m maximerene.durand.pro@gmail.com:
+1.813 Saving debug log to /var/log/letsencrypt/letsencrypt.log
+2.275 Account registered.
+2.277 Requesting a certificate for gaminspot.games
+6.750
+6.750 Certbot failed to authenticate some domains (authenticator: standalone). The Certificate Authority reported these problems:
+6.750   Domain: gaminspot.games
+6.750   Type:   connection
+6.750   Detail: 34.74.134.56: Fetching http://gaminspot.games/.well-known/acme-challenge/blEG6EKLobq4-JBxgbppvIeTmdpaDm5b8V7HsnnhPt0: Connection refused
+6.750
+6.750 Hint: The Certificate Authority failed to download the challenge files from the temporary standalone webserver started by Certbot on port 80. Ensure that the listed domains point to this machine and that it can accept inbound connections from the internet.
+6.750
+7.041 Some challenges have failed.
+7.044 Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+------
+failed to solve: process "/bin/sh -c certbot certonly --standalone -d gaminspot.games --non-interactive --agree-tos -m maximerene.durand.pro@gmail.com" did not complete successfully: exit code: 1

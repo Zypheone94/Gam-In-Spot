@@ -47,9 +47,9 @@ const UserProfile = () => {
             data: updatedUserData
         }
         try {
-            const updatedUser = await api('/users/modify', 'PUT', requestDate);
+            const updatedUser = await api('users/modify', 'PUT', requestDate);
             setUserData(updatedUser);
-            const newUserValue = await api('/users/detail', 'POST', requestDate)
+            const newUserValue = await api('users/detail', 'POST', requestDate)
             dispatch(setUser(newUserValue.user));
             navigate('/profile')
         } catch (error) {

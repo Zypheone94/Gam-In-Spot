@@ -17,7 +17,7 @@ function ProductList() {
             }
 
             try {
-                let url = '/products/api/product'
+                let url = 'products/api/product'
                 getSearchParam() !== null ?
                     url += `/?search=${getSearchParam()}` : null
                 const response = await api(url);

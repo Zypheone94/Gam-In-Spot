@@ -14,7 +14,7 @@ function Logout() {
             const refreshToken = Cookies.get('refresh_token');
 
             try {
-                const response = await api('/users/logout', 'POST', { refresh_token: refreshToken });
+                const response = await api('users/logout', 'POST', { refresh_token: refreshToken });
                 console.log(response)
                 if (response.status === 205) {
                     dispatch(setUser(null));
