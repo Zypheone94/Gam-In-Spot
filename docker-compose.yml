@@ -26,16 +26,7 @@ services:
     volumes:
       - ./back:/app
     networks:
-<<<<<<< HEAD
       - gaminspot-network
-
-networks:
-  gaminspot-network:
-    driver: bridge
-=======
-       - gaminspot-network
-
 networks:
    gaminspot-network:
       driver: bridge
->>>>>>> origin/http
