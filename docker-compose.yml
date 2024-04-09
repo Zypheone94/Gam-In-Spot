@@ -2,23 +2,32 @@ version: "3"
 
 services:
   gaminspot-front:
-    image: react-gaminspot
+    # image: react-gaminspot
+    build:
+      context: ./front
+    restart: always
     ports:
-      - "5173:5173"
+      - "80:80"
+      - "443:443"
     networks:
       - gaminspot-network
     volumes:
       - ./front:/app/front
     depends_on:
       - gaminspot-back
+
   gaminspot-back:
-    image: django-gaminspot
+    # image: django-gaminspot
+    build:
+      context: ./back
+    restart: always
     ports:
       - "8000:8000"
     volumes:
       - ./back:/app
     networks:
       - gaminspot-network
+
 networks:
   gaminspot-network:
     driver: bridge
