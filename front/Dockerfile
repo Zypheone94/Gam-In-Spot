@@ -1,5 +1,5 @@
 # Utiliser l'image Node pour construire l'application
-FROM node:14 AS builder
+FROM node:21 AS builder
 
 # Définir le répertoire de travail
 WORKDIR /app
