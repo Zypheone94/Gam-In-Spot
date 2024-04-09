@@ -19,6 +19,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env(env_file=str(BASE_DIR / '.env'))
+print(BASE_DIR)
+print(env)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -150,7 +152,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ALLOWED_HOSTS = ['localhost', 'gaminspot.games']
 CORS_ORIGIN_WHITELIST = (
-    'https://localhost',
+    'http://localhost:5173',
     'https://localhost:8000',
     'https://gaminspot.games',
     'https://gaminspot.games:8000'

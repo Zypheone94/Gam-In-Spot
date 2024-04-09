@@ -1,4 +1,4 @@
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 console.log(apiUrl)
 
 export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
@@ -15,7 +15,7 @@ export const api = async (apiDetailRoad, method = 'GET', data = {}) => {
     }
 
     try {
-        const response = await fetch(`https://gaminspot.games:8000/${apiDetailRoad}`, requestOptions);
+        const response = await fetch(`${apiUrl}${apiDetailRoad}`, requestOptions);
         return await response.json();
     } catch (error) {
         throw error;
