@@ -14,8 +14,6 @@ const Search = () => {
     const [categoryList, setCategoryList] = useState([])
     const [productList, setProductList] = useState([])
 
-    use
-
     useEffect(() => {
         let value = location.search.substring(2)
         if (value.includes('%20')) {
