@@ -76,10 +76,10 @@ class ProductDetailView(APIView):
             data = serializer.data
             data['seller'] = seller.__str__()
 
-            images = []
+            """images = []
 
             for i in range(1, 4):
-                url = f"http://localhost:8000/static/{data['seller']}/{data['slug']}/image_{i}.jpg"
+                url = f"https://localhost:8000/static/{data['seller']}/{data['slug']}/image_{i}.jpg"
                 if check_url_status(url):
                     images.append(url)
                 else:
@@ -88,7 +88,7 @@ class ProductDetailView(APIView):
             if len(images) == 0:
                 None
             else:
-                data['images'] = images
+                data['images'] = images"""
 
             return Response(data)
         except Product.DoesNotExist:
