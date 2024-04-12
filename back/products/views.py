@@ -221,39 +221,40 @@ class LiteProductListView(APIView):
                 return False
 
         try:
-            products = Product.objects.all()
+            #products = Product.objects.all()
 
-            if seller_id:
-                products = products.filter(seller_id=seller_id)
+            #if seller_id:
+             #   products = products.filter(seller_id=seller_id)
 
-            products = products.order_by('-productId')
+            #products = products.order_by('-productId')
 
-            if title:
-                products = products.filter(title__contains=title)
+            #if title:
+             #   products = products.filter(title__contains=title)
 
-            products = products.order_by('-productId')
+           # products = products.order_by('-productId')
 
-            if limit:
-                products = products[:int(limit)]
+            #if limit:
+             #   products = products[:int(limit)]
 
             result_data = []
 
-            for product in products:
-                serialized_product = LiteProductSerializer(product).data
-                seller = CustomUser.objects.get(pk=serialized_product['seller_id'])
-                serialized_product['seller'] = seller.__str__()
 
-                images = []
+            #for product in products:
+             #   serialized_product = LiteProductSerializer(product).data
+              #  seller = CustomUser.objects.get(pk=serialized_product['seller_id'])
+               # serialized_product['seller'] = seller.__str__()
 
-                for i in range(1, 4):
-                    url = f"http://localhost:8000/static/{serialized_product['seller']}/{serialized_product['slug']}/image_{i}.jpg"
-                    if check_url_status(url):
-                        images.append(url)
+               # images = []
 
-                if images:
-                    serialized_product['images'] = images
+                #for i in range(1, 4):
+                 #   url = f"http://localhost:8000/static/{serialized_product['seller']}/{serialized_product['slug']}/image_{i}.jpg"
+                  #  if check_url_status(url):
+                   #     images.append(url)
 
-                result_data.append(serialized_product)
+                #if images:
+                 #   serialized_product['images'] = images
+
+                #result_data.append(serialized_product)
 
             return Response(result_data, status=status.HTTP_200_OK)
 
