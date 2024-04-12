@@ -150,7 +150,7 @@ AUTHENTICATION_BACKENDS = ['Gaminspot.backend.EmailBackend', 'django.contrib.aut
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ALLOWED_HOSTS = ['localhost', 'gaminspot.games']
+ALLOWED_HOSTS = ['localhost', 'gaminspot.games', '35.196.242.162']
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:5173',
     'https://localhost:8000',
