@@ -35,7 +35,7 @@ const Search = () => {
             }
 
             try {
-                const response = await api('products/product/loadProductList', 'POST', {
+                const response = await api('products/product/load-product-list', 'POST', {
                     'title': searchValue,
                     'limit': 25
                 });

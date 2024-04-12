@@ -28,7 +28,7 @@ const HistoryUser = () => {
 
     const getAllUserProducts = async () => {
         try {
-            const response = await api('products/product/loadProductList', 'POST', {'seller_id': user.id});
+            const response = await api('products/product/load-product-list', 'POST', {'seller_id': user.id});
             setProductList(response)
         } catch (error) {
             console.error('Error fetching product list:', error);

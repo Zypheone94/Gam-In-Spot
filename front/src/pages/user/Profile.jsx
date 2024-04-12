@@ -29,7 +29,7 @@ const Profile = () => {
 
     const getLastProduct = async () => {
         try {
-            const response = await api('products/product/loadProductList', 'POST', {'limit': 5, 'seller_id': user.id});
+            const response = await api('products/product/load-product-list', 'POST', {'limit': 5, 'seller_id': user.id});
             setProductList(response)
         } catch (error) {console.error('Error fetching product list:', error);
         }
