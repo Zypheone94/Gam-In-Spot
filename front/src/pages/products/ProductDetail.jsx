@@ -83,7 +83,7 @@ function ProductDetail() {
                                         objectFit: 'contain',
                                         objectPosition: '50% 50%'
                                     }}
-                                    src={productDetail.images ? productDetail.images[selectedImage] : '../../src/assets/images/Placeholder.jpg'}
+                                    src={productDetail.images ? productDetail.images[selectedImage] : placeholderImage}
                                     alt="Product Image"
                                 />
                             </div>

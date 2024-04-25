@@ -21,7 +21,7 @@ const CategoryCard = ({categorySlug, categoryTitle}) => {
         };
         img.onerror = () => {
             console.log(`../../src/assets/images/category/${categorie}.jpg`)
-            setImageExists('../../src/assets/images/Placeholder.jpg');
+            setImageExists(placeholderImage);
         };
     }
 
