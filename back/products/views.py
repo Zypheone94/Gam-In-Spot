@@ -246,7 +246,7 @@ class LiteProductListView(APIView):
                 images = []
 
                 for i in range(1, 4):
-                    url = f"http://gaminspot.games:8000/static/{serialized_product['seller']}/{serialized_product['slug']}/image_{i}.jpg"
+                    url = f"https://gaminspot.games:8000/static/{serialized_product['seller']}/{serialized_product['slug']}/image_{i}.jpg"
                     if check_url_status(url):
                         images.append(url)
 
