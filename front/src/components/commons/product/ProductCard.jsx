@@ -2,6 +2,8 @@ import DateFormat from "../../../utils/DateFormat.jsx";
 import {useNavigate} from "react-router-dom"
 
 import {nommage} from "../../../utils/nommage.jsx";
+import placeholderImage from "../../../assets/images/Placeholder.jpg"
+
 
 const ProductCard = ({productValue}) => {
 
@@ -20,7 +22,7 @@ const ProductCard = ({productValue}) => {
             }}>
                 <img className='h-full w-full'
                      style={{objectFit: 'cover', objectPosition: '50% 50%', borderRadius: '20px 20px 0 0'}}
-                     src={productValue.images ? productValue.images[0] : '../../src/assets/images/Placeholder.jpg'}
+                     src={productValue.images ? productValue.images[0] : placeholderImage}
                      alt={productValue.images ? productValue.images[0] : 'Product Placeholder'}/>
             </div>
             <div className='text-lightPurple p-2 flex flex-col justify-between' style={{

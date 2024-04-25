@@ -5,7 +5,7 @@ import {nommage} from "../../utils/nommage.jsx";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
-
+import placeholderImage from "../../assets/images/Placeholder.jpg"
 
 function ProductDetail() {
 
@@ -31,7 +31,7 @@ function ProductDetail() {
                 const req = await api('cart/cart/add-to-cart/', "POST", {
                     user_id: user.id,
                     product_id: productDetail.productId,
-                    image: productDetail.images ? productDetail.images[0] : 'src/assets/images/Placeholder.jpg'
+                    image: productDetail.images ? productDetail.images[0] : placeholderImage
                 })
                 navigate('/cart')
             }

@@ -3,6 +3,9 @@ import {useNavigate} from "react-router-dom"
 
 import {nommage} from "../../../utils/nommage.jsx";
 
+import placeholderImage from "../../../assets/images/Placeholder.jpg"
+
+
 const HistoryCard = ({productValue}) => {
 
     const navigate = useNavigate()
@@ -23,7 +26,7 @@ const HistoryCard = ({productValue}) => {
                              borderRadius: '20px 0 20px 20px',
                              backgroundPosition: 'center',
                              backgroundSize: 'cover',
-                             backgroundImage: productValue.images ? `url(${productValue.images[0]})` : 'url(../../src/assets/images/Placeholder.jpg)'
+                             backgroundImage: productValue.images ? `url(${productValue.images[0]})` : `url(${placeholderImage})`
                          }}>
                     </div>
                 </div>

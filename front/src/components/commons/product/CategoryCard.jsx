@@ -4,6 +4,9 @@ import {useNavigate} from "react-router-dom";
 import {nommage} from "../../../utils/nommage.jsx";
 import DateFormat from "../../../utils/DateFormat.jsx";
 
+import placeholderImage from "../../../assets/images/Placeholder.jpg"
+
+
 const CategoryCard = ({categorySlug, categoryTitle}) => {
 
     const navigate = useNavigate()

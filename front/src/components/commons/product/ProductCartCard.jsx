@@ -6,6 +6,8 @@ import {api} from "../../../utils/api.jsx";
 import X from '../../../assets/images/icons/X.jsx'
 
 import Selector from "../Selector.jsx";
+import placeholderImage from "../../../assets/images/Placeholder.jpg"
+
 
 const ProductCartCard = ({product, user, getUserCart}) => {
 
@@ -55,7 +57,7 @@ const ProductCartCard = ({product, user, getUserCart}) => {
             }}>
                 <img className='h-full w-full hidden sm:block'
                      style={{objectFit: 'cover', objectPosition: '50% 50%', borderRadius: '20px 20px 0 0'}}
-                     src={product.image ? product.image : '../../src/assets/images/Placeholder.jpg'}
+                     src={product.image ? product.image : placeholderImage}
                 alt={product.image ? product.image : 'Product placeholder'}/>
                 <div className="block sm:hidden" style={{
                     maxHeight: "17" +
