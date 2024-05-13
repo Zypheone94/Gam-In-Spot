@@ -4,6 +4,7 @@ import WrongPage from "../WrongPage.jsx";
 import {nommage} from "../../utils/nommage.jsx";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import placeholderImage from "../../assets/images/Placeholder.jpg"
 
@@ -61,6 +62,15 @@ function ProductDetail() {
     }, [productSlug]);
 
     return (
+        <>
+            <Helmet>
+                <title>{productDetail.title} | Gam'in-Spot</title>
+                <meta name="description" content={`Browse our e-commerce website for an extensive collection of video
+                games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About 
+                this game : ` + productDetail.productDescription }  />
+                <meta name="keywords" content={"videogames gaming games retro retrogaming" + productDetail.plateform} />
+                <meta name="robots" content="index, follow" />
+            </Helmet>
         <section className='flex flex-col px-12 py-8 md:mt-60 lg:mt-0'>
             {loading ? (
                 <p>Chargement...</p>
@@ -225,6 +235,7 @@ function ProductDetail() {
 
             )}
         </section>
+        </>
     );
 }
 

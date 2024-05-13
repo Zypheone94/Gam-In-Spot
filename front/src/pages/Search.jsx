@@ -1,10 +1,11 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {api} from "../utils/api.jsx";
 
 import {useLocation} from 'react-router-dom';
 
 import CategoryCard from "../components/commons/product/CategoryCard.jsx";
 import ProductCard from "../components/commons/product/ProductCard.jsx";
+import {Helmet} from "react-helmet";
 
 const Search = () => {
 
@@ -50,6 +51,14 @@ const Search = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Search | Gam'in-Spot</title>
+                <meta name="description" content="Browse our e-commerce website for an extensive collection of video
+                games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
+                this game"  />
+                <meta name="keywords" content="videogames gaming games retro retrogaming" />
+                <meta name="robots" content="index, follow" />
+            </Helmet>
             <div>
                 <h1 className='text-pink text-xl mt-2 ml-8 mb-10'>Recherche : {searchValue}</h1>
 

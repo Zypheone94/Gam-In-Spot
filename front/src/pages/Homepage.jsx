@@ -8,6 +8,7 @@ import React, {useEffect, useState} from "react";
 import CategoryCard from "../components/commons/product/CategoryCard.jsx";
 
 import {useNavigate} from "react-router-dom"
+import {Helmet} from "react-helmet";
 
 function Homepage() {
 
@@ -65,7 +66,15 @@ function Homepage() {
     }
 
     return (
-        <div>
+        <>
+            <Helmet>
+                <title>Welcome | Gam'in-Spot</title>
+                <meta name="description" content="Browse our e-commerce website for an extensive collection of video
+                games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
+                this game"  />
+                <meta name="keywords" content="videogames gaming games retro retrogaming" />
+                <meta name="robots" content="index, follow" />
+            </Helmet>
             <div className='flex flex-col'>
                 <div className='flex items-center mt-4 mb-10'>
                     <h1 className='text-pink text-xl ml-8 '>Catégories en vedette</h1>
@@ -104,7 +113,8 @@ function Homepage() {
                     }
                 </div>
             </div>
-        </div>
+        </>
+
     );
 }
 

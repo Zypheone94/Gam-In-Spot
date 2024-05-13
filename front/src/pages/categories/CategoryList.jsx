@@ -1,7 +1,8 @@
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {api} from "../../utils/api.jsx";
 
 import CategoryCard from "../../components/commons/product/CategoryCard.jsx";
+import {Helmet} from "react-helmet";
 
 function CategoryList() {
 
@@ -35,6 +36,15 @@ function CategoryList() {
     }, []);
 
     return (
+        <>
+            <Helmet>
+                <title>Categories | Gam'in-Spot</title>
+                <meta name="description" content="Browse our e-commerce website for an extensive collection of video
+                games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
+                this game"  />
+                <meta name="keywords" content="videogames gaming games game retro retrogaming ps3 ps4 ps5 nintendo playstation goodies" />
+                <meta name="robots" content="index, follow" />
+            </Helmet>
         <div>
             <h1 className='text-pink text-xl mt-4 ml-8 mb-10'>Liste des catégories</h1>
             {loading ? (
@@ -50,6 +60,7 @@ function CategoryList() {
                 </div>
             )}
         </div>
+        </>
     );
 }
 
