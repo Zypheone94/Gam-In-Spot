@@ -74,6 +74,20 @@ function Homepage() {
                 this game"  />
                 <meta name="keywords" content="videogames gaming games retro retrogaming" />
                 <meta name="robots" content="index, follow" />
+                <link rel="canonical" href="https://gaminspot.games" />
+                <meta property="og:title" content="Gam'In-Spot | Games"/>
+                <meta property="og:description" content="Browse our e-commerce website for an extensive collection of video
+                games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
+                this game"/>
+                <meta property="og:image" content="../../../assets/images/banner/main.jpg"/>
+                <meta property="og:url" content="https://gaminspot.games"/>
+                <meta property="og:type" content="website"/>
+                <meta name="twitter:card" content="summary_large_image"/>
+                <meta name="twitter:title" content="Welcome | Gam'In-Spot"/>
+                <meta name="twitter:description" content="Browse our e-commerce website for an extensive collection of video
+                games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
+                this game"/>
+                <meta name="twitter:image" content="../../../assets/images/banner/main.jpg"/>
             </Helmet>
             <div className='flex flex-col'>
                 <div className='flex items-center mt-4 mb-10'>
@@ -100,7 +114,7 @@ function Homepage() {
                 </div>
             </div>
             <div className='flex flex-col'>
-                <h1 className='text-pink text-xl mt-4 ml-8 mb-10'>Produits en vedette</h1>
+                <h2 className='text-pink text-xl mt-4 ml-8 mb-10'>Produits en vedette</h2>
                 <div className='flex flex-wrap'>
                     {
                         productList && productList.map((product) =>
