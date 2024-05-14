@@ -83,7 +83,7 @@ function Homepage() {
                 <meta property="og:description" content="Browse our e-commerce website for an extensive collection of video
                 games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
                 this game"/>
-                <meta property="og:image" content={MainImage}/>
+                <meta property="og:image" content={"https://gaminspot.games" + MainImage}/>
                 <meta property="og:url" content="https://gaminspot.games"/>
                 <meta property="og:type" content="website"/>
                 <meta name="twitter:card" content="summary_large_image"/>
@@ -97,7 +97,7 @@ function Homepage() {
                 <meta name="discord:description" content="Browse our e-commerce website for an extensive collection of video
                 games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
                 this game"/>
-                <meta name="discord:image" content={MainImage}/>
+                <meta name="discord:image" content={"https://gaminspot.games" + MainImage}/>
             </Helmet>
             <div className='flex flex-col'>
                 <div className='flex items-center mt-4 mb-10'>
