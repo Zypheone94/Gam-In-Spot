@@ -26,13 +26,15 @@ function Homepage() {
 
     useEffect(() => {
         if (categoryList && categoryList.length > 0) {
-            while (categoryStar.length < 5) {
+            const newCategoryStar = [];
+            while (newCategoryStar.length < 5) {
                 const randomIndex = Math.floor(Math.random() * categoryList.length);
                 const randomCategory = categoryList[randomIndex];
-                if (!categoryStar.includes(randomCategory)) {
-                    categoryStar.push(randomCategory);
+                if (!newCategoryStar.includes(randomCategory)) {
+                    newCategoryStar.push(randomCategory);
                 }
             }
+            setCategoryStar(newCategoryStar);
         }
     }, [categoryList]);
 
@@ -88,6 +90,12 @@ function Homepage() {
                 games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
                 this game"/>
                 <meta name="twitter:image" content="../../../assets/images/banner/main.jpg"/>
+                <meta name="discord:card" content="summary_large_image"/>
+                <meta name="discord:title" content="Welcome | Gam'In-Spot"/>
+                <meta name="discord:description" content="Browse our e-commerce website for an extensive collection of video
+                games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
+                this game"/>
+                <meta name="discord:image" content="../../../assets/images/banner/main.jpg"/>
             </Helmet>
             <div className='flex flex-col'>
                 <div className='flex items-center mt-4 mb-10'>
