@@ -79,13 +79,7 @@ function Homepage() {
                 <meta name="keywords" content="videogames gaming games retro retrogaming" />
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://gaminspot.games" />
-                <meta property="og:title" content="Gam'In-Spot | Games"/>
-                <meta property="og:description" content="Browse our e-commerce website for an extensive collection of video
-                games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
-                this game"/>
-                <meta property="og:image" content={"https://gaminspot.games" + MainImage}/>
-                <meta property="og:url" content="https://gaminspot.games"/>
-                <meta property="og:type" content="website"/>
+
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="Welcome | Gam'In-Spot" />
                 <meta name="twitter:description" content="Browse our e-commerce website for an extensive collection of video games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About this game" />
