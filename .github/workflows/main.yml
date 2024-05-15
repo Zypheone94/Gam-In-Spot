@@ -3,7 +3,7 @@ name: Deploy to Production
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   deploy:
@@ -12,6 +12,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: Connect to GCP and retrieve code
+      run: gcloud auth activate-service-account --key-file=gaminspot-34279918f013.json
 
     - name: Move to /var/www/html directory
       run: |
