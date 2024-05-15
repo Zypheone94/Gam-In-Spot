@@ -101,7 +101,6 @@ function Homepage() {
                             )
                         )
                     }
-                    test
                 </div>
             </div>
             <div className='flex flex-col'>
