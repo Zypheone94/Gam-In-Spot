@@ -24,7 +24,7 @@ jobs:
         with:
           instance_name: gaminspot
           zone: us-east1-b
-          ssh_private_key: ${{ secrets.SSH_KEY }}
+          ssh_private_key: '${{ secrets.SSH_KEY }}'
           command: 'echo Hello world'
 
 
