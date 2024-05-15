@@ -25,7 +25,7 @@ jobs:
       - name: Move to /var/www/html directory
         run: | 
           cd /var/www/html
-          ls
+          hostname
 
       - name: Copy db.sqlite3 to backup directory
         run: sudo cp Gam-In-Spot/back/db.sqlite3 backup/
