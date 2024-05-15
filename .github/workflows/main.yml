@@ -19,6 +19,10 @@ jobs:
           service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
           project_id: gaminspot
 
+      # Ajout de la commande pour accéder à la VM
+      - name: SSH into VM
+        run: gcloud compute ssh container-gaminspot --zone=us-east1-b
+
       - name: Move to /var/www/html directory
         run: cd /var/www/html
 
