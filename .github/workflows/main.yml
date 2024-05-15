@@ -13,40 +13,35 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Connect to GCP and retrieve code
-        run: gcloud auth activate-service-account --key-file="${{ secrets.GCLOUD_SERVICE_KEY }}"
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.4.0
+        with:
+          service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          project_id: gaminspot
 
       - name: Move to /var/www/html directory
-        run: |
-          cd /var/www/html
+        run: cd /var/www/html
 
       - name: Copy db.sqlite3 to backup directory
-        run: |
-          sudo cp Gam-In-Spot/back/db.sqlite3 backup/
+        run: sudo cp Gam-In-Spot/back/db.sqlite3 backup/
 
       - name: Move to Gam-In-Spot directory
-        run: |
-          cd Gam-In-Spot
+        run: cd Gam-In-Spot
 
       - name: Stash uncommitted changes
-        run: |
-          sudo git stash
+        run: sudo git stash
 
       - name: Update code from Git repository
-        run: |
-          sudo git pull
+        run: sudo git pull
 
       - name: Stop Docker container
-        run: |
-          sudo docker-compose down
+        run: sudo docker-compose down
 
       - name: Remove Docker image
-        run: |
-          sudo docker image rm gam-in-spot-gaminspot-front
+        run: sudo docker image rm gam-in-spot-gaminspot-front
 
       - name: Move back to previous directory
-        run: |
-          cd ..
+        run: cd ..
 
       - name: Copy .env and db.sqlite3 from backup to Gam-In-Spot
         run: |
@@ -55,20 +50,16 @@ jobs:
           sudo cp backup/db.sqlite3 Gam-In-Spot/back
 
       - name: Move to Gam-In-Spot/front directory
-        run: |
-          cd Gam-In-Spot/front
+        run: cd Gam-In-Spot/front
 
       - name: Build Docker image gam-in-spot-gaminspot-front
-        run: |
-          sudo docker build -t gam-in-spot-gaminspot-front .
+        run: sudo docker build -t gam-in-spot-gaminspot-front .
 
       - name: Move back to previous directory
-        run: |
-          cd ..
+        run: cd ..
 
       - name: Launch Docker containers
-        run: |
-          sudo docker-compose up -d
+        run: sudo docker-compose up -d
 
       - name: Copy files from backup to containers
         run: |
