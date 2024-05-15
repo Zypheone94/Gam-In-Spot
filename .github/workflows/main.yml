@@ -1,0 +1,82 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Connect to GCP and retrieve code
+        run: gcloud auth activate-service-account --key-file=gaminspot-34279918f013.json
+
+      - name: Move to /var/www/html directory
+        run: |
+          cd /var/www/html
+
+      - name: Copy db.sqlite3 to backup directory
+        run: |
+          sudo cp Gam-In-Spot/back/db.sqlite3 backup/
+
+      - name: Move to Gam-In-Spot directory
+        run: |
+          cd Gam-In-Spot
+
+      - name: Stash uncommitted changes
+        run: |
+          sudo git stash
+
+      - name: Update code from Git repository
+        run: |
+          sudo git pull
+
+      - name: Stop Docker container
+        run: |
+          sudo docker-compose down
+
+      - name: Remove Docker image
+        run: |
+          sudo docker image rm gam-in-spot-gaminspot-front
+
+      - name: Move back to previous directory
+        run: |
+          cd ..
+
+      - name: Copy .env and db.sqlite3 from backup to Gam-In-Spot
+        run: |
+          sudo cp backup/front/.env Gam-In-Spot/front
+          sudo cp backup/back/.env Gam-In-Spot/back
+          sudo cp backup/db.sqlite3 Gam-In-Spot/back
+
+      - name: Move to Gam-In-Spot/front directory
+        run: |
+          cd Gam-In-Spot/front
+
+      - name: Build Docker image gam-in-spot-gaminspot-front
+        run: |
+          sudo docker build -t gam-in-spot-gaminspot-front .
+
+      - name: Move back to previous directory
+        run: |
+          cd ..
+
+      - name: Launch Docker containers
+        run: |
+          sudo docker-compose up -d
+
+      - name: Copy files from backup to containers
+        run: |
+          sudo docker cp ../backup/letsencrypt gam-in-spot-gaminspot-front-1:/etc/
+          sudo docker cp ../backup/letsencrypt gam-in-spot-gaminspot-back-1:/app/
+          sudo docker cp ../backup/nginx.conf gam-in-spot-gaminspot-front-1:/etc/nginx/nginx.conf
+
+      - name: Restart Docker containers
+        run: |
+          cd Gam-In-Spot
+          sudo docker-compose restart

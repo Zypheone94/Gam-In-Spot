@@ -123,9 +123,3 @@ steps:
       - |
         cd Gam-In-Spot
         sudo docker-compose restart
-
-
-machine:
-  projectId: '5734602571113521531'
-  instanceName: 'container-gaminspot'
-  zone: 'us-east1-b'
