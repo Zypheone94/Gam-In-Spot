@@ -1,3 +1,109 @@
 steps:
+  # Déplacer dans le répertoire /var/www/html
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy', 'app.yaml']
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cd /var/www/html
+
+  # Copier db.sqlite3 vers le dossier backup
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        sudo cp Gam-In-Spot/back/db.sqlite3 backup/
+
+  # Déplacer dans le répertoire Gam-In-Spot
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cd Gam-In-Spot
+
+  # Arrêter le conteneur Docker
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        sudo docker-compose down
+
+  # Supprimer l'image Docker
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        sudo docker image rm gam-in-spot-gaminspot-front
+
+  # Revenir au répertoire précédent
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cd ..
+
+  # Copier les fichiers .env et db.sqlite3 depuis le dossier backup vers Gam-In-Spot
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        sudo cp backup/front/.env Gam-In-Spot/front
+        sudo cp backup/back/.env Gam-In-Spot/back
+        sudo cp backup/db.sqlite3 Gam-In-Spot/back
+
+  # Déplacer dans le répertoire Gam-In-Spot/front
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cd Gam-In-Spot/front
+
+  # Construire l'image Docker gam-in-spot-gaminspot-front
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        sudo docker build -t gam-in-spot-gaminspot-front .
+
+  # Revenir au répertoire précédent
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cd ..
+
+  # Lancer les conteneurs Docker
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        sudo docker-compose up -d
+
+  # Copier les fichiers depuis le dossier backup vers les conteneurs
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        sudo docker cp ../backup/letsencrypt gam-in-spot-gaminspot-front-1:/etc/
+        sudo docker cp ../backup/letsencrypt gam-in-spot-gaminspot-back-1:/app/
+        sudo docker cp ../backup/nginx.conf gam-in-spot-gaminspot-front-1:/etc/nginx/nginx.conf
+
+  # Redémarrer les conteneurs Docker
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cd Gam-In-Spot
+        sudo docker-compose restart
