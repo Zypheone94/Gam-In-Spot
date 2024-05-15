@@ -27,6 +27,7 @@ jobs:
           ssh_private_key: ${{ secrets.SSH_KEY }}
           command: 'echo Hello world'
 
+
       - name: Move to /var/www/html directory
         run: | 
           cd /var/www/html
