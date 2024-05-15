@@ -23,6 +23,22 @@ steps:
       - |
         cd Gam-In-Spot
 
+  # Sauvegarder les modifications non commitées
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        sudo git stash
+
+  # Mettre à jour le code à partir du dépôt Git
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        sudo git pull
+
   # Arrêter le conteneur Docker
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
@@ -107,3 +123,9 @@ steps:
       - |
         cd Gam-In-Spot
         sudo docker-compose restart
+
+
+machine:
+  projectId: '5734602571113521531'
+  instanceName: 'container-gaminspot'
+  zone: 'us-east1-b'
