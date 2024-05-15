@@ -9,7 +9,6 @@ import CategoryCard from "../components/commons/product/CategoryCard.jsx";
 
 import {useNavigate} from "react-router-dom"
 import {Helmet} from "react-helmet";
-import MainImage from '../../public/assets/main.jpg';
 
 
 function Homepage() {
@@ -75,22 +74,10 @@ function Homepage() {
                 <title>Welcome | Gam'in-Spot</title>
                 <meta name="description" content="Browse our e-commerce website for an extensive collection of video
                 games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
-                this game"  />
+                this game" />
                 <meta name="keywords" content="videogames gaming games retro retrogaming" />
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://gaminspot.games" />
-
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Welcome | Gam'In-Spot" />
-                <meta name="twitter:description" content="Browse our e-commerce website for an extensive collection of video games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About this game" />
-                <meta name="twitter:image" content={`https://gaminspot.games${MainImage}`} />
-
-                <meta name="discord:card" content="summary_large_image"/>
-                <meta name="discord:title" content="Welcome | Gam'In-Spot"/>
-                <meta name="discord:description" content="Browse our e-commerce website for an extensive collection of video
-                games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About
-                this game"/>
-                <meta name="discord:image" content={"https://gaminspot.games" + MainImage}/>
             </Helmet>
             <div className='flex flex-col'>
                 <div className='flex items-center mt-4 mb-10'>
