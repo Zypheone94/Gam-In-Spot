@@ -56,7 +56,7 @@ function Header() {
                     <SearchBar/>
                 </div>
                 <div className='flex mt-6 md:mt-0  lg:w-5/12 lg:justify-center'>
-                    {user === null || user.username === undefined ? (
+                    {(user === null || user.username === undefined || user.email !== "gaminspot.pro@gmail.com" )  ?  (
                         <></>
                     ) : (
                         <div style={{

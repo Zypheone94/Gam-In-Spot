@@ -9,7 +9,7 @@ const CreateUser = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-            if (user.email !== undefined) {
+            if (user && user.email !== undefined) {
                 navigate('/profile')
             }
 
