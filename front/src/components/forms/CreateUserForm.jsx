@@ -291,6 +291,10 @@ const CreateUserForm = () => {
                                            onChange={handleInputChange}
                                            required/>
                                 </div>
+                                <div className="mt-6 w-full flex justify-between">
+                                    <label className="w-2/5">J'accepte les <a href={'https://gaminspot.games/conditions'} target="_blank">conditions d'utilisation</a> du site</label>
+                                    <input type="checkbox" required />
+                                </div>
                             </div>
                             {
                                 returnError ? (
