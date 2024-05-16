@@ -22,8 +22,8 @@ jobs:
       - name: SSH into VM
         uses: google-github-actions/ssh-compute@v1
         with:
-          instance_name: gaminspot
-          zone: us-east1-b
+          instance_name: 'container-gaminspot'
+          zone: 'us-east1-b'
           ssh_private_key: '${{ secrets.SSH_KEY }}'
           command: 'echo Hello world'
 
