@@ -24,7 +24,7 @@ jobs:
           instance_name: 'container-gaminspot'
           zone: 'us-east1-b'
           ssh_private_key: '${{ secrets.SSH_KEY }}'
-          command: 'echo Hello world'
+          command: 'echo Hello world --troubleshoot'
 
       - name: Move to /var/www/html directory
         run: | 
