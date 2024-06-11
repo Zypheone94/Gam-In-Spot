@@ -29,7 +29,7 @@ jobs:
 
       - name: Deploy to VPS
         run: |
-          ssh maximerene_durand_pro@35.196.242.162 'cd /var/www && touch file.txt'
+          ssh githubuser@35.196.242.162 'cd /home/githubuser && touch file.txt'
 
 # jobs:
 #   deploy:
