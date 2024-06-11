@@ -64,7 +64,7 @@ function ProductDetail() {
     return (
         <>
             <Helmet>
-                <title>{productDetail.title} | Gam'in-Spot</title>
+                <title>{`${productDetail.title} | Gam'in-Spot`}</title>
                 <meta name="description" content={`Browse our e-commerce website for an extensive collection of video
                 games. Find the perfect game on our product page, featuring top-rated titles and unbeatable deals. About 
                 this game : ` + productDetail.productDescription }  />
