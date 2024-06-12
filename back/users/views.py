@@ -139,7 +139,7 @@ class LogoutView(APIView):
 class SendValidationMail(APIView):
     def post(self, request):
         try:
-
+            # Essai d'envoyer un mail a l'adresse renseignée pour valider le compte
             data = request.data
             verification_code = str(random.randint(100000, 500000))
             email = data.get('formMail')
@@ -147,11 +147,11 @@ class SendValidationMail(APIView):
             message = 'Voici votre code de vérification : ' + verification_code
             from_email = 'magna94320@gmail.com'
             recipient_list = [email]
-
+            # Vérifie que l'Email est correctement renseigné
             if email:
 
                 send_mail(subject, message, from_email, recipient_list)
-
+                # garde en cache le code de validation
                 cache.set('cache_data', {'verification_code': verification_code, 'email': email}, 3600)
 
                 return Response({'message': 'E-mail envoyé avec succès.'}, status=status.HTTP_200_OK)
@@ -160,6 +160,7 @@ class SendValidationMail(APIView):
         except Exception as e:
             return Response({'error': 'Erreur lors de l\'envoi de l\'e-mail.'}, status=status.HTTP_400_BAD_REQUEST)
 
+    # Fonction pour vérifier si le code retourné est bien le bon
     def put(self, request):
         try:
             data = json.loads(request.body)
