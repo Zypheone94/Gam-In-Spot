@@ -5,11 +5,10 @@ const Legales = () => {
             <h2 className='text-pink font-bold text-2xl my-4'>Informations légales :</h2>
 
             <p className='my-2'><u>Nom de l'entreprise :</u> Gam'In-Spot</p>
-            <p className='my-2'><u>Forme juridique :</u> Projet étudiant</p>
+            <p className='my-2'><u>Forme juridique :</u> Auto-entrepreneur</p>
             <p className='my-2'><u>Siège social :</u> Thiais 94320</p>
-            <p className='my-2'><u>Numéro de téléphone :</u> 06.XX.XX.XX.XX</p>
 
-            <p className='my-2'><u>Adresse e-mail :</u> gaminspot.pro@gmail.col</p>
+            <p className='my-2'><u>Adresse e-mail :</u> gaminspot.pro@gmail.com</p>
 
             <p><u>Hébergeur du site :</u> Google Cloud Plateforme</p>
             <p><u>Adresse de l'hébergeur :</u> https://cloud.google.com/</p>
