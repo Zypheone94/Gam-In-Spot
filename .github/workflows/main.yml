@@ -28,4 +28,4 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
       - name: Deploy to VPS
-        run: ssh -tt -o StrictHostKeyChecking=no githubuser@35.196.242.162 'sudo bash /var/www/html/backup/deploy.sh'
+        run: ssh -tt -o StrictHostKeyChecking=no githubuser@35.196.242.162 'touch /home/githubuser/test.txt'
