@@ -34,7 +34,9 @@ const Legales = () => {
 
             <p className='my-4'>Lien vers le site de la CNIL pour le traitement des données SEO : <a href="https://www.cnil.fr/fr/reglement-europeen-protection-donnees">Lien</a></p>
 
+<p>SAIKOU ET MAXIME</p>
         </div>
+
     )
 }
 
