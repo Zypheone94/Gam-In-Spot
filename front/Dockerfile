@@ -21,9 +21,9 @@ RUN npm run build
 FROM nginx:alpine
 
 # Install Certbot
-RUN apk update && \
-    apk add --no-cache certbot certbot-nginx && \
-    rm -rf /var/cache/apk/*
+#RUN apk update && \
+#   apk add --no-cache certbot certbot-nginx && \
+#  rm -rf /var/cache/apk/*
 
 RUN mkdir -p /etc/letsencrypt
 
