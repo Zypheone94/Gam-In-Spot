@@ -20,10 +20,10 @@ RUN npm run build
 # Utiliser l'image légère de Nginx pour servir l'application construite
 FROM nginx:alpine
 
-# Install Certbot
-#RUN apk update && \
-#   apk add --no-cache certbot certbot-nginx && \
-#  rm -rf /var/cache/apk/*
+#` Install Certbot
+RUN apk update && \
+    apk add --no-cache certbot certbot-nginx && \
+    rm -rf /var/cache/apk/*
 
 RUN mkdir -p /etc/letsencrypt
 
